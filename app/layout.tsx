@@ -27,10 +27,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Script
-        src="https://newcookiebucket.s3.us-east-2.amazonaws.com/cookie_consent_2/363cc9bc-7ee8-43de-bd64-4238ee416ba2/main_4813236.js"
+        src="/main.js"
         id="lb-cookie-consent"
+        strategy="beforeInteractive"
       ></Script>
-      <Script src="https://test-cookies.tiiny.site/show_alert.js" />
+      <Script src="https://test-cookies.tiiny.site/show_alert.js" strategy="beforeInteractive" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
