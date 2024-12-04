@@ -2,41 +2,10 @@
 import Image from "next/image";
 import Script from "next/script";
 
-const initCookies = () => {
-  const oneDayExpire = new Date(Date.now() + 86400 * 1000).toUTCString();
-
-  document.cookie =
-    "same_domain_cookie_1=local_value_1; expires=" + oneDayExpire + ";path=/;";
-  document.cookie =
-    "same_domain_cookie2=local_value_2; expires=" + oneDayExpire + ";path=/;";
-  document.cookie =
-    "same_domain_cookie3=local_value_3; expires=" + oneDayExpire + ";path=/;";
-  document.cookie =
-    "same_domain_cookie4=local_value_4; expires=" + oneDayExpire + ";path=/;";
-
-  document.cookie =
-    "test_cookie__1=local_value_4; expires=" + oneDayExpire + ";path=/;";
-  document.cookie =
-    "test_cookie__2=local_value_4; expires=" + oneDayExpire + ";path=/;";
-  document.cookie =
-    "test_cookie__3=local_value_4; expires=" + oneDayExpire + ";path=/;";
-  document.cookie =
-    "test_cookie__4=local_value_4; expires=" + oneDayExpire + ";path=/;";
-
-  document.cookie =
-    "main_domain_cookie_1=main_domain_cookie_value_1; domain=.lightbeamsecurity.com; expires=" +
-    oneDayExpire +
-    ";path=/;";
-  document.cookie =
-    "main_domain_cookie_2=main_domain_cookie_value_2; domain=.lightbeamsecurity.com; expires=" +
-    oneDayExpire +
-    ";path=/;";
-};
-
 export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <Script onLoad={initCookies} />
+      <Script src={"/injectCookies.js"} type="text/javascript" />
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"

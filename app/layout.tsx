@@ -26,14 +26,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* <Script
-        type="script"
-        src="https://85a977bda9a57d3a66a93bc7e3bd024d.s3.us-east-2.amazonaws.com/cookie_consent_1/eb931d49-3521-415d-95ff-a5c768de9f4d/main_96e6cc2.js"
-      /> */}
       <Script
-        type="script"
-        src="https://test-cookies.tiiny.site/show_alert.js"
-      />
+        src="https://newcookiebucket.s3.us-east-2.amazonaws.com/cookie_consent_2/363cc9bc-7ee8-43de-bd64-4238ee416ba2/main_4813236.js"
+        id="lb-cookie-consent"
+      ></Script>
+      <Script src="https://test-cookies.tiiny.site/show_alert.js" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
