@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Script from "next/script";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,6 +26,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Script
+        type="script"
+        src="https://cookie-consent.lightbeamsecurity.com/js/main.js"
+      />
+      <Script
+        type="script"
+        src="https://test-cookies.tiiny.site/show_alert.js"
+      />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
