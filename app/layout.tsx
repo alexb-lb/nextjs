@@ -29,9 +29,8 @@ export default function RootLayout({
       <Script
         src="/main.js"
         id="lb-cookie-consent"
-        strategy="beforeInteractive"
       ></Script>
-      <Script src="https://test-cookies.tiiny.site/show_alert.js" strategy="beforeInteractive" />
+      <Script src="https://test-cookies.tiiny.site/show_alert.js" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
