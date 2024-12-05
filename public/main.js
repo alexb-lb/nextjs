@@ -10255,15 +10255,15 @@ const initCookieConsent = () => {
 
   const link = document.createElement("link");
   link.rel = "stylesheet";
-  link.href = `${dataScriptHost}/cookie_consent_${ccVersion}/${domainId}/lbstyles_${cssHash}.css`;
-  // link.href = `/lbstyles.css`;
+  // link.href = `${dataScriptHost}/cookie_consent_${ccVersion}/${domainId}/lbstyles_${cssHash}.css`;
+  link.href = `/lbstyles.css`;
   link.type = "text/css";
   document.head.appendChild(link);
 
   const scriptRenderer = document.createElement("script");
   scriptRenderer.type = "text/javascript";
-  scriptRenderer.src = `${dataScriptHost}/cookie_consent_${ccVersion}/${domainId}/renderCookieConsent_${jsHash}.js`;
-  // scriptRenderer.src = `/renderCookieConsent.js`;
+  // scriptRenderer.src = `${dataScriptHost}/cookie_consent_${ccVersion}/${domainId}/renderCookieConsent_${jsHash}.js`;
+  scriptRenderer.src = `/renderCookieConsent.js`;
   scriptRenderer.async = true;
   document.head.appendChild(scriptRenderer);
 
