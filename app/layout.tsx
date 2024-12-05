@@ -46,12 +46,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <iframe
+        {/* <iframe
           title="Inline frame to set cookies"
           width="100%"
           height="500"
           src="https://test-cookies.tiiny.site"
-        />
+        /> */}
       </body>
     </html>
   );
