@@ -27,6 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
       <Script
         src="/main.js"
         id="lb-cookie-consent"
@@ -34,13 +35,10 @@ export default function RootLayout({
       ></Script>
       {/* <Script src="https://test-cookies.tiiny.site/show_alert.js" strategy="beforeInteractive" /> */}
       <GoogleTagManager gtmId="GTM-MVMX3H4V" />
+      </>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MVMX3H4V"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
         {children}
       </body>
     </html>
