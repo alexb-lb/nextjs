@@ -28,15 +28,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* <Script
+        <Script
           src="/main.js"
           id="lb-cookie-consent"
           strategy="beforeInteractive"
-        ></Script> */}
-        <Script
+        ></Script>
+        {/* <Script
           src="https://test-cookies.tiiny.site/show_alert.js"
           strategy="beforeInteractive"
-        />
+        /> */}
         <Script id="google-tag-manager">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
