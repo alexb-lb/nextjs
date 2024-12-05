@@ -27,13 +27,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Script
-        src="/main.js"
-        id="lb-cookie-consent"
-        strategy="beforeInteractive"
-      ></Script>
-      {/* <Script src="https://test-cookies.tiiny.site/show_alert.js" strategy="beforeInteractive" /> */}
-      <GoogleTagManager gtmId="GTM-5GXBGFPT" />
+      <head>
+        <Script
+          src="/main.js"
+          id="lb-cookie-consent"
+          strategy="beforeInteractive"
+        ></Script>
+        {/* <Script src="https://test-cookies.tiiny.site/show_alert.js" strategy="beforeInteractive" /> */}
+        <GoogleTagManager gtmId="GTM-5GXBGFPT" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
