@@ -28,11 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script
+        {/* <Script
           src="/main.js"
           id="lb-cookie-consent"
           strategy="beforeInteractive"
-        ></Script>
+        ></Script> */}
         {/* <Script src="https://test-cookies.tiiny.site/show_alert.js" strategy="beforeInteractive" /> */}
         <GoogleTagManager gtmId="GTM-5GXBGFPT" />
       </head>
