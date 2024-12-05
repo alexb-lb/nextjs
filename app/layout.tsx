@@ -27,7 +27,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
       <Script
         src="/main.js"
         id="lb-cookie-consent"
@@ -35,7 +34,6 @@ export default function RootLayout({
       ></Script>
       {/* <Script src="https://test-cookies.tiiny.site/show_alert.js" strategy="beforeInteractive" /> */}
       <GoogleTagManager gtmId="GTM-5GXBGFPT" />
-      </>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
