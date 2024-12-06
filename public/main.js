@@ -1,3 +1,19 @@
+(function debugAccess(obj, prop, debugGet){
+  var origValue = obj[prop];
+  Object.defineProperty(obj, prop, {
+      get: function () {
+          if ( debugGet )
+              debugger;
+          return origValue;
+      },
+      set: function(val) {
+          debugger;
+          return origValue = val;
+      }
+  });
+})()
+debugAccess(document, 'cookie');
+
 // domain Public Suffix List library start
 const dataDomain = "nextjs-rust-six.vercel.app";
 const dataScriptHost = "https://newcookiebucket.s3.us-east-2.amazonaws.com";
