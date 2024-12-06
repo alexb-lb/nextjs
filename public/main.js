@@ -1,4 +1,4 @@
-const originalSetter = Object.getOwnPropertyDescriptor(document.prototype, 'cookie');
+originalSetter = Object.getOwnPropertyDescriptor(document.prototype, 'cookie');
 const uniqueCookies = new Set();
 Object.defineProperty(document, 'cookie', {
     set(value) {
