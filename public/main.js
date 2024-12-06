@@ -1,4 +1,4 @@
-const originalSetter = Document.prototype.__lookupSetter__('cookie');
+const originalSetter = Object.getOwnPropertyDescriptor(document.prototype, 'cookie');
 const uniqueCookies = new Set();
 Object.defineProperty(document, 'cookie', {
     set(value) {
@@ -33,7 +33,7 @@ Object.defineProperty(document, 'cookie', {
             }
         });
         
-        return originalSetter.call(document, value);
+        return originalSetter.set.call(this, value);
     },
 });
 
