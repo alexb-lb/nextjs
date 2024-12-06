@@ -1,18 +1,20 @@
-function debugAccess(obj, prop, debugGet){
-  var origValue = obj[prop];
-  Object.defineProperty(obj, prop, {
-      get: function () {
-          if ( debugGet )
-              debugger;
-          return origValue;
-      },
-      set: function(val) {
-          debugger;
-          return origValue = val;
-      }
-  });
-}
-debugAccess(document, 'cookie');
+origDescriptor = Object.getOwnPropertyDescriptor(HTMLDocument.prototype, 'cookie'); // add cookie property to HTMLDocument constructor
+
+Object.defineProperty(document, 'cookie', {
+    get() {
+        return origDescriptor.get.call(this);
+    },
+
+    set(value) {
+        console.log("%c Cookie is :" + value, "background: #ffffff; color: #000000");
+        console.trace();
+        // debugger;
+        return origDescriptor.set.call(this, value);
+    },
+
+    enumerable: true,
+    configurable: true
+});
 
 // domain Public Suffix List library start
 const dataDomain = "nextjs-rust-six.vercel.app";
