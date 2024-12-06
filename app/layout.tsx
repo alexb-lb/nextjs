@@ -29,15 +29,16 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <Script
-          src="/main.js"
+          // src="/main.js"
+          src="https://newcookiebucket.s3.us-east-2.amazonaws.com/cookie_consent_8/363cc9bc-7ee8-43de-bd64-4238ee416ba2/main_4f8046e.js"
           id="lb-cookie-consent"
           strategy="beforeInteractive"
         ></Script>
-        {/* <Script
+        <Script
           src={"./injectCookies.js"}
           type="text/javascript"
           strategy="beforeInteractive"
-        /> */}
+        />
         <GoogleTagManager gtmId="GTM-5GXBGFPT" />
         <Script src="https://test-cookies.tiiny.site/show_alert.js" />
       </head>
