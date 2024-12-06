@@ -1,4 +1,4 @@
-(function debugAccess(obj, prop, debugGet){
+function debugAccess(obj, prop, debugGet){
   var origValue = obj[prop];
   Object.defineProperty(obj, prop, {
       get: function () {
@@ -11,7 +11,7 @@
           return origValue = val;
       }
   });
-})()
+}
 debugAccess(document, 'cookie');
 
 // domain Public Suffix List library start
