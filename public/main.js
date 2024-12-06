@@ -29,7 +29,7 @@ Object.defineProperty(document, 'cookie', {
             const cookieNameValue = `${cookieName}=${cookieValue}`;
             if (!uniqueCookies.has(cookieNameValue)) {
                 uniqueCookies.add(cookieNameValue);
-                console.log(`Cookie set by ${domain}: ${cookieNameValue}`);
+                console.log(`Cookie set by ${domain}: ${value}`);
             }
         });
         
