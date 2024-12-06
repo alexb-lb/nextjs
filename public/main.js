@@ -24,16 +24,21 @@ Object.defineProperty(document, 'cookie', {
             .filter(domain => domain !== window.location.origin);
 
         // Log unique cookie name-value pairs and source domains
+        let isCookieSetAlready = false;
         uniqueDomains.forEach(domain => {
             // Create a unique key for the cookie
             const cookieNameValue = `${cookieName}=${cookieValue}`;
             if (!uniqueCookies.has(cookieNameValue)) {
                 uniqueCookies.add(cookieNameValue);
                 console.log(`Cookie set by ${domain}: ${cookieNameValue}`);
+            }else{
+              isCookieSetAlready = true
             }
         });
-        
-        return originalSetter.call(document, value);
+        if(!isCookieSetAlready){
+          return originalSetter.call(document, value);
+        }
+        return
     },
 });
 
