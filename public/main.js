@@ -2,6 +2,7 @@ const originalSetter = Document.prototype.__lookupSetter__('cookie');
 Object.defineProperty(document, 'cookie', {
     set(value) {
         console.log(`Cookie set: ${value}`);
+
         // Capture and parse the stack trace
         const stack = new Error().stack;
 
@@ -15,10 +16,12 @@ Object.defineProperty(document, 'cookie', {
             })
             .filter(Boolean); // Remove null values
 
-        // Log the unique source domains
-        const uniqueDomains = [...new Set(domains)]; // Get unique domains
-        console.log('Source domains for setting cookie:', uniqueDomains);
+        // Filter out duplicates and the original domain
+        const uniqueDomains = [...new Set(domains)]
+            .filter(domain => domain !== window.location.origin);
 
+        // Log the source domains
+        console.log('Third-party domains setting cookie:', uniqueDomains);
         return originalSetter.call(document, value);
     },
 });
