@@ -2,7 +2,23 @@ const originalSetter = Document.prototype.__lookupSetter__('cookie');
 Object.defineProperty(document, 'cookie', {
     set(value) {
         console.log(`Cookie set: ${value}`);
-        console.trace('Stack trace for cookie set:');
+        // Capture and parse the stack trace
+        const stack = new Error().stack;
+
+        // Extract domain from each line of the stack trace
+        const domainRegex = /(https?:\/\/[^\s/]+)/; // Match domain from URLs
+        const domains = stack
+            .split('\n') // Split stack trace into lines
+            .map(line => {
+                const match = domainRegex.exec(line);
+                return match ? match[1] : null; // Extract matched domain or null
+            })
+            .filter(Boolean); // Remove null values
+
+        // Log the unique source domains
+        const uniqueDomains = [...new Set(domains)]; // Get unique domains
+        console.log('Source domains for setting cookie:', uniqueDomains);
+
         return originalSetter.call(document, value);
     },
 });
