@@ -541,11 +541,10 @@ var renderCookieConsent = async () => {
 
   // API requests
   const fetchDomainInfo = async () => {
-    // const response = await fetch(
-    //   `${dataScriptHost}/cookie_consent_${ccVersion}/${domainId}/domain_config_${domainHash}.json`
-    // );
-    // const domain = await response.json();
-    const domain = mockDomain;
+    const response = await fetch(
+      `${dataScriptHost}/cookie_consent_${ccVersion}/${domainId}/domain_config_${domainHash}.json`
+    );
+    const domain = await response.json();
     domain.banner = domain.banner || {};
     domain.banner.layout = {};
     try {
