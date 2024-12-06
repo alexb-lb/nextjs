@@ -572,9 +572,18 @@ var renderCookieConsent = async () => {
 
   /* API to GET saved preferences */
   const fetchPreferences = async () => {
-    const response = await fetch(`${dataWebApp}/api/cookie-consent/response`, {
-      credentials: "include",
-    });
+    const requestForPreferences = () => {
+      return fetch(`${dataWebApp}/api/cookie-consent/response`, {
+        credentials: "include",
+      });
+    };
+    let response = await requestForPreferences();
+
+    // get preferences if previous call fails because of _lb_fp cookie was not found
+    if (response.status >= 400) {
+      response = await requestForPreferences();
+    }
+
     const savedPreferences = await response.json();
     savePreferencesInStorage(savedPreferences?.consentInfo?.categoriesAccepted);
     return savedPreferences.consentInfo;
