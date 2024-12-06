@@ -39,10 +39,7 @@ export default function RootLayout({
           strategy="beforeInteractive"
         /> */}
         <GoogleTagManager gtmId="GTM-5GXBGFPT" />
-        {/* <Script
-          src="https://test-cookies.tiiny.site/show_alert.js"
-          strategy="beforeInteractive"
-        /> */}
+        <Script src="https://test-cookies.tiiny.site/show_alert.js" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
