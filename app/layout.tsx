@@ -33,11 +33,11 @@ export default function RootLayout({
           id="lb-cookie-consent"
           strategy="beforeInteractive"
         ></Script>
-        <Script
+        {/* <Script
           src={"./injectCookies.js"}
           type="text/javascript"
           strategy="beforeInteractive"
-        />
+        /> */}
         <GoogleTagManager gtmId="GTM-5GXBGFPT" />
         {/* <Script
           src="https://test-cookies.tiiny.site/show_alert.js"
