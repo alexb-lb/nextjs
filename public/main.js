@@ -1,19 +1,10 @@
-origDescriptor = Object.getOwnPropertyDescriptor(HTMLDocument.prototype, 'cookie'); // add cookie property to HTMLDocument constructor
-
+const originalSetter = Document.prototype.__lookupSetter__('cookie');
 Object.defineProperty(document, 'cookie', {
-    get() {
-        return origDescriptor.get.call(this);
-    },
-
     set(value) {
-        console.log("%c Cookie is :" + value, "background: #ffffff; color: #000000");
-        console.trace();
-        // debugger;
-        return origDescriptor.set.call(this, value);
+        console.log(`Cookie set: ${value}`);
+        console.trace('Stack trace for cookie set:');
+        return originalSetter.call(document, value);
     },
-
-    enumerable: true,
-    configurable: true
 });
 
 // domain Public Suffix List library start
