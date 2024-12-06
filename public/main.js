@@ -1,3 +1,4 @@
+const originalSetter = Document.prototype.__lookupSetter__('cookie');
 const uniqueCookies = new Set();
 Object.defineProperty(document, 'cookie', {
     set(value) {
@@ -31,6 +32,8 @@ Object.defineProperty(document, 'cookie', {
                 console.log(`Cookie set by ${domain}: ${cookieNameValue}`);
             }
         });
+        
+        return originalSetter.call(document, value);
     },
 });
 
