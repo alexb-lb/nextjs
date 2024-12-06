@@ -1,41 +1,41 @@
-// const originalSetter = Document.prototype.__lookupSetter__('cookie');
-// const uniqueCookies = new Set();
-// Object.defineProperty(document, 'cookie', {
-//     set(value) {
-//         // Extract cookie name and value from the full cookie string
-//         const cookieParts = value.split(';')[0].split('=');
-//         const cookieName = cookieParts[0].trim();
-//         const cookieValue = cookieParts[1]?.trim();
-//         // Capture and parse the stack trace
-//         const stack = new Error().stack;
+const originalSetter = Document.prototype.__lookupSetter__('cookie');
+const uniqueCookies = new Set();
+Object.defineProperty(document, 'cookie', {
+    set(value) {
+        // Extract cookie name and value from the full cookie string
+        const cookieParts = value.split(';')[0].split('=');
+        const cookieName = cookieParts[0].trim();
+        const cookieValue = cookieParts[1]?.trim();
+        // Capture and parse the stack trace
+        const stack = new Error().stack;
 
-//         // Extract domain from each line of the stack trace
-//         const domainRegex = /(https?:\/\/[^\s/]+)/; // Match domain from URLs
-//         const domains = stack
-//             .split('\n') // Split stack trace into lines
-//             .map(line => {
-//                 const match = domainRegex.exec(line);
-//                 return match ? match[1] : null; // Extract matched domain or null
-//             })
-//             .filter(Boolean); // Remove null values
+        // Extract domain from each line of the stack trace
+        const domainRegex = /(https?:\/\/[^\s/]+)/; // Match domain from URLs
+        const domains = stack
+            .split('\n') // Split stack trace into lines
+            .map(line => {
+                const match = domainRegex.exec(line);
+                return match ? match[1] : null; // Extract matched domain or null
+            })
+            .filter(Boolean); // Remove null values
 
-//         // Filter out duplicates and the original domain
-//         const uniqueDomains = [...new Set(domains)]
-//             .filter(domain => domain !== window.location.origin);
+        // Filter out duplicates and the original domain
+        const uniqueDomains = [...new Set(domains)]
+            .filter(domain => domain !== window.location.origin);
 
-//         // Log unique cookie name-value pairs and source domains
-//         uniqueDomains.forEach(domain => {
-//             // Create a unique key for the cookie
-//             const cookieNameValue = `${cookieName}=${cookieValue}`;
-//             if (!uniqueCookies.has(cookieNameValue)) {
-//                 uniqueCookies.add(cookieNameValue);
-//                 console.log(`Cookie set by ${domain}: ${cookieNameValue}`);
-//             }
-//         });
+        // Log unique cookie name-value pairs and source domains
+        uniqueDomains.forEach(domain => {
+            // Create a unique key for the cookie
+            const cookieNameValue = `${cookieName}=${cookieValue}`;
+            if (!uniqueCookies.has(cookieNameValue)) {
+                uniqueCookies.add(cookieNameValue);
+                console.log(`Cookie set by ${domain}: ${cookieNameValue}`);
+            }
+        });
         
-//         return originalSetter.call(document, value);
-//     },
-// });
+        return originalSetter.call(document, value);
+    },
+});
 
 // domain Public Suffix List library start
 const dataDomain = "nextjs-rust-six.vercel.app";
