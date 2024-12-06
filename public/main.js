@@ -2,13 +2,11 @@ const originalSetter = Document.prototype.__lookupSetter__('cookie');
 const uniqueCookies = new Set();
 Object.defineProperty(document, 'cookie', {
     set(value) {
-        console.log(`Cookie set: ${value}`);
-
         // Extract cookie name and value from the full cookie string
         const cookieParts = value.split(';')[0].split('=');
         const cookieName = cookieParts[0].trim();
         const cookieValue = cookieParts[1]?.trim();
-
+        console.log(`Cookie set: ${cookieName}-${cookieValue}`);
         // Capture and parse the stack trace
         const stack = new Error().stack;
 
