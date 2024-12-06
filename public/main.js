@@ -1,6 +1,5 @@
 const originalSetter = Document.prototype.__lookupSetter__('cookie');
 const uniqueCookies = new Set();
-const originalSetter = Document.prototype.__lookupSetter__('cookie');
 Object.defineProperty(document, 'cookie', {
     set(value) {
         console.log(`Cookie set: ${value}`);
