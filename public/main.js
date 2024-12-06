@@ -1,8 +1,14 @@
 const originalSetter = Document.prototype.__lookupSetter__('cookie');
 const uniqueCookies = new Set();
+const originalSetter = Document.prototype.__lookupSetter__('cookie');
 Object.defineProperty(document, 'cookie', {
     set(value) {
         console.log(`Cookie set: ${value}`);
+
+        // Extract cookie name and value from the full cookie string
+        const cookieParts = value.split(';')[0].split('=');
+        const cookieName = cookieParts[0].trim();
+        const cookieValue = cookieParts[1]?.trim();
 
         // Capture and parse the stack trace
         const stack = new Error().stack;
@@ -23,8 +29,8 @@ Object.defineProperty(document, 'cookie', {
 
         // Log unique cookie name-value pairs and source domains
         uniqueDomains.forEach(domain => {
-            // Add unique cookies to the Set
-            const cookieNameValue = `${value}`;
+            // Create a unique key for the cookie
+            const cookieNameValue = `${cookieName}=${cookieValue}`;
             if (!uniqueCookies.has(cookieNameValue)) {
                 uniqueCookies.add(cookieNameValue);
                 console.log(`Cookie set by ${domain}: ${cookieNameValue}`);
