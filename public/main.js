@@ -1,4 +1,5 @@
 const originalSetter = Document.prototype.__lookupSetter__('cookie');
+const uniqueCookies = new Set();
 Object.defineProperty(document, 'cookie', {
     set(value) {
         console.log(`Cookie set: ${value}`);
@@ -20,8 +21,16 @@ Object.defineProperty(document, 'cookie', {
         const uniqueDomains = [...new Set(domains)]
             .filter(domain => domain !== window.location.origin);
 
-        // Log the source domains
-        console.log('Third-party domains setting cookie:', uniqueDomains);
+        // Log unique cookie name-value pairs and source domains
+        uniqueDomains.forEach(domain => {
+            // Add unique cookies to the Set
+            const cookieNameValue = `${value}`;
+            if (!uniqueCookies.has(cookieNameValue)) {
+                uniqueCookies.add(cookieNameValue);
+                console.log(`Cookie set by ${domain}: ${cookieNameValue}`);
+            }
+        });
+        
         return originalSetter.call(document, value);
     },
 });
