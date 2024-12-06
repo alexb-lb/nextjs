@@ -30,7 +30,7 @@ export default function RootLayout({
       <head>
         <Script
           // src="/main.js"
-          src="https://newcookiebucket.s3.us-east-2.amazonaws.com/cookie_consent_8/363cc9bc-7ee8-43de-bd64-4238ee416ba2/main_4f8046e.js"
+          src="https://newcookiebucket.s3.us-east-2.amazonaws.com/cookie_consent_9/363cc9bc-7ee8-43de-bd64-4238ee416ba2/main_4f8046e.js"
           id="lb-cookie-consent"
           strategy="beforeInteractive"
         ></Script>
