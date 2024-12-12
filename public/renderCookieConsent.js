@@ -333,7 +333,7 @@ const mockDomain = {
       id: "d76ef22a-4e1c-43c1-81d0-9438245c53be",
       name: "Essential",
       description: null,
-      optOut: false,
+      optOut: true,
       createdBy: null,
       updatedBy: null,
       domainId: "363cc9bc-7ee8-43de-bd64-4238ee416ba2",
@@ -1086,7 +1086,9 @@ var renderCookieConsent = async () => {
     label = "",
     checked = false,
     disabled = false,
+    styles,
   }) => {
+    console.log("styles", styles);
     return `\
       <div class="lb-toggle-container lb-switch" \
           data-category-id="${id}" \
@@ -1319,6 +1321,7 @@ var renderCookieConsent = async () => {
           savedPreferences?.categoriesAccepted?.includes(category.id) ||
           !category.optOut,
         disabled: !category.optOut,
+        styles: banner?.layout?.preferences?.category,
       };
 
       const categoryCookies = domain.cookies.filter(
@@ -1444,15 +1447,7 @@ var renderCookieConsent = async () => {
   // init
   const webAppDomainName = dataWebApp?.replace(/https?:\/\//i, "") || "";
   const s3DomainName = dataScriptHost?.replace(/https?:\/\//i, "") || "";
-  const essentialsWhiteList = [
-    "^/",
-    "^./",
-    window.location.host,
-    getLbMainDomain(),
-    "." + getLbMainDomain(),
-    ...(s3DomainName ? [s3DomainName] : []),
-    ...(webAppDomainName ? [webAppDomainName] : []),
-  ];
+  const essentialsWhiteList = getLbEssentialsWhiteList();
 
   const init = () => {
     if (domain) {
