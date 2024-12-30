@@ -4,11 +4,11 @@ const dataScriptHost = "https://newcookiebucket.s3.us-east-2.amazonaws.com";
 const dataWebApp =
   "https://playground-master-privacy-ops.lightbeamsecurity.com";
 const hostUrl = "https://newcookiebucket.s3.us-east-2.amazonaws.com";
-const ccVersion = "21";
+const ccVersion = "22";
 const domainId = "f375128c-af80-4c7d-a405-b9fc7249635a";
 const jsHash = "7e5a0e1";
-const cssHash = "506a3a5";
-const domainHash = "81be21a";
+const cssHash = "ba07f4a";
+const domainHash = "cc270e6";
 
 !(function (a) {
   "object" == typeof exports && "undefined" != typeof module
