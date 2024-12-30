@@ -825,13 +825,38 @@ var renderCookieConsent = async () => {
 
   // API requests
   const fetchDomainInfo = async () => {
-    // const response = await fetch(
-    //   `${dataScriptHost}/cookie_consent_${ccVersion}/${domainId}/domain_config_${domainHash}.json`
-    // );
-    // const domain = response.domain;
-    const domain = mockDomain;
-    domain.banner = domain.banner || {};
+    const globalResponse = await fetch(
+      `${dataScriptHost}/cookie_consent_${ccVersion}/${domainId}/domain_config_${domainHash}.json`
+    );
+    const globalDomain = await globalResponse.json();
+
+    // get global banner
+    const globalBanner = !!globalDomain.regionBannerInfo.length
+      ? globalDomain.regionBannerInfo[0].banner
+      : globalDomain.banner;
+
+    // get location-based banner
+    const MAX_PENDING_TIME_MS = 2000;
+    const controller = new AbortController();
+    const webAppResponse = await Promise.race([
+      fetch(
+        `${dataWebApp}/api/cookie-consent/domain?domainName=${dataDomain}`,
+        { signal: controller.signal }
+      ),
+      new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(JSON.stringify({ banner: null }));
+          controller.abort();
+        }, MAX_PENDING_TIME_MS);
+      }),
+    ]);
+    const localDomain = await webAppResponse.json();
+    const localBanner = localDomain?.banner;
+
+    const domain = { ...globalDomain };
+    domain.banner = localBanner || globalBanner;
     domain.banner.layout = {};
+
     try {
       domain.banner.layout = JSON.parse(domain.banner.rawJSON);
     } catch (e) {
@@ -1445,8 +1470,6 @@ var renderCookieConsent = async () => {
   };
 
   // init
-  const webAppDomainName = dataWebApp?.replace(/https?:\/\//i, "") || "";
-  const s3DomainName = dataScriptHost?.replace(/https?:\/\//i, "") || "";
   const essentialsWhiteList = getLbEssentialsWhiteList();
 
   const init = () => {
