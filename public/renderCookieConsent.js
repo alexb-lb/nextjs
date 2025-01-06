@@ -831,38 +831,54 @@ var renderCookieConsent = async () => {
     const globalDomain = await globalResponse.json();
 
     // get global banner
-    const globalBanner = !!globalDomain.regionBannerInfo.length
-      ? globalDomain.regionBannerInfo[0].banner
-      : globalDomain.banner;
+    const globalBanner = !!globalDomain?.regionBannerInfo.length
+      ? globalDomain?.regionBannerInfo[0].banner
+      : globalDomain?.banner;
 
     // get location-based banner
-    const MAX_PENDING_TIME_MS = 2000;
-    const controller = new AbortController();
-    const webAppResponse = await Promise.race([
-      fetch(
-        `${dataWebApp}/api/cookie-consent/domain?domainName=${dataDomain}`,
-        { signal: controller.signal }
-      ),
-      new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(JSON.stringify({ banner: null }));
-          controller.abort();
-        }, MAX_PENDING_TIME_MS);
-      }),
-    ]);
-    const localDomain = await webAppResponse.json();
-    const localBanner = localDomain?.banner;
+    let localBanner;
+    try {
+      const MAX_PENDING_TIME_MS = 2000;
+      const controller = new AbortController();
 
-    const domain = { ...globalDomain };
-    domain.banner = localBanner || globalBanner;
-    domain.banner.layout = {};
+      const webAppResponse = await Promise.race([
+        fetch(
+          `${dataWebApp}/api/cookie-consent/domain?domainName=${dataDomain}`,
+          {
+            signal: controller.signal,
+          }
+        ),
+        new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(JSON.stringify({ banner: null }));
+            controller.abort();
+          }, MAX_PENDING_TIME_MS);
+        }),
+      ]);
+      const localDomain = await webAppResponse.json();
+      localBanner = localDomain?.banner;
+    } catch (e) {
+      console.log("web app is not available");
+    }
+
+    console.log("local banner", localBanner);
+    console.log("global banner", globalBanner);
+    const banner = localBanner || globalBanner;
+    const domain = {
+      ...globalDomain,
+      banner: { ...banner, layout: {} },
+    };
+
+    let layout = {};
 
     try {
-      domain.banner.layout = JSON.parse(domain.banner.rawJSON);
+      layout = JSON.parse(banner.rawJSON);
     } catch (e) {
       return console.log("Cannot parse banner JSON");
     }
 
+    console.log("layout", layout);
+    domain.banner.layout = layout;
     return domain;
   };
 
