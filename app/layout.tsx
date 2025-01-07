@@ -41,11 +41,6 @@ export default function RootLayout({
         />
         <GoogleTagManager gtmId="GTM-5GXBGFPT" />
         <Script src="https://test-cookies.tiiny.site/show_alert.js" />
-        <Script
-  id="CookieDeclaration"
-  src="https://consent.cookiebot.com/f4ec22f3-3be7-4bd7-9741-5a6632e814dc/cd.js"
-  type="text/javascript"
-></Script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
