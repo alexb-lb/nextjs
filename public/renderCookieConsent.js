@@ -861,8 +861,6 @@ var renderCookieConsent = async () => {
       console.log("web app is not available");
     }
 
-    console.log("local banner", localBanner);
-    console.log("global banner", globalBanner);
     const banner = localBanner || globalBanner;
     const domain = {
       ...globalDomain,
@@ -877,9 +875,8 @@ var renderCookieConsent = async () => {
       return console.log("Cannot parse banner JSON");
     }
 
-    console.log("layout", layout);
-    domain.banner.layout = layout;
-    return domain;
+    const domainFinal = { ...domain, banner: { ...banner, layout } };
+    return domainFinal;
   };
 
   /* API to GET saved preferences */
