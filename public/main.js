@@ -1,13 +1,15 @@
 // domain Public Suffix List library start
 const dataDomain = "lb-next-main.vercel.app";
 const dataScriptHost = "https://lb-cctest.s3.ap-south-1.amazonaws.com";
-const dataWebApp = "http://35.196.131.96:30001";
+const dataWebApp =
+  "https://playground-master-privacy-ops.lightbeamsecurity.com";
 const hostUrl = "https://lb-cctest.s3.ap-south-1.amazonaws.com";
-const ccVersion = "19";
-const domainId = "60cea99f-aedd-4625-a1c6-95cef5131b58";
-const jsHash = "c6b0455";
+const ccVersion = "16";
+const domainId = "f375128c-af80-4c7d-a405-b9fc7249635a";
+const jsHash = "10859a1";
 const cssHash = "884d8ce";
-const domainHash = "1bff89c";
+const domainHash = "338274b";
+const customWhiteListUrls = [];
 
 !(function (a) {
   "object" == typeof exports && "undefined" != typeof module
@@ -9818,7 +9820,6 @@ var setLbCookies = ({ name, value = "", shareCookies = false }) => {
 (function () {
   // detect essentials that must NOT be blocked
   const root = document.getElementById("lb-cookie-consent");
-
   const essentialsWhiteList = getLbEssentialsWhiteList();
 
   // check whether show both banner and pref center or pref center only
