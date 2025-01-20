@@ -346,7 +346,7 @@ var renderCookieConsent = async () => {
     // test gtag categories
     if (window.gtag) {
       gtag("consent", "update", {
-        ad_user_data: "granted",
+        ad_user_data: "denied",
         ad_personalization: "granted",
         ad_storage: "granted",
         analytics_storage: "granted",
