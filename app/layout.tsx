@@ -33,7 +33,7 @@ export default function RootLayout({
           src="https://www.googletagmanager.com/gtag/js?id=GTM-5GXBGFPT"
         />
         {/* Initialize dataLayer and gtag */}
-        <Script
+{/*         <Script
           id="gtag-init"
           dangerouslySetInnerHTML={{
             __html: `
@@ -48,7 +48,7 @@ export default function RootLayout({
               });
             `,
           }}
-        />
+        /> */}
         {/* Handle consent updates */}
         <Script
           id="consent-update"
