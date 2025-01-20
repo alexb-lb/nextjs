@@ -28,10 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <GoogleTagManager gtmId="GTM-5GXBGFPT" />
-        {/* Load GTM script asynchronously */}
 {/*         <Script src="https://www.googletagmanager.com/gtag/js?id=GTM-5GXBGFPT" /> */}
-        {/* Initialize dataLayer and gtag */}
 {/*         <Script
           id="gtag-init"
           dangerouslySetInnerHTML={{
@@ -61,12 +58,16 @@ export default function RootLayout({
             `,
           }}
         /> */}
-{/*         <Script
+        
+        <Script
           src="/main.js"
-          // src="https://newcookiebucket.s3.us-east-2.amazonaws.com/cookie_consent_10/363cc9bc-7ee8-43de-bd64-4238ee416ba2/main_4f8046e.js"
           id="lb-cookie-consent"
           strategy="beforeInteractive"
-        ></Script> */}
+        ></Script>
+        <GoogleTagManager gtmId="GTM-5GXBGFPT" />
+        
+{/*         src="https://newcookiebucket.s3.us-east-2.amazonaws.com/cookie_consent_10/363cc9bc-7ee8-43de-bd64-4238ee416ba2/main_4f8046e.js" */}
+      
         {/* Inject your custom script */}
         <Script
           src="./injectCookies.js"
