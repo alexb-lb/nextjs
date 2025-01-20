@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Script from "next/script";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,8 +28,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <GoogleTagManager gtmId="GTM-5GXBGFPT" />
         {/* Load GTM script asynchronously */}
-        <Script src="https://www.googletagmanager.com/gtag/js?id=GTM-5GXBGFPT" />
+{/*         <Script src="https://www.googletagmanager.com/gtag/js?id=GTM-5GXBGFPT" /> */}
         {/* Initialize dataLayer and gtag */}
 {/*         <Script
           id="gtag-init"
