@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Script from "next/script";
-import { GoogleTagManager } from "@next/third-parties/google";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,46 +27,48 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Load GTM script asynchronously */}
         <Script
-          // Define dataLayer and the gtag function.
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-
-          // Set default consent to 'denied' as a placeholder
-          // Determine actual values based on your own requirements
-          gtag('consent', 'default', {
-            'ad_storage': 'denied',
-            'ad_user_data': 'denied',
-            'ad_personalization': 'denied',
-            'analytics_storage': 'denied'
-          });
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=GTM-5GXBGFPT"
         />
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=GTM-5GXBGFPT"/>
+        {/* Initialize dataLayer and gtag */}
         <Script
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-
-          gtag('js', new Date());
+          id="gtag-init"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('consent', 'default', {
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'analytics_storage': 'denied'
+              });
+            `,
+          }}
         />
+        {/* Handle consent updates */}
         <Script
-          function consentGrantedAdStorage() {
-            gtag('consent', 'update', {
-              'ad_user_data': 'granted'
-            });
-          }
+          id="consent-update"
+          dangerouslySetInnerHTML={{
+            __html: `
+              function consentGrantedAdStorage() {
+                gtag('consent', 'update', {
+                  'ad_user_data': 'granted'
+                });
+              }
+            `,
+          }}
         />
-        {/* <GoogleTagManager gtmId="GTM-5GXBGFPT" /> */}
-        {/* <Script
-          src="/main.js"
-          // src="https://newcookiebucket.s3.us-east-2.amazonaws.com/cookie_consent_10/363cc9bc-7ee8-43de-bd64-4238ee416ba2/main_4f8046e.js"
-          id="lb-cookie-consent"
-          strategy="beforeInteractive"
-        ></Script> */}
+        {/* Inject your custom script */}
         <Script
-          src={"./injectCookies.js"}
+          src="./injectCookies.js"
           type="text/javascript"
           strategy="beforeInteractive"
         />
+        {/* Example script from external source */}
         <Script src="https://test-cookies.tiiny.site/show_alert.js" />
       </head>
       <body
