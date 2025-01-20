@@ -28,9 +28,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-{/*         <GoogleTagManager gtmId="GTM-5GXBGFPT" /> */}
+        <GoogleTagManager gtmId="GTM-5GXBGFPT" />
         {/* Load GTM script asynchronously */}
-        <Script src="https://www.googletagmanager.com/gtag/js?id=GTM-5GXBGFPT" />
+{/*         <Script src="https://www.googletagmanager.com/gtag/js?id=GTM-5GXBGFPT" /> */}
         {/* Initialize dataLayer and gtag */}
 {/*         <Script
           id="gtag-init"
