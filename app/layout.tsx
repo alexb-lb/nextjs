@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <Script
-          id="gtag-init"
+          id="gtag-default"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -53,6 +53,22 @@ export default function RootLayout({
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'GTM-5GXBGFPT');
+            `,
+          }}
+        />
+        <Script
+          id="gtag-update"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('consent', 'update', {
+                'ad_storage': 'granted',
+                'ad_user_data': 'granted',
+                'ad_personalization': 'granted',
+                'analytics_storage': 'granted'
+              });
             `,
           }}
         />
