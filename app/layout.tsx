@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Script from "next/script";
-// import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -44,7 +44,9 @@ export default function RootLayout({
             `,
           }}
         />
-       <Script src="https://www.googletagmanager.com/gtag/js?id=GTM-5GXBGFPT" />
+{/*        <Script src="https://www.googletagmanager.com/gtag/js?id=GTM-5GXBGFPT" /> */}
+        <GoogleTagManager gtmId="GTM-5GXBGFPT" />
+        
        <Script
           id="gtag-init"
           dangerouslySetInnerHTML={{
@@ -89,7 +91,6 @@ export default function RootLayout({
           id="lb-cookie-consent"
           strategy="beforeInteractive"
         ></Script> */}
-{/*         <GoogleTagManager gtmId="GTM-5GXBGFPT" /> */}
         
 {/*         src="https://newcookiebucket.s3.us-east-2.amazonaws.com/cookie_consent_10/363cc9bc-7ee8-43de-bd64-4238ee416ba2/main_4f8046e.js" */}
       
