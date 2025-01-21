@@ -28,8 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-{/*         <Script src="https://www.googletagmanager.com/gtag/js?id=GTM-5GXBGFPT" /> */}
-{/*         <Script
+        <Script
           id="gtag-init"
           dangerouslySetInnerHTML={{
             __html: `
@@ -44,7 +43,9 @@ export default function RootLayout({
               });
             `,
           }}
-        /> */}
+        />
+       <Script src="https://www.googletagmanager.com/gtag/js?id=GTM-5GXBGFPT" />
+        
         {/* Handle consent updates */}
 {/*         <Script
           id="consent-update"
@@ -64,7 +65,7 @@ export default function RootLayout({
           id="lb-cookie-consent"
           strategy="beforeInteractive"
         ></Script>
-        <GoogleTagManager gtmId="GTM-5GXBGFPT" />
+{/*         <GoogleTagManager gtmId="GTM-5GXBGFPT" /> */}
         
 {/*         src="https://newcookiebucket.s3.us-east-2.amazonaws.com/cookie_consent_10/363cc9bc-7ee8-43de-bd64-4238ee416ba2/main_4f8046e.js" */}
       
