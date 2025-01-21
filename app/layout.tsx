@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Script from "next/script";
-import { GoogleTagManager } from "@next/third-parties/google";
+// import { GoogleTagManager } from "@next/third-parties/google";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,6 +34,7 @@ export default function RootLayout({
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
+              console.log("Setting defaults");
               gtag('consent', 'default', {
                 'ad_storage': 'granted',
                 'ad_user_data': 'granted',
@@ -50,6 +51,7 @@ export default function RootLayout({
             __html: `
               // window.dataLayer = window.dataLayer || [];
               // function gtag(){dataLayer.push(arguments);}
+              console.log("init gtag");
               gtag('js', new Date());
               gtag('config', 'GTM-5GXBGFPT');
             `,
@@ -59,6 +61,7 @@ export default function RootLayout({
           id="gtag-update"
           dangerouslySetInnerHTML={{
             __html: `
+              console.log("updating consent");
               gtag('consent', 'update', {
                 'ad_storage': 'granted',
                 'ad_user_data': 'granted',
