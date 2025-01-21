@@ -59,9 +59,6 @@ export default function RootLayout({
           id="gtag-update"
           dangerouslySetInnerHTML={{
             __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
               gtag('consent', 'update', {
                 'ad_storage': 'granted',
                 'ad_user_data': 'granted',
