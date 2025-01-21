@@ -45,8 +45,17 @@ export default function RootLayout({
           }}
         />
        <Script src="https://www.googletagmanager.com/gtag/js?id=GTM-5GXBGFPT" />
-        
-        {/* Handle consent updates */}
+       <Script
+          id="gtag-init"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'GTM-5GXBGFPT');
+            `,
+          }}
+        />
 {/*         <Script
           id="consent-update"
           dangerouslySetInnerHTML={{
@@ -60,11 +69,11 @@ export default function RootLayout({
           }}
         /> */}
         
-        <Script
+{/*         <Script
           src="/main.js"
           id="lb-cookie-consent"
           strategy="beforeInteractive"
-        ></Script>
+        ></Script> */}
 {/*         <GoogleTagManager gtmId="GTM-5GXBGFPT" /> */}
         
 {/*         src="https://newcookiebucket.s3.us-east-2.amazonaws.com/cookie_consent_10/363cc9bc-7ee8-43de-bd64-4238ee416ba2/main_4f8046e.js" */}
