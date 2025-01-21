@@ -48,8 +48,8 @@ export default function RootLayout({
           id="gtag-init"
           dangerouslySetInnerHTML={{
             __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
+              // window.dataLayer = window.dataLayer || [];
+              // function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'GTM-5GXBGFPT');
             `,
