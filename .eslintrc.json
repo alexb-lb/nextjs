@@ -1,4 +1,6 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"],
-  "ignores": [".js"]
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "@next/next/no-img-element": "off"
+  }
 }

@@ -1,0 +1,334 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import AudioPlayer from "./AudioPlayer";
+import TableOfContents from "./TableOfContents";
+import Tags from "./Tags";
+
+function NewsSummary() {
+  const [divWidth, setDivWidth] = useState(-40);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const handleScroll = () => {
+        const scrollPosition = window.scrollY;
+        const newWidth = Math.min(30, -1 + scrollPosition / 100);
+        setDivWidth(newWidth);
+      };
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, []);
+  return (
+    <div className="w-full flex gap-10 px-4 md:px-[60px] py-[78px]">
+      <div className="relative w-[10%] hidden md:block">
+        <div className="sticky top-10 flex flex-col gap-2">
+          <svg
+            width="49"
+            height="48"
+            viewBox="0 0 49 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M31.6992 24C31.6992 25.9891 30.909 27.8968 29.5025 29.3033C28.096 30.7098 26.1883 31.5 24.1992 31.5C22.2101 31.5 20.3024 30.7098 18.8959 29.3033C17.4894 27.8968 16.6992 25.9891 16.6992 24C16.6992 23.5725 16.7442 23.155 16.8217 22.75H14.1992V32.7425C14.1992 33.4375 14.7617 34 15.4567 34H32.9442C33.2773 33.9993 33.5965 33.8666 33.8318 33.6308C34.0671 33.3951 34.1992 33.0756 34.1992 32.7425V22.75H31.5767C31.6542 23.155 31.6992 23.5725 31.6992 24ZM24.1992 29C24.856 28.9998 25.5063 28.8703 26.113 28.6188C26.7197 28.3673 27.271 27.9988 27.7353 27.5343C28.1996 27.0698 28.5678 26.5183 28.819 25.9115C29.0702 25.3046 29.1994 24.6543 29.1992 23.9975C29.1991 23.3407 29.0695 22.6904 28.818 22.0837C28.5666 21.477 28.198 20.9257 27.7335 20.4614C27.269 19.9972 26.7176 19.6289 26.1107 19.3777C25.5039 19.1265 24.8535 18.9973 24.1967 18.9975C22.8703 18.9978 21.5984 19.5251 20.6607 20.4632C19.723 21.4014 19.1964 22.6736 19.1967 24C19.1971 25.3264 19.7243 26.5984 20.6624 27.5361C21.6006 28.4737 22.8728 29.0003 24.1992 29ZM30.1992 18.75H33.1967C33.3959 18.75 33.5869 18.6711 33.7279 18.5305C33.869 18.3899 33.9486 18.1991 33.9492 18V15.0025C33.9492 14.8029 33.8699 14.6115 33.7288 14.4704C33.5877 14.3293 33.3963 14.25 33.1967 14.25H30.1992C29.9996 14.25 29.8082 14.3293 29.6671 14.4704C29.526 14.6115 29.4467 14.8029 29.4467 15.0025V18C29.4492 18.4125 29.7867 18.75 30.1992 18.75ZM24.1992 0C17.834 0 11.7295 2.52856 7.22866 7.02944C2.72778 11.5303 0.199219 17.6348 0.199219 24C0.199219 30.3652 2.72778 36.4697 7.22866 40.9706C11.7295 45.4714 17.834 48 24.1992 48C27.3509 48 30.4718 47.3792 33.3836 46.1731C36.2954 44.967 38.9412 43.1992 41.1698 40.9706C43.3984 38.742 45.1662 36.0962 46.3723 33.1844C47.5784 30.2726 48.1992 27.1517 48.1992 24C48.1992 20.8483 47.5784 17.7274 46.3723 14.8156C45.1662 11.9038 43.3984 9.25804 41.1698 7.02944C38.9412 4.80083 36.2954 3.033 33.3836 1.82689C30.4718 0.620778 27.3509 0 24.1992 0ZM36.6992 33.7225C36.6992 35.25 35.4492 36.5 33.9217 36.5H14.4767C12.9492 36.5 11.6992 35.25 11.6992 33.7225V14.2775C11.6992 12.75 12.9492 11.5 14.4767 11.5H33.9217C35.4492 11.5 36.6992 12.75 36.6992 14.2775V33.7225Z"
+              fill="#545CF6"
+            />
+          </svg>
+
+          <svg
+            width="48"
+            height="48"
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M24 0C10.745 0 0 10.745 0 24C0 37.255 10.745 48 24 48C37.255 48 48 37.255 48 24C48 10.745 37.255 0 24 0ZM33.7625 19.66C33.7725 19.865 33.775 20.07 33.775 20.27C33.775 26.52 29.0225 33.7225 20.3275 33.7225C17.7582 33.7268 15.2424 32.9889 13.0825 31.5975C13.45 31.6425 13.8275 31.66 14.21 31.66C16.425 31.66 18.4625 30.9075 20.08 29.6375C19.0943 29.6181 18.1392 29.2917 17.3478 28.7038C16.5564 28.1158 15.9681 27.2956 15.665 26.3575C16.3729 26.4921 17.1021 26.4639 17.7975 26.275C16.7276 26.0587 15.7655 25.4789 15.0743 24.6342C14.383 23.7894 14.0053 22.7315 14.005 21.64V21.5825C14.6425 21.935 15.3725 22.15 16.1475 22.175C15.1445 21.5073 14.4345 20.4817 14.1626 19.3078C13.8908 18.134 14.0776 16.9006 14.685 15.86C15.8724 17.32 17.3532 18.5144 19.0314 19.3658C20.7097 20.2172 22.5481 20.7067 24.4275 20.8025C24.1886 19.7883 24.2914 18.7235 24.72 17.7738C25.1487 16.824 25.8791 16.0425 26.7977 15.5507C27.7163 15.0588 28.7717 14.8843 29.7997 15.0542C30.8278 15.2241 31.7709 15.7288 32.4825 16.49C33.5404 16.2807 34.5549 15.8926 35.4825 15.3425C35.1299 16.4378 34.3917 17.3679 33.405 17.96C34.3421 17.8471 35.2572 17.5952 36.12 17.2125C35.4862 18.1622 34.6878 18.9911 33.7625 19.66Z"
+              fill="#545CF6"
+            />
+          </svg>
+
+          <svg
+            width="48"
+            height="48"
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M24 0C10.745 0 0 10.745 0 24C0 37.255 10.745 48 24 48C37.255 48 48 37.255 48 24C48 10.745 37.255 0 24 0ZM29.685 16.585H26.0775C25.65 16.585 25.175 17.1475 25.175 17.895V20.5H29.6875L29.005 24.215H25.175V35.3675H20.9175V24.215H17.055V20.5H20.9175V18.315C20.9175 15.18 23.0925 12.6325 26.0775 12.6325H29.685V16.585Z"
+              fill="#545CF6"
+            />
+          </svg>
+
+          <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#545CF6]">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g mask="url(#mask0_1576_50219)">
+                <path
+                  d="M5.33073 26.6683C4.5974 26.6683 3.96962 26.4072 3.4474 25.885C2.92517 25.3627 2.66406 24.735 2.66406 24.0016V8.00163C2.66406 7.26829 2.92517 6.64052 3.4474 6.11829C3.96962 5.59607 4.5974 5.33496 5.33073 5.33496H26.6641C27.3974 5.33496 28.0252 5.59607 28.5474 6.11829C29.0696 6.64052 29.3307 7.26829 29.3307 8.00163V24.0016C29.3307 24.735 29.0696 25.3627 28.5474 25.885C28.0252 26.4072 27.3974 26.6683 26.6641 26.6683H5.33073ZM15.9974 17.335L5.33073 10.6683V24.0016H26.6641V10.6683L15.9974 17.335ZM15.9974 14.6683L26.6641 8.00163H5.33073L15.9974 14.6683ZM5.33073 10.6683V8.00163V24.0016V10.6683Z"
+                  fill="white"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full">
+        <div className="flex gap-8 md:gap-14">
+          <div className="w-full md:w-[65%] flex flex-col">
+            <div className="w-full flex gap-2">
+              <div className="w-[24px] h-[24px] rounded-[4px] bg-[#434152] flex justify-center items-center">
+                <img
+                  loading="lazy"
+                  src="/images/resource/headset.svg"
+                  alt="headset"
+                  className="rounded-[20px] "
+                />
+              </div>
+
+              <div className="my-auto basis-auto mb-4">
+                Listen to the article
+              </div>
+            </div>
+            <AudioPlayer />
+
+            <div className="w-full py-[59px] flex flex-col gap-5">
+              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                The recent security breach at Xfinity, a reputed internet
+                provider in the US, has exposed the personal data of almost all
+                their customers – nearly 36 million people – including account
+                usernames, passwords, and answers to their security questions.
+                This has sparked conversations about the paramount need for
+                proper security measures and data and security breaches
+                awareness. 
+              </p>
+
+              <div className="w-full flex flex-col md:flex-row gap-2">
+                <div className="w-full flex flex-col justify-between pr-2">
+                  <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                    This has sparked conversations about the paramount need for
+                    proper security measures and data and security breaches
+                    awareness. 
+                  </p>
+                  <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                    Customer Relationship Management (CRM) software is a prime
+                    tool for businesses in terms of relationship management with
+                    their customers and clients. However, with the ever-present
+                    increase in terms of sensitive data being stocked in digital
+                    management systems, it has become critical for organizations
+                    to exercise the use of vigorous actionable CRM security
+                    measures to safeguard themselves against cyber threats and
+                    warrant data privacy. 
+                  </p>
+                </div>
+
+                <img
+                  loading="lazy"
+                  src="/images/resource/introduction.png"
+                  alt="intoduction"
+                  className="max-md:h-[342px]"
+                />
+              </div>
+
+              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                This consequently makes the use of CRM tools to cement safety as
+                a priority and not an option, to necessitate proper security
+                measures being undertaken for everyone&apos;s benefit to fortify
+                their businesses and their customer&apso;s sensitive data and
+                information. 
+              </p>
+
+              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                The attraction of boosting CRM functionality with third-party
+                applications is irrefutable.  From marketing automation to
+                AI-powered analytics, these integrations promise a streamlined
+                path to customer success. However, such integrations could lead
+                to data breaches if proper protection measures are not taken.
+                Each integration acts as a new node of a branch of your CRM
+                tree, a likely weak point for malicious enforcers. The
+                responsibility for data security does not end there, at the
+                CRM&apos;s edge. Businesses must scrutinize their partners,
+                ensuring adherence to stringent security protocols and data
+                protection regulations. The consequences here could be crippling
+                but reputationally and monetary.The good news is, that building
+                a secure CRM ecosystem is possible. Before including any
+                third-party app in the dynamic, companies must conduct thorough
+                due diligence, assessing the vendor&apos;s security posture,
+                data handling practices, and compliance with relevant
+                regulations. Implementing clear access controls and data
+                encryption within the CRM further bolsters the defense
+              </p>
+
+              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                Here are several ways common threats and vulnerabilities exist,
+                and some best practices and tools to combat proper compliance
+                with data protection laws and regulations.
+              </p>
+
+              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                Here are several ways common threats and vulnerabilities exist,
+                and some best practices and tools to combat proper compliance
+                with data protection laws and regulations.
+              </p>
+
+              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                It is imperative to realize the underlying risks and types of
+                cyberattacks that can compromise the security and privacy of
+                sensitive data, a few of them are:
+              </p>
+
+              <div className="w-full flex flex-col gap-1">
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
+                  Phishing
+                </p>
+
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                  It is imperative to realize the underlying risks and types of
+                  cyberattacks that can compromise the security and privacy of
+                  sensitive data, a few of them are:
+                </p>
+              </div>
+              <div className="w-full flex flex-col gap-1">
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
+                  Phishing
+                </p>
+
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                  It is imperative to realize the underlying risks and types of
+                  cyberattacks that can compromise the security and privacy of
+                  sensitive data, a few of them are:
+                </p>
+              </div>
+              <div className="w-full flex flex-col gap-1">
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
+                  Phishing
+                </p>
+
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                  It is imperative to realize the underlying risks and types of
+                  cyberattacks that can compromise the security and privacy of
+                  sensitive data, a few of them are:
+                </p>
+              </div>
+              <div className="w-full flex flex-col gap-1">
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
+                  Phishing
+                </p>
+
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                  It is imperative to realize the underlying risks and types of
+                  cyberattacks that can compromise the security and privacy of
+                  sensitive data, a few of them are:
+                </p>
+              </div>
+              <div className="w-full flex flex-col gap-1">
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
+                  Phishing
+                </p>
+
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                  It is imperative to realize the underlying risks and types of
+                  cyberattacks that can compromise the security and privacy of
+                  sensitive data, a few of them are:
+                </p>
+              </div>
+
+              <div className="w-full">
+                <img
+                  loading="lazy"
+                  src="/images/resource/introduction2.png"
+                  alt="intoduction2"
+                  className="object-cover w-full max-md:h-[342px]"
+                />
+              </div>
+
+              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                It is imperative to realize the underlying risks and types of
+                cyberattacks that can compromise the security and privacy of
+                sensitive data, a few of them are:
+              </p>
+              <div className="w-full flex flex-col gap-1">
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
+                  Phishing
+                </p>
+
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                  It is imperative to realize the underlying risks and types of
+                  cyberattacks that can compromise the security and privacy of
+                  sensitive data, a few of them are:
+                </p>
+              </div>
+              <div className="w-full flex flex-col gap-1">
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
+                  Phishing
+                </p>
+
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                  It is imperative to realize the underlying risks and types of
+                  cyberattacks that can compromise the security and privacy of
+                  sensitive data, a few of them are:
+                </p>
+              </div>
+              <div className="w-full flex flex-col gap-1">
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
+                  Phishing
+                </p>
+
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                  It is imperative to realize the underlying risks and types of
+                  cyberattacks that can compromise the security and privacy of
+                  sensitive data, a few of them are:
+                </p>
+              </div>
+              <div className="w-full flex flex-col gap-1">
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
+                  Phishing
+                </p>
+
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                  It is imperative to realize the underlying risks and types of
+                  cyberattacks that can compromise the security and privacy of
+                  sensitive data, a few of them are:
+                </p>
+              </div>
+              <div className="w-full flex flex-col gap-1">
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
+                  Phishing
+                </p>
+
+                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                  It is imperative to realize the underlying risks and types of
+                  cyberattacks that can compromise the security and privacy of
+                  sensitive data, a few of them are:
+                </p>
+              </div>
+              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
+                It is imperative to realize the underlying risks and types of
+                cyberattacks that can compromise the security and privacy of
+                sensitive data, a few of them are:
+              </p>
+            </div>
+          </div>
+
+          <div className="relative w-[30%] hidden md:block">
+            <div className="sticky top-10 flex  gap-2">
+              <TableOfContents divWidth={divWidth} />
+            </div>
+          </div>
+        </div>
+        <Tags />
+      </div>
+    </div>
+  );
+}
+
+export default NewsSummary;

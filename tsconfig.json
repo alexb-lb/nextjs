@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -19,9 +18,21 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/components/Plateform/Hero.jsx",
+    "src/components/Home/GlobalQuoteSection.jsx",
+    "src/components/Home/SolutionsPage.jsx",
+    "src/components/common/NavItem.jsx",
+    "src/components/common/Header.jsx",
+    "src/components/Home/Hero.tsx",
+    "src/store/slices/loader/loader.slice.js"
+  ],
   "exclude": ["node_modules"]
 }

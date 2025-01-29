@@ -1,0 +1,9 @@
+.slick-slide {
+  transform: scale(1) !important;
+}
+.slick-list {
+  padding: 0px !important;
+}
+#slick-list-custom .slick-list {
+  padding: 0px !important;
+}

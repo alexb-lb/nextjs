@@ -1,0 +1,26 @@
+@media only screen and (min-width: 1500px) {
+  .useCasesBox {
+    width: 310px;
+  }
+}
+@media only screen and (min-width: 1600px) {
+  .useCasesBox {
+    width: 345px;
+  }
+}
+@media only screen and (min-width: 1700px) {
+  .useCasesBox {
+    width: 370px;
+  }
+}
+@media only screen and (min-width: 1900px) {
+  .useCasesBox {
+    width: 425px;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .useCasesBox {
+    width: 46%;
+  }
+}
