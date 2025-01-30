@@ -10,7 +10,7 @@ function TabSection({ currentSection }) {
     setActiveTab(currentSection);
   }, [currentSection]);
   return (
-    <section className="max-md:px-4 flex justify-center bg-transparent md:mt-8 sticky top-0 z-50">
+    <section className="max-md:px-4 flex justify-center bg-transparent md:mt-8  z-50">
       <div className="max-w-full overflow-x-scroll no-scrollbar flex gap-5 items-start self-center p-2 mt-2 lg:mb-[34px] text-xl font-medium leading-snug text-center whitespace-nowrap bg-white border  rounded-[55px] text-[#232323] max-md:mt-10 max-md:max-w-full ">
         {tabs.map((tab, index) => (
           <div

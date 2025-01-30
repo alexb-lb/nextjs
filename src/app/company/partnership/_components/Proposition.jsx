@@ -1,8 +1,8 @@
 "use client";
-import HoverBorderGradientDemo from "@/components/common/HoverBorderGradientDemo";
+
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const data_section = [
   <div
@@ -22,15 +22,17 @@ const data_section = [
         and ensures robust protection for sensitive information, all from a
         single interface.
       </p>
-      <div>
+      <div className="max-sm:hidden">
         <h4 className="para1 font-urbanist lg:font-semibold font-bold text-[#33405A] mb-[20px]">
           Key Advantages
         </h4>
         <div className="flex lg:flex-row flex-col gap-[16px] lg:items-center">
           <div className="flex gap-[10px] items-center">
-            <img
+            <Image
               loading="lazy"
               src="/images/solution/privacy/adv1.svg"
+              width={46}
+              height={46}
               alt=""
             />
             <p className="font-urbanist font-[400] text-[16px] leading-[19.2px] text-[#020103]">
@@ -39,9 +41,11 @@ const data_section = [
             </p>
           </div>
           <div className="flex gap-[10px] items-center">
-            <img
+            <Image
               loading="lazy"
               src="/images/solution/privacy/adv2.svg"
+              width={46}
+              height={46}
               alt=""
             />
             <p className="font-urbanist font-[400] text-[16px] leading-[19.2px] text-[#020103]">
@@ -54,10 +58,12 @@ const data_section = [
       </div>
     </div>
     <div className="lg:w-1/3 w-full rounded-[8px] overflow-hidden">
-      <img
+      <Image
         loading="lazy"
         src={"/images/company/kp1.svg"}
         alt=""
+        height={300}
+        width={200}
         className=" min-h-[329px] min-w-full object-cover"
       />
     </div>
@@ -79,15 +85,17 @@ const data_section = [
         and ensures robust protection for sensitive information, all from a
         single interface.
       </p>
-      <div>
+      <div className="max-sm:hidden">
         <h4 className="para1 font-urbanist lg:font-semibold font-bold text-[#33405A] mb-[20px]">
           Key Advantages
         </h4>
         <div className="flex lg:flex-row flex-col gap-[16px] lg:items-center">
           <div className="flex gap-[10px] items-center">
-            <img
+            <Image
               loading="lazy"
               src="/images/solution/privacy/adv1.svg"
+              width={46}
+              height={46}
               alt=""
             />
             <p className="font-urbanist font-[400] text-[16px] leading-[19.2px] text-[#020103]">
@@ -96,9 +104,11 @@ const data_section = [
             </p>
           </div>
           <div className="flex gap-[10px] items-center">
-            <img
+            <Image
               loading="lazy"
               src="/images/solution/privacy/adv2.svg"
+              width={46}
+              height={46}
               alt=""
             />
             <p className="font-urbanist font-[400] text-[16px] leading-[19.2px] text-[#020103]">
@@ -111,10 +121,12 @@ const data_section = [
       </div>
     </div>
     <div className="lg:w-1/3 w-full rounded-[8px] overflow-hidden">
-      <img
+      <Image
         loading="lazy"
         src={"/images/company/kp1.svg"}
         alt=""
+        width={200}
+        height={300}
         className=" min-h-[329px] min-w-full object-cover"
       />
     </div>
@@ -136,16 +148,18 @@ const data_section = [
         and ensures robust protection for sensitive information, all from a
         single interface.
       </p>
-      <div>
+      <div className="max-sm:hidden">
         <h4 className="para1 font-urbanist lg:font-semibold font-bold text-[#33405A] mb-[20px]">
           Key Advantages
         </h4>
         <div className="flex lg:flex-row flex-col gap-[16px] lg:items-center">
           <div className="flex gap-[10px] items-center">
-            <img
+            <Image
               loading="lazy"
               src="/images/solution/privacy/adv1.svg"
               alt=""
+              width={46}
+              height={46}
             />
             <p className="font-urbanist font-[400] text-[16px] leading-[19.2px] text-[#020103]">
               Reduced Long-Term <br className="max-md:hidden" />
@@ -153,10 +167,12 @@ const data_section = [
             </p>
           </div>
           <div className="flex gap-[10px] items-center">
-            <img
+            <Image
               loading="lazy"
               src="/images/solution/privacy/adv2.svg"
               alt=""
+              width={46}
+              height={46}
             />
             <p className="font-urbanist font-[400] text-[16px] leading-[19.2px] text-[#020103]">
               Faster Launch,
@@ -168,10 +184,12 @@ const data_section = [
       </div>
     </div>
     <div className="lg:w-1/3 w-full rounded-[8px] overflow-hidden">
-      <img
+      <Image
         loading="lazy"
         src={"/images/company/kp1.svg"}
         alt=""
+        width={200}
+        height={300}
         className=" min-h-[329px] min-w-full object-cover"
       />
     </div>
@@ -193,16 +211,18 @@ const data_section = [
         and ensures robust protection for sensitive information, all from a
         single interface.
       </p>
-      <div>
+      <div className="max-sm:hidden">
         <h4 className="para1 font-urbanist lg:font-semibold font-bold text-[#33405A] mb-[20px]">
           Key Advantages
         </h4>
         <div className="flex lg:flex-row flex-col gap-[16px] lg:items-center">
           <div className="flex gap-[10px] items-center">
-            <img
+            <Image
               loading="lazy"
               src="/images/solution/privacy/adv1.svg"
               alt=""
+              width={46}
+              height={46}
             />
             <p className="font-urbanist font-[400] text-[16px] leading-[19.2px] text-[#020103]">
               Reduced Long-Term <br className="max-md:hidden" />
@@ -210,10 +230,12 @@ const data_section = [
             </p>
           </div>
           <div className="flex gap-[10px] items-center">
-            <img
+            <Image
               loading="lazy"
               src="/images/solution/privacy/adv2.svg"
               alt=""
+              width={46}
+              height={46}
             />
             <p className="font-urbanist font-[400] text-[16px] leading-[19.2px] text-[#020103]">
               Faster Launch,
@@ -225,10 +247,12 @@ const data_section = [
       </div>
     </div>
     <div className="lg:w-1/3 w-full rounded-[8px] overflow-hidden">
-      <img
+      <Image
         loading="lazy"
         src={"/images/company/kp1.svg"}
         alt=""
+        width={200}
+        height={300}
         className=" min-h-[329px] min-w-full object-cover"
       />
     </div>
@@ -263,7 +287,7 @@ function DeploymentCard({
   );
 }
 
-const Proposition = () => {
+const Proposition = ({ strapiData }) => {
   const [activeTab, setActiveTab] = useState(1);
 
   // useEffect(() => {
@@ -277,27 +301,21 @@ const Proposition = () => {
       id="key_proposition"
     >
       <h1 className="font-sora mb-[16px] title2 text-[#020103] font-semibold text-center">
-        Key Proposition
+        {strapiData.sections[5]?.title || "Key Proposition"}
       </h1>
-      <p className="text-center font-urbanist para3A text-[#4D4D4D] mb-[32px] max-w-[844px] mx-auto">
-        LightBeam.ai ensures secure data across locations, maintaining control,
-        compliance, and privacy for all data types, enabling a zero-trust data
-        protection approach.
+      <p className="text-center font-urbanist para3A md:text-2xl text-[#4D4D4D] mb-[32px] max-w-[844px] mx-auto">
+        {strapiData.sections[6]?.content?.description ||
+          "LightBeam.ai ensures secure data across locations, maintaining control, compliance, and privacy for all data types, enabling a zero-trust data protection approach."}
       </p>
 
       <div className="relative max-md:mt-10 max-md:max-w-full mt-10">
         <div className="flex items-center gap-5 max-md:flex-col">
           <div className="flex flex-col w-4/12 max-md:ml-0 max-md:w-full">
             <div className="flex relative md:flex-col gap-4  grow capitalize font-sora text-primary_white max-md:mt-6 max-md:max-w-full max-md:overflow-hidden max-md:overflow-x-auto max-md:border-b max-md:border-[#A877FF] max-md:scrollbar-none">
-              {[
-                "Unify Compliance",
-                "Consolidate Tools",
-                "Reduce Risk",
-                "Migrate & Modernize",
-              ].map((card, index) => (
+              {strapiData.sections[6].tabs.map((card, index) => (
                 <DeploymentCard
                   key={index}
-                  title={card}
+                  title={card?.title}
                   setActiveTab={setActiveTab}
                   activeTab={activeTab}
                   index={index + 1}
@@ -317,8 +335,8 @@ const Proposition = () => {
               />
             </div> */}
             {data_section
-              .filter((item, idx) => idx + 1 === activeTab)
-              .map((item, id) => (
+              ?.filter((item, idx) => idx + 1 === activeTab)
+              ?.map((item, id) => (
                 <div key={id}>{item}</div>
               ))}
           </div>

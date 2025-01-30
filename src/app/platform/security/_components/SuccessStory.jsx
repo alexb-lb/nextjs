@@ -1,21 +1,21 @@
 "use client";
-import CaseStudy from "@/components/customer/CaseStudy";
+
 import BorderButton from "@/components/Animation/Button";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import HoverBorderGradientDemo from "@/components/common/HoverBorderGradientDemo";
 import { useState } from "react";
 import Link from "next/link";
-const SuccessStory = () => {
+const SuccessStory = ({ sectionData, caseStudy }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const handlePrevClick = () => {
     if (currentIndex !== 1) {
       setCurrentIndex(currentIndex - 1);
     } else {
-      setCurrentIndex(3);
+      setCurrentIndex(caseStudy?.data?.data.length);
     }
   };
   const handleNextClick = () => {
-    if (currentIndex !== 3) {
+    if (currentIndex !== caseStudy?.data?.data.length) {
       setCurrentIndex(currentIndex + 1);
     } else {
       setCurrentIndex(1);
@@ -26,38 +26,50 @@ const SuccessStory = () => {
       <div className="flex justify-between max-md:flex-col mb-8">
         <div className="flex flex-col w-5/12 max-md:ml-0 max-md:w-full">
           <p className="para2 font-urbanist font-normal text-[#232323] lg:block hidden uppercase">
-            case studies
+            {/* case studies */}
+            {sectionData[0]?.content?.title}
           </p>
           <h2 className="text-[28px] lg:text-[48px] leading-[39px] lg:leading-[60px] font-semibold text-[#020103] capitalize text-center lg:text-left max-md:mt-10 max-md:max-w-full max-md:text-[28px] font-sora">
-            Some of Our Success Stories
+            {/* Some of Our Success Stories */}
+            {sectionData[0]?.content?.description ||
+              "Some of Our Success Stories"}
           </h2>
         </div>
 
         <div className="flex flex-col ml-5 w-5/12 max-md:ml-0 max-md:w-full">
           <p className="self-stretch my-auto text-[14px] leading-[22px] lg:text-xl lg:leading-7 text-[#444444] lg:text-left text-center max-md:mt-10 max-md:max-w-full font-urbanist">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-            turpis molestie, dictum est a, mattis tellus. Sed dignissim,
+            {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
+            turpis molestie, dictum est a, mattis tellus. Sed dignissim, */}
+            {sectionData[0]?.content?.content ||
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euturpis molestie, dictum est a, mattis tellus. Sed dignissim, "}
           </p>
         </div>
       </div>
       <div className="hidden md:block pb-[46px]">
-        <img src="/images/platform/caseStudyLine.png" />
+        <img
+          src="/images/platform/caseStudyLine.png"
+          alt=""
+          layout="responsive"
+        />
       </div>
       <div className="flex flex-col md:flex-row justify-center items-stretch gap-[20px]">
         {/* {currentIndex === 1 && ( */}
         <div className="rounded-[24px] w-[50%] pt-[66px] pl-[32px] pr-[40px] pb-[38px] bg-gradient-to-br from-[#231C40] via-[#4B298B] to-[#9987CA]">
           <h3 className="text-white text-[40px] leading-[50.4px] font-semibold font-sora mb-[25px]">
-            LightBeam ai pioneers zero-trust
+            {/* LightBeam ai pioneers zero-trust */}
+            {caseStudy?.data?.data[currentIndex - 1]?.attributes?.title}
           </h3>
           <p className="text-white para2 font-urbanist">
-            <span className="font-semibold">Challenge: </span>LightBeam ai
+            {/* <span className="font-semibold">Challenge: </span>LightBeam ai
             pioneers zero-trust data protection, merging data security, privacy,
-            and AI governance.
+            and AI governance. */}
+            {caseStudy?.data?.data[currentIndex - 1]?.attributes?.challenges}
           </p>
           <br />
           <p className="text-white para2 font-urbanist">
-            <span className="font-semibold">Goal: </span>LightBeam ai pioneers
-            zero-trust data protection, merging
+            {/* <span className="font-semibold">Goal: </span>LightBeam ai pioneers
+            zero-trust data protection, merging */}
+            {caseStudy?.data?.data[currentIndex - 1]?.attributes?.goals}
           </p>
           <div className="mt-[71px] flex justify-between items-center">
             <Link
@@ -92,7 +104,7 @@ const SuccessStory = () => {
           style={{
             backgroundImage: `${
               currentIndex === 1
-                ? "url('/images/customers/case_study1.svg')"
+                ? "url('/images/customers/case_study1.png')"
                 : currentIndex === 2
                 ? "url('/images/platform/retention.png"
                 : "url('/images/platform/retention3.png')"
@@ -116,8 +128,8 @@ const SuccessStory = () => {
         </div>
       </div>
       <div className="my-[64px]">
-        <Link href={"/customer#case-study"}>
-          <HoverBorderGradientDemo content="View All" />
+        <Link href={sectionData[0]?.cta[0]?.url || "#"} className="inline">
+          <HoverBorderGradientDemo content={sectionData[0]?.cta[0]?.text} />
         </Link>
       </div>
     </section>

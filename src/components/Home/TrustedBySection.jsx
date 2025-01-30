@@ -1,11 +1,17 @@
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
-const TrustedBySection = () => {
+const TrustedBySection = ({ sectionData }) => {
+  const isArray = Array.isArray(sectionData);
+  const imgArr = isArray
+    ? sectionData[0]?.images?.data
+    : sectionData?.images?.data;
+
   return (
     <div className="bg-[#F5F8FF] md:px-[105px] py-[52px] md:py-[60px] ">
       <h3 className="text-[#232323] font-semibold text-[28px] md:text-[32px] leading-[35px] md:leading-[48px] text-center  md:mb-[84px] font-sora">
-        Trusted by leading organisations <br className="max-md:hidden" /> around
-        the world
+        {/* Trusted by leading organisations <br className="max-md:hidden" /> around
+        the world */}
+        {isArray ? sectionData[0]?.content?.title : sectionData?.content?.title}
       </h3>
       <div className="w-full max-h-[262px] hidden xl:block relative 2xl:max-w-[1300px] 2xl:mx-auto">
         <div
@@ -20,27 +26,33 @@ const TrustedBySection = () => {
               {/* First Image Start */}
               <div className="relative">
                 <div className=" pb-5 relative">
-                  <Image
-                    loading="lazy"
-                    src="/images/home/Trusted1.png"
-                    alt=""
-                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
-                    height={60}
-                    width={169}
-                  />
+                  {imgArr?.[0]?.attributes?.url && (
+                    <Image
+                      loading="lazy"
+                      // src="/images/home/Trusted1.png"
+                      src={imgArr && imgArr[0]?.attributes?.url}
+                      alt=""
+                      className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
+                      height={60}
+                      width={169}
+                    />
+                  )}
                 </div>
               </div>
               {/* End First Image  */}
 
               <div className="relative">
-                <Image
-                  loading="lazy"
-                  src="/images/home/Trusted2.png"
-                  alt=""
-                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                  height={60}
-                  width={169}
-                />
+                {imgArr?.[1]?.attributes?.url && (
+                  <Image
+                    loading="lazy"
+                    // src="/images/home/Trusted2.png"
+                    src={imgArr && imgArr[1]?.attributes?.url}
+                    alt=""
+                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                    height={60}
+                    width={169}
+                  />
+                )}
               </div>
             </section>
           </Marquee>
@@ -50,27 +62,33 @@ const TrustedBySection = () => {
               {/* First Image Start */}
               <div className="relative">
                 <div className=" pb-5 relative">
-                  <Image
-                    loading="lazy"
-                    src="/images/home/Trusted3.png"
-                    alt=""
-                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
-                    height={60}
-                    width={169}
-                  />
+                  {imgArr?.[2]?.attributes?.url && (
+                    <Image
+                      loading="lazy"
+                      // src="/images/home/Trusted3.png"
+                      src={imgArr && imgArr[2]?.attributes?.url}
+                      alt=""
+                      className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
+                      height={60}
+                      width={169}
+                    />
+                  )}
                 </div>
               </div>
               {/* End First Image  */}
 
               <div className="relative">
-                <Image
-                  loading="lazy"
-                  src="/images/home/Trusted4.png"
-                  alt=""
-                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                  height={60}
-                  width={169}
-                />
+                {imgArr?.[3]?.attributes?.url && (
+                  <Image
+                    loading="lazy"
+                    // src="/images/home/Trusted4.png"
+                    src={imgArr && imgArr[3]?.attributes?.url}
+                    alt=""
+                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                    height={60}
+                    width={169}
+                  />
+                )}
               </div>
             </section>
           </Marquee>
@@ -80,27 +98,33 @@ const TrustedBySection = () => {
               {/* First Image Start */}
               <div className="relative">
                 <div className=" pb-5 relative">
-                  <Image
-                    loading="lazy"
-                    src="/images/home/Trusted5.png"
-                    alt=""
-                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
-                    height={60}
-                    width={169}
-                  />
+                  {imgArr?.[4]?.attributes?.url && (
+                    <Image
+                      loading="lazy"
+                      // src="/images/home/Trusted5.png"
+                      src={imgArr && imgArr[4]?.attributes?.url}
+                      alt=""
+                      className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
+                      height={60}
+                      width={169}
+                    />
+                  )}
                 </div>
               </div>
               {/* End First Image  */}
 
               <div className="relative">
-                <Image
-                  loading="lazy"
-                  src="/images/home/Trusted6.png"
-                  alt=""
-                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                  height={60}
-                  width={169}
-                />
+                {imgArr?.[5]?.attributes?.url && (
+                  <Image
+                    loading="lazy"
+                    // src="/images/home/Trusted6.png"
+                    src={imgArr && imgArr[5]?.attributes?.url}
+                    alt=""
+                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                    height={60}
+                    width={169}
+                  />
+                )}
               </div>
             </section>
           </Marquee>
@@ -110,27 +134,33 @@ const TrustedBySection = () => {
               {/* First Image Start */}
               <div className="relative">
                 <div className=" pb-5 relative">
-                  <Image
-                    loading="lazy"
-                    src="/images/home/Trusted7.png"
-                    alt=""
-                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
-                    height={60}
-                    width={169}
-                  />
+                  {imgArr?.[6]?.attributes?.url && (
+                    <Image
+                      loading="lazy"
+                      // src="/images/home/Trusted7.png"
+                      src={imgArr && imgArr[6]?.attributes?.url}
+                      alt=""
+                      className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
+                      height={60}
+                      width={169}
+                    />
+                  )}
                 </div>
               </div>
               {/* End First Image  */}
 
               <div className="relative">
-                <Image
-                  loading="lazy"
-                  src="/images/home/Trusted8.png"
-                  alt=""
-                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                  height={60}
-                  width={169}
-                />
+                {imgArr?.[7]?.attributes?.url && (
+                  <Image
+                    loading="lazy"
+                    // src="/images/home/Trusted8.png"
+                    src={imgArr && imgArr[7]?.attributes?.url}
+                    alt=""
+                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                    height={60}
+                    width={169}
+                  />
+                )}
               </div>
             </section>
           </Marquee>
@@ -173,47 +203,59 @@ const TrustedBySection = () => {
             {/* First Image Start */}
             <div className="relative">
               <div className=" relative">
-                <Image
-                  loading="lazy"
-                  src="/images/home/Trusted1.png"
-                  alt=""
-                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10  "
-                  height={60}
-                  width={169}
-                />
+                {imgArr?.[0]?.attributes?.url && (
+                  <Image
+                    loading="lazy"
+                    // src="/images/home/Trusted1.png"
+                    src={imgArr && imgArr[0]?.attributes?.url}
+                    alt=""
+                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10  "
+                    height={(imgArr && imgArr[0]?.attributes?.height) || 60}
+                    width={(imgArr && imgArr[0]?.attributes?.width) || 169}
+                  />
+                )}
               </div>
             </div>
             {/* End First Image  */}
 
             <div className="relative">
-              <Image
-                loading="lazy"
-                src="/images/home/Trusted2.png"
-                alt=""
-                className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10 "
-                height={60}
-                width={169}
-              />
+              {imgArr?.[1]?.attributes?.url && (
+                <Image
+                  loading="lazy"
+                  // src="/images/home/Trusted2.png"
+                  src={imgArr && imgArr[1]?.attributes?.url}
+                  alt=""
+                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10 "
+                  height={(imgArr && imgArr[1]?.attributes?.height) || 60}
+                  width={(imgArr && imgArr[1]?.attributes?.width) || 169}
+                />
+              )}
             </div>
             <div className="relative">
-              <Image
-                loading="lazy"
-                src="/images/home/Trusted1.png"
-                alt=""
-                className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10 "
-                height={60}
-                width={169}
-              />
+              {imgArr?.[0]?.attributes?.url && (
+                <Image
+                  loading="lazy"
+                  // src="/images/home/Trusted1.png"
+                  src={imgArr && imgArr[0]?.attributes?.url}
+                  alt=""
+                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10 "
+                  height={(imgArr && imgArr[0]?.attributes?.height) || 60}
+                  width={(imgArr && imgArr[0]?.attributes?.width) || 169}
+                />
+              )}
             </div>
             <div className="relative">
-              <Image
-                loading="lazy"
-                src="/images/home/Trusted2.png"
-                alt=""
-                className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10 "
-                height={60}
-                width={169}
-              />
+              {imgArr?.[1]?.attributes?.url && (
+                <Image
+                  loading="lazy"
+                  // src="/images/home/Trusted2.png"
+                  src={imgArr && imgArr[1]?.attributes?.url}
+                  alt=""
+                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10 "
+                  height={(imgArr && imgArr[1]?.attributes?.height) || 60}
+                  width={(imgArr && imgArr[1]?.attributes?.width) || 169}
+                />
+              )}
             </div>
           </section>
         </Marquee>
@@ -222,47 +264,59 @@ const TrustedBySection = () => {
             {/* First Image Start */}
             <div className="relative">
               <div className="  relative">
-                <Image
-                  loading="lazy"
-                  src="/images/home/Trusted3.png"
-                  alt=""
-                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
-                  height={60}
-                  width={169}
-                />
+                {imgArr?.[2]?.attributes?.url && (
+                  <Image
+                    loading="lazy"
+                    // src="/images/home/Trusted3.png"
+                    src={imgArr && imgArr[2]?.attributes?.url}
+                    alt=""
+                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
+                    height={(imgArr && imgArr[2]?.attributes?.height) || 60}
+                    width={(imgArr && imgArr[2]?.attributes?.width) || 169}
+                  />
+                )}
               </div>
             </div>
             {/* End First Image  */}
 
             <div className="relative">
-              <Image
-                loading="lazy"
-                src="/images/home/Trusted4.png"
-                alt=""
-                className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                height={60}
-                width={169}
-              />
+              {imgArr && imgArr[3]?.attributes?.url && (
+                <Image
+                  loading="lazy"
+                  // src="/images/home/Trusted4.png"
+                  src={imgArr && imgArr[3]?.attributes?.url}
+                  alt=""
+                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                  height={(imgArr && imgArr[3]?.attributes?.height) || 60}
+                  width={(imgArr && imgArr[3]?.attributes?.width) || 169}
+                />
+              )}
             </div>
             <div className="relative">
-              <Image
-                loading="lazy"
-                src="/images/home/Trusted3.png"
-                alt=""
-                className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                height={60}
-                width={169}
-              />
+              {imgArr?.[2]?.attributes?.url && (
+                <Image
+                  loading="lazy"
+                  // src="/images/home/Trusted3.png"
+                  src={imgArr && imgArr[2]?.attributes?.url}
+                  alt=""
+                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                  height={(imgArr && imgArr[2]?.attributes?.height) || 60}
+                  width={(imgArr && imgArr[2]?.attributes?.width) || 169}
+                />
+              )}
             </div>
             <div className="relative">
-              <Image
-                loading="lazy"
-                src="/images/home/Trusted4.png"
-                alt=""
-                className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                height={60}
-                width={169}
-              />
+              {imgArr?.[3]?.attributes?.url && (
+                <Image
+                  loading="lazy"
+                  // src="/images/home/Trusted4.png"
+                  src={imgArr && imgArr[3]?.attributes?.url}
+                  alt=""
+                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                  height={(imgArr && imgArr[3]?.attributes?.height) || 60}
+                  width={(imgArr && imgArr[3]?.attributes?.width) || 169}
+                />
+              )}
             </div>
           </section>
         </Marquee>
@@ -272,47 +326,59 @@ const TrustedBySection = () => {
             {/* First Image Start */}
             <div className="relative">
               <div className="  relative">
-                <Image
-                  loading="lazy"
-                  src="/images/home/Trusted5.png"
-                  alt=""
-                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
-                  height={60}
-                  width={169}
-                />
+                {imgArr?.[4]?.attributes?.url && (
+                  <Image
+                    loading="lazy"
+                    // src="/images/home/Trusted5.png"
+                    src={imgArr && imgArr[4]?.attributes?.url}
+                    alt=""
+                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
+                    height={60}
+                    width={169}
+                  />
+                )}
               </div>
             </div>
             {/* End First Image  */}
 
             <div className="relative">
-              <Image
-                loading="lazy"
-                src="/images/home/Trusted6.png"
-                alt=""
-                className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                height={60}
-                width={169}
-              />
+              {imgArr?.[5]?.attributes?.url && (
+                <Image
+                  loading="lazy"
+                  // src="/images/home/Trusted6.png"
+                  src={imgArr && imgArr[5]?.attributes?.url}
+                  alt=""
+                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                  height={60}
+                  width={169}
+                />
+              )}
             </div>
             <div className="relative">
-              <Image
-                loading="lazy"
-                src="/images/home/Trusted5.png"
-                alt=""
-                className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                height={60}
-                width={169}
-              />
+              {imgArr?.[6]?.attributes?.url && (
+                <Image
+                  loading="lazy"
+                  // src="/images/home/Trusted5.png"
+                  src={imgArr && imgArr[6]?.attributes?.url}
+                  alt=""
+                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                  height={60}
+                  width={169}
+                />
+              )}
             </div>
             <div className="relative">
-              <Image
-                loading="lazy"
-                src="/images/home/Trusted6.png"
-                alt=""
-                className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                height={60}
-                width={169}
-              />
+              {imgArr?.[7]?.attributes?.url && (
+                <Image
+                  loading="lazy"
+                  // src="/images/home/Trusted6.png"
+                  src={imgArr && imgArr[7]?.attributes?.url}
+                  alt=""
+                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                  height={60}
+                  width={169}
+                />
+              )}
             </div>
           </section>
         </Marquee>
@@ -322,47 +388,59 @@ const TrustedBySection = () => {
             {/* First Image Start */}
             <div className="relative">
               <div className="  relative">
-                <Image
-                  loading="lazy"
-                  src="/images/home/Trusted7.png"
-                  alt=""
-                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
-                  height={60}
-                  width={169}
-                />
+                {imgArr?.[6]?.attributes?.url && (
+                  <Image
+                    loading="lazy"
+                    // src="/images/home/Trusted7.png"
+                    src={imgArr && imgArr[6]?.attributes?.url}
+                    alt=""
+                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
+                    height={60}
+                    width={169}
+                  />
+                )}
               </div>
             </div>
             {/* End First Image  */}
 
             <div className="relative">
-              <Image
-                loading="lazy"
-                src="/images/home/Trusted8.png"
-                alt=""
-                className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                height={60}
-                width={169}
-              />
+              {imgArr?.[7]?.attributes?.url && (
+                <Image
+                  loading="lazy"
+                  // src="/images/home/Trusted8.png"
+                  src={imgArr && imgArr[7]?.attributes?.url}
+                  alt=""
+                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                  height={60}
+                  width={169}
+                />
+              )}
             </div>
             <div className="relative">
-              <Image
-                loading="lazy"
-                src="/images/home/Trusted7.png"
-                alt=""
-                className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                height={60}
-                width={169}
-              />
+              {imgArr?.[6]?.attributes?.url && (
+                <Image
+                  loading="lazy"
+                  // src="/images/home/Trusted7.png"
+                  src={imgArr && imgArr[6]?.attributes?.url}
+                  alt=""
+                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                  height={60}
+                  width={169}
+                />
+              )}
             </div>
             <div className="relative">
-              <Image
-                loading="lazy"
-                src="/images/home/Trusted8.png"
-                alt=""
-                className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                height={60}
-                width={169}
-              />
+              {imgArr?.[7]?.attributes?.url && (
+                <Image
+                  loading="lazy"
+                  // src="/images/home/Trusted8.png"
+                  src={imgArr && imgArr[7]?.attributes?.url}
+                  alt=""
+                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                  height={60}
+                  width={169}
+                />
+              )}
             </div>
           </section>
         </Marquee>

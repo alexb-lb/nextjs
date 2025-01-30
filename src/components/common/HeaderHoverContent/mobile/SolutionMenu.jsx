@@ -9,7 +9,7 @@ import {
 } from "react-accessible-accordion";
 import { FaAngleDown } from "react-icons/fa6";
 
-const SolutionMenu = ({ changeNavMenu }) => {
+const SolutionMenu = ({ changeNavMenu, navData }) => {
   const solution_navItems = [
     {
       title: "SECURITY",
@@ -113,21 +113,23 @@ const SolutionMenu = ({ changeNavMenu }) => {
     { title: "HR Systems", link: "/solution/integration#hr-system" },
     { title: "M365 Suite", link: "/solution/integration#m365-suite" },
   ];
+
+
   return (
     <>
       <MobileNavheader
-        title={"Solution"}
+        title={navData?.name}
         changeNavMenu={changeNavMenu}
-        link={"/solution"}
+        link={navData?.custom_path}
       />
       <Accordion allowZeroExpanded>
-        {solution_navItems.map((item) => (
+        {navData?.children?.map((item, index) => (
           <AccordionItem key={item.uuid} className="mb-[35px]">
             <AccordionItemHeading>
               <AccordionItemButton>
                 <h2 className="flex items-center gap-[12px]">
-                  <Link href={"/solution/" + item.link}>
-                    <span>{item.title}</span>
+                  <Link href={item?.custom_path}>
+                    <span>{item.name}</span>
                   </Link>
                   <span>
                     <FaAngleDown />
@@ -136,15 +138,18 @@ const SolutionMenu = ({ changeNavMenu }) => {
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
-              {item.body.map((body, ind) => (
+              {item?.children?.map((body, ind) => (
                 <div
                   className="mt-[14px] flex items-center gap-[9px]"
                   key={ind}
                 >
-                  <img src={body.img} alt="" />
-                  <Link href={body.link}>
+                  <img
+                    src={body?.img || solution_navItems[index]?.body[ind]?.img}
+                    alt=""
+                  />
+                  <Link href={body?.custom_path}>
                     <p className="font-normal font-urbanist text-[14px] leading-[16px] text-[#232323E5]/[.90]">
-                      {body.data}
+                      {body.name}
                     </p>
                   </Link>
                 </div>

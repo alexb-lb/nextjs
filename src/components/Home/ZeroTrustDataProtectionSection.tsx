@@ -1,8 +1,7 @@
 import React from "react";
-import Button from "../common/Button";
-import BorderButton from "../Animation/Button";
 import HoverBorderGradientDemo from "../common/HoverBorderGradientDemo";
 import Link from "next/link";
+import Image from "next/image";
 
 interface StatCardProps {
   icon: string;
@@ -14,17 +13,22 @@ const StatCard: React.FC<StatCardProps> = ({ icon, title, description }) => {
   return (
     <div className="flex overflow-hidden flex-col grow px-4 pt-6 lg:pb-10 pb-6 w-full text-black capitalize bg-white rounded-3xl lg:min-h-[221px] max-md:mt-5">
       <div className="flex flex-col max-w-full w-[272px]">
-        <img
-          loading="lazy"
-          src={icon}
-          alt=""
-          className="object-contain rounded-xl aspect-square lg:w-[60px] w-[48px]"
-        />
+        {icon && (
+          <Image
+            loading="lazy"
+            src={icon}
+            alt=""
+            width={60}
+            height={60}
+            className="object-contain rounded-xl aspect-square lg:w-[60px] w-[48px]"
+          />
+        )}
+
         <div className="flex flex-col mt-6 w-full">
-          <p className="lg:text-sm text-[12px] font-urbanist font-medium lg:leading-loose leading-[14.4px]">
-            Lorem ipsum dolor sit amet, consectetur
+          <p className="lg:text-lg text-[14px] font-urbanist font-medium lg:leading-loose !leading-[22px] h-[44px]">
+            {description}
           </p>
-          <h3 className="mt-4 lg:text-lg text-[14px] lg:leading-[28px] leading-[17.64px] font-semibold font-sora">
+          <h3 className="mt-4 lg:text-sm text-[12px] lg:leading-[28px] leading-[17.64px] font-semibold font-sora">
             {title}
           </h3>
         </div>
@@ -33,7 +37,7 @@ const StatCard: React.FC<StatCardProps> = ({ icon, title, description }) => {
   );
 };
 
-const ZeroTrustDataProtectionSection: React.FC = () => {
+const ZeroTrustDataProtectionSection = ({ sectionData, imageData }: any) => {
   const stats = [
     {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/83872fb9cec18fab7b3949627804caa6be5fc6a58b053ff9e4a625c1942b65dd?placeholderIfAbsent=true&apiKey=94e29386ea8f4d58bd339db870b3bbe8",
@@ -54,35 +58,43 @@ const ZeroTrustDataProtectionSection: React.FC = () => {
   ];
 
   return (
-    <section className="flex flex-col pt-[112px] items-center lg:px-20 px-[16px] pb-14 mt-0 w-full bg-primary_white bg-[url('/images/home/zeroBgMob.png')] md:bg-[url('/images/home/zeroBg.png')]  bg-cover bg-center max-md:pt-[54px] max-md:mt-0 max-md:max-w-full md:bg-custom-330">
+    <section className="flex flex-col pt-[112px] items-center lg:px-0 px-[16px] pb-14 mt-0 w-full bg-primary_white bg-[url('/images/home/zeroBgMob.png')] md:bg-[url('/images/home/zeroBg.png')]  bg-cover bg-center max-md:pt-[54px] max-md:mt-0 max-md:max-w-full md:bg-custom-330">
       <h2 className="lg:text-5xl text-[30px] lg:leading-[60.48px] leading-[37.8px] font-bold md:font-semibold text-center text-[#020103] capitalize lg:w-[685px] w-full  font-sora">
-        Zero Trust <br /> Data Protection
+        {/* Zero Trust <br /> Data Protection */}
+        {sectionData[0]?.content?.title}
       </h2>
-      <p className="lg:mt-6 mt-[16px] font-urbanist lg:text-xl text-[14px] lg:leading-7 leading-[16.8px] text-center text-[#444444] lg:w-[685px] w-full max-md:max-w-full">
-        LightBeam ai pioneers zero-trust data protection, merging data security,
+      <p className="lg:mt-6 mt-[16px] font-urbanist lg:text-2xl text-[14px] lg:leading-7 leading-[16.8px] text-center text-[#444444] lg:w-[685px] w-full max-md:max-w-full">
+        {/* LightBeam ai pioneers zero-trust data protection, merging data security,
         privacy, and AI governance. It ensures compliance with regulations like
-        PCI, GLBA, GDPR, and HIPAA for businesses&apos; growth.
+        PCI, GLBA, GDPR, and HIPAA for businesses&apos; growth. */}
+        {sectionData[0]?.content?.description}
       </p>
       {/* <Button
         label="Know More"
         className="flex flex-col lg:mt-7 mt-[16.8px] max-w-full text-xl font-semibold leading-none text-center text-white bg-indigo-500 rounded-[50px] px-[40px] py-[20px]"
       /> */}
       <div className="lg:mt-7 mt-[16.8px]">
-        <Link href={"/company"}>
+        <Link href={sectionData[0]?.cta[0]?.url || "#"}>
           <HoverBorderGradientDemo
-            content={"Know More"}
+            content={sectionData[0]?.cta[0]?.text}
             className=" max-w-full text-xl max-md:text-[16px] max-md:leading-[20px] font-semibold leading-none text-center text-white rounded-[50px] px-[40px] py-[20px] max-md:py-3 max-md:px-9 max-md:h-[42px]"
           />
         </Link>
       </div>
       <div className="self-stretch lg:mt-20 mt-[42px] max-md:max-w-full">
         <div className="flex gap-[7px] sm:gap-5 justify-center flex-wrap">
-          {stats.map((stat, index) => (
+          {sectionData?.[1]?.cards.map((stat: any, index: any) => (
             <div
               key={index}
               className="flex flex-col lg:w-[280px]  2xl:w-[304px] w-[47%] max-md:ml-0 "
             >
-              <StatCard icon={stat.icon} title={stat.title} description="" />
+              <StatCard
+                icon={
+                  imageData?.sections?.[16]?.cards?.[index]?.image?.data?.attributes?.url
+                }
+                title={stat.title}
+                description={stat.description}
+              />
             </div>
           ))}
         </div>

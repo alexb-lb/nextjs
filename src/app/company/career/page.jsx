@@ -1,66 +1,75 @@
-"use client";
-import ContactForm from "@/components/common/ContactForm";
-import Footer from "@/components/common/Footer";
-import Hero from "@/components/career/Hero";
-import Jobs from "@/components/career/Jobs";
-import Gallery from "@/components/career/Gallery";
-import Zerotrust from "@/components/career/Zerotrust";
-import Whyus from "@/components/career/Whyus";
 import React from "react";
-import Header from "@/components/common/Header";
-import Section from "../../../components/career/Section";
-import lottie from "lottie-web";
-import animationData from "@/utils/animation/Torch-interaction.json";
-import { useEffect, useRef } from "react";
+import LandingPage from "./main";
+import {
+  fetchCaseStudies,
+  fetchDataFromStrapi,
+  fetchImageData,
+  fetchPageData,
+} from "../../../utils/helpers/initStrapi.helper";
+import { fetchNavigation } from "og_strapi_client";
+import { getSeoMetaData } from "@/utils/helpers/server.helpers";
 
-const Page = () => {
-  const lottieRef = useRef(null);
-  const lottieInstance = useRef(null);
+async function CareerPage() {
+  const data = await fetchPageData("pages", "company-career");
+  const imagesData = await fetchImageData("pages", {
+    filters: {
+      slug: "company-career",
+    },
+    populate: {
+      sections: {
+        populate: {
+          cards: {
+            populate: ["image", "*"],
+          },
+          image: {
+            populate: "*",
+          },
+          images: {
+            populate: ["image", "*"],
+          },
+        },
+      },
+    },
+  });
+  const navigation = await fetchNavigation(["header", "footer"]);
 
-  useEffect(() => {
-    if (lottieRef.current && !lottieInstance.current) {
-      lottieInstance.current = lottie.loadAnimation({
-        container: lottieRef.current,
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        animationData: animationData,
-      });
-    }
+  const fetchAllJobs = await fetchDataFromStrapi("careers", {
+    populate: "*",
+  });
 
-    // Cleanup function to destroy the animation on component unmount
-    return () => {
-      if (lottieInstance.current) {
-        lottieInstance.current.destroy();
-        lottieInstance.current = null;
-      }
-    };
-  }, []);
+  const GetInTouchData = await fetchDataFromStrapi("get-in-touches", {
+    populate: "*",
+  });
+
+  const caseStudy = await fetchCaseStudies();
   return (
-    <>
-      <div className=" bg-primary_white relative">
-        <div className="relative">
-          <div className="lg:p-[80px] lg:pt-[20px] hero_banner">
-            <div className="absolute top-20 right-0" ref={lottieRef}></div>
-            <Header />
-            <Hero />
-          </div>
-        </div>
-        <Jobs />
-        <div className="px-4 max-md:mt-[52px] md:px-20">
-          <Section />
-
-          <Gallery />
-        </div>
-        <Zerotrust />
-        <Whyus />
-        <div className="md:px-20 md:sticky md:top-0">
-          <ContactForm />
-        </div>
-        <Footer />
-      </div>
-    </>
+    <LandingPage
+      strapiData={data?.data?.data[0]?.attributes}
+      imagesData={imagesData?.data?.data[0]?.attributes}
+      navigation={navigation}
+      caseStudy={caseStudy}
+      allJobs={fetchAllJobs?.data?.data}
+      GetInTouchData={GetInTouchData?.data?.data?.[0]?.attributes}
+    />
   );
-};
+}
+export const dynamic = "force-dynamic";
+export default CareerPage;
 
-export default Page;
+export async function generateMetadata() {
+  const response = await fetchDataFromStrapi("pages", {
+    filters: {
+      slug: {
+        $eq: "company-career",
+      },
+    },
+    populate: {
+      seo: {
+        populate: "*",
+      },
+    },
+  });
+  const seo = response?.data?.data && response?.data?.data[0]?.attributes?.seo;
+  const seoData = seo && seo[0];
+  return getSeoMetaData(seoData);
+}

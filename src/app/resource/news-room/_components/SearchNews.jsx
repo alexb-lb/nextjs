@@ -1,9 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
-import HoverBorderGradientDemo from "@/components/common/HoverBorderGradientDemo";
+
 import Link from "next/link";
 import Image from "next/image";
+import {
+  fetchNewsByCategoryNameClient,
+  formatNews,
+} from "@/utils/helpers/dataFormating.helper";
 
 // Tab Button Component
 const TabButton = ({ label, isActive, onClick }) => (
@@ -21,22 +25,35 @@ const TabButton = ({ label, isActive, onClick }) => (
 );
 
 // News Item Component
-const NewsItem = ({ date, author, title, description, imgsrc }) => (
-  <div className="w-full bg-white rounded-md flex  lg:flex-row p-[10px] ">
-    <div className="w-full flex flex-col gap-5 py-[5px] px-[15px] lg:px-[31px] ">
+const NewsItem = ({
+  date,
+  author,
+  title,
+  description,
+  imgsrc,
+  slug,
+  authorImage,
+}) => (
+  <div className="w-full bg-white rounded-md flex flex-col  lg:flex-row p-[11px] ">
+    <div className="w-full lg:w-[60%] flex flex-col gap-5 py-[5px] px-[15px] lg:px-[31px] ">
       <div className="w-full flex  lg:flex-row gap-3 lg:gap-5 items-center">
-        <img
-          src="/images/resource/user.png"
-          alt="user"
-          className="w-10 h-10 lg:w-[36px] lg:h-[36px]"
-        />
+        {authorImage && (
+          <Image
+            src={authorImage}
+            height={40}
+            width={40}
+            alt="user"
+            className="w-10 h-10 lg:w-[36px] lg:h-[36px]"
+          />
+        )}
+
         <div className="flex max-md:flex-col gap-1 md:gap-4">
           <p className="text-[#4B4B4B] font-urbanist text-[12px] md:text-[14px] lg:text-[16px] font-[600]">
             {author}
           </p>
 
           <p className="text-[#4B4B4B] font-urbanist text-[10px] md:text-[14px] lg:text-[16px] font-medium">
-            {date}
+            {date && new Date(date).toLocaleDateString()}
           </p>
           <p className="text-[#4B4B4B] font-urbanist text-[14px] lg:text-[16px] font-medium hidden md:block">
             4 min read
@@ -55,7 +72,7 @@ const NewsItem = ({ date, author, title, description, imgsrc }) => (
         </p>
       </div>
       <div className="flex gap-2 text-[#545CF6] text-[12px] md:text-[16px] lg:text-[18px] font-[600] font-urbanist cursor-pointer">
-        <Link href={"/resource/news-details"}>
+        <Link href={`/resources/news-detail/${slug}`}>
           {" "}
           <span className="self-stretch my-auto">Learn More</span>
         </Link>
@@ -67,18 +84,60 @@ const NewsItem = ({ date, author, title, description, imgsrc }) => (
         />
       </div>
     </div>
-    <img
-      loading="lazy"
-      src={imgsrc}
-      alt="industry"
-      className="w-[50%] max-md:rounded-[12px] lg:w-[50%] object-cover mt-4 lg:mt-0"
-    />
+    {imgsrc && (
+      <Image
+        loading="lazy"
+        src={imgsrc}
+        height={200}
+        width={500}
+        alt="industry"
+        className="w-full max-md:rounded-[12px] lg:w-[40%] h-[200px] lg:h-[300px] rounded-2xl object-cover mt-4 lg:mt-0"
+      />
+    )}
   </div>
 );
 
-const SearchNews = () => {
+const SearchNews = ({ newsCategoryList }) => {
   const [tabIndexSecond, setTabIndexSecond] = useState(1);
   const [clickedviewall, setclickedviewall] = useState(false);
+
+  const [blogs, setBlogs] = useState([]);
+  const [search, setSearch] = useState("");
+
+
+  
+
+  const tabs = newsCategoryList?.map((ele, idx) => {
+    return {
+      id: idx + 1,
+      label: ele?.attributes?.title,
+    };
+  });
+
+  useEffect(() => {
+    (async function () {
+      const selectedTab = tabs[tabIndexSecond - 1];
+      const data = await fetchNewsByCategoryNameClient(
+        "news-rooms",
+        selectedTab.label
+      );
+
+      const formated_date = formatNews(data?.data);
+
+      
+      const new_formated_date = formated_date.sort((a, b) => {
+        const dateA = new Date(a.createdAt); 
+        const dateB = new Date(b.createdAt);
+        return dateB - dateA; 
+      });
+
+
+      setBlogs(new_formated_date);
+      setSearch("");
+    })();
+  }, [tabIndexSecond]);
+
+
 
   const options = [
     { value: "dateCreated", label: "Sort by: Date Created" },
@@ -89,7 +148,7 @@ const SearchNews = () => {
   const customStyles = {
     control: (base, state) => ({
       ...base,
-      // width: 200,
+      width: 220,
       padding: "0.6rem",
       fontFamily: "Urbanist, sans-serif",
       fontSize: "14px",
@@ -104,22 +163,49 @@ const SearchNews = () => {
     dropdownIndicator: (base) => ({ ...base, color: "#999" }),
   };
 
-  const tabs = [
-    { id: 1, label: "All" },
-    { id: 2, label: "Privacy Bites" },
-    { id: 3, label: "US Privacy Law" },
-    { id: 4, label: "GDPR" },
-    { id: 5, label: "Quebec Law 25" },
-    { id: 6, label: "International Privacy Law" },
-  ];
+  const [filterSelect, setFilterSelect] = useState(options[0]);
+
+  function filterAlpha() {
+    const sortedBlogs = [...blogs].sort((a, b) =>
+      a.title.localeCompare(b.title)
+    );
+    setBlogs(sortedBlogs);
+  }
+
+  function filterDateCreated() {
+    const sortedBlogs = [...blogs].sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+    setBlogs(sortedBlogs);
+  }
+
+  function filterOldest() {
+    const sortedBlogs = [...blogs].sort(
+      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+    );
+    setBlogs(sortedBlogs);
+  }
+
+  function handleFilterChange(event) {
+    switch (event.value) {
+      case "alphabetical":
+        return filterAlpha();
+      case "dateCreated":
+        return filterDateCreated();
+      case "oldest":
+        return filterOldest();
+    }
+  }
 
   return (
     <section className="w-full py-[40px]">
       <div className="relative w-full px-2">
-        <div className="w-[60%] mx-auto flex py-[50px] px-2 gap-5">
+        <div className="w-full md:w-[60%] mx-auto flex py-[50px] px-2 gap-5">
           <div className="relative w-full h-[60px]">
             <input
               type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               placeholder="Search blog with keywords"
               className="w-[100%] text-[20px] py-[12px] pl-[67px]  font-urbanist font-medium leading-8 bg-[#fff] border-[1.5px] border-[#EAEEF4] rounded-full focus:outline-none max-md:text-[14px]"
             />
@@ -144,23 +230,24 @@ const SearchNews = () => {
           <div className="lg:hidden">
             <Image
               src="/images/solution/integration/Sortby.svg"
-              width={62}
-              height={62}
+              width={64}
+              height={64}
               alt="Sortby"
             />
           </div>
 
-          <div className="w-[30%] max-lg:hidden h-[60px]">
+          {/* <div className="w-[30%] max-lg:hidden h-[60px]">
             <Select
               options={options}
               styles={customStyles}
               defaultValue={options[0]}
-              isSearchable={false} // Disable search functionality if not needed
+              isSearchable={false}
+              onChange={handleFilterChange}
             />
-          </div>
+          </div> */}
         </div>
         {/* <div className="w-full flex justify-center overflow-hidden overflow-x-auto"> */}
-        <div className="w-full max-md:w-[96%] md:w-[91%] mx-auto mb-2 flex items-center md:justify-center border-b border-[#A877FF] overflow-x-scroll no-scrollbar">
+        <div className="w-full max-md:w-[96%] md:md:w-[90%] mx-auto mb-2 flex items-center md:justify-center border-b border-[#A877FF] overflow-x-scroll no-scrollbar">
           {tabs.map((tab) => (
             <TabButton
               key={tab.id}
@@ -173,86 +260,35 @@ const SearchNews = () => {
         {/* </div> */}
 
         <div className="w-full py-8">
-          {tabIndexSecond === 1 ||
-          tabIndexSecond === 2 ||
-          tabIndexSecond === 3 ||
-          tabIndexSecond === 4 ||
-          tabIndexSecond === 5 ||
-          tabIndexSecond === 6 ? (
-            <div className="flex flex-col gap-[22px] px-2 md:px-[62px]">
-              <NewsItem
-                author="Sharon Farber"
-                date="May 21, 2024"
-                title="AI and Employee Privacy"
-                description="AI technologies like ChatGPT are becoming very common in workplaces, making tasks easier. However, they can also pose privacy problems."
-                imgsrc="/images/resource/industry.png"
-              />
-              <NewsItem
-                author="Sharon Farber"
-                date="May 21, 2024"
-                title="AI and Employee Privacy"
-                description="AI technologies like ChatGPT are becoming very common in workplaces, making tasks easier. However, they can also pose privacy problems."
-                imgsrc="/images/resource/industry2.png"
-              />
-              <NewsItem
-                author="Sharon Farber"
-                date="May 21, 2024"
-                title="AI and Employee Privacy"
-                imgsrc="/images/resource/industry3.png"
-                description="AI technologies like ChatGPT are becoming very common in workplaces, making tasks easier. However, they can also pose privacy problems."
-              />
-              <NewsItem
-                author="Sharon Farber"
-                date="May 21, 2024"
-                title="AI and Employee Privacy"
-                description="AI technologies like ChatGPT are becoming very common in workplaces, making tasks easier. However, they can also pose privacy problems."
-                imgsrc="/images/resource/industry.png"
-              />
-              <NewsItem
-                author="Sharon Farber"
-                date="May 21, 2024"
-                title="AI and Employee Privacy"
-                description="AI technologies like ChatGPT are becoming very common in workplaces, making tasks easier. However, they can also pose privacy problems."
-                imgsrc="/images/resource/industry2.png"
-              />
-              {/* {clickedviewall && ( */}
-              {false && (
-                <>
-                  <NewsItem
-                    author="Sharon Farber"
-                    date="May 21, 2024"
-                    title="AI and Employee Privacy"
-                    description="AI technologies like ChatGPT are becoming very common in workplaces, making tasks easier. However, they can also pose privacy problems."
-                    imgsrc="/images/resource/industry.png"
-                  />
-                  <NewsItem
-                    author="Sharon Farber"
-                    date="May 21, 2024"
-                    title="AI and Employee Privacy"
-                    description="AI technologies like ChatGPT are becoming very common in workplaces, making tasks easier. However, they can also pose privacy problems."
-                    imgsrc="/images/resource/industry2.png"
-                  />
-                  <NewsItem
-                    author="Sharon Farber"
-                    date="May 21, 2024"
-                    title="AI and Employee Privacy"
-                    imgsrc="/images/resource/industry3.png"
-                    description="AI technologies like ChatGPT are becoming very common in workplaces, making tasks easier. However, they can also pose privacy problems."
-                  />
-                </>
-              )}
-            </div>
-          ) : null}
+          <div className="flex flex-col gap-[22px] px-2 md:px-[62px]">
+            {blogs
+              ?.filter((item) =>
+                item.title.toLowerCase().includes(search.toLowerCase())
+              )
+              ?.map((blog, index) => (
+                <NewsItem
+                  key={index}
+                  author={blog?.author?.name}
+                  authorImage={blog?.author?.image}
+                  date={blog?.createdAt}
+                  title={blog.title}
+                  description={blog.description}
+                  imgsrc={blog.image}
+                  slug={blog?.slug}
+                  value={filterSelect}
+                />
+              ))}
+          </div>
         </div>
       </div>
-      <div className="mt-4 mb-4 md:mt-10 md:mb-10">
+      {/* <div className="mt-4 mb-4 md:mt-10 md:mb-10">
         <HoverBorderGradientDemo
-          content={"View All"}
+          content={strapiData?.sections[5]?.cta[0]?.text || "View All"}
           onClick={() => {
             setclickedviewall(true);
           }}
         />
-      </div>
+      </div> */}
     </section>
   );
 };

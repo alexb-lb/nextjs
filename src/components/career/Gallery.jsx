@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
+import Image from "next/image";
 import React from "react";
 
-const Gallery = () => {
+const Gallery = ({strapiData}) => {
   return (
     <div
       className="  bg-[#F5F8FF] sm:pt-8 pt-3 pb-2 md:pb-[111px]"
@@ -16,20 +17,22 @@ const Gallery = () => {
     >
       <div className="flex justify-center items-center">
         <p className="text-[30px] leading-[37px] max-md:text-center  sm:text-[48px] text-black sm:mb-10 mb-3 font-semibold font-sora  sm:leading-[60px]">
-          A Day In A Life at LightBeam.ai
+          {strapiData.sections[4].title || "A Day In A Life at LightBeam.ai"}
         </p>
       </div>
       <div className="flex justify-center items-center w-[100%]">
-        <img src="/images/career/gallery.png" className="hidden md:block" />
+        <Image src="/images/career/gallery.png" height={400} width={800} className="hidden md:block size-full"  />
       </div>
 
       <div className="flex justify-center items-center w-[100%]">
         {/* <img src="/images/career/gallery1.png" className=" sm:hidden block" /> */}
-        <img
+        <Image
           loading="lazy"
           src="/images/contact/imageCollab.svg"
           alt="images"
-          className="size-full z-50 md:hidden"
+          height={400}
+          width={400}
+          className="size-full  z-50 md:hidden"
         />
       </div>
     </div>

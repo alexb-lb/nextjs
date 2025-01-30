@@ -2,7 +2,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import DeploymentCard from "./DeploymentCard";
-import HoverBorderGradientDemo from "../common/HoverBorderGradientDemo";
+
 import Image from "next/image";
 
 const deploymentCards = [
@@ -26,7 +26,14 @@ const deploymentCards = [
   },
 ];
 
-function DeploymentSection({ name, setCurrentSection, sectionRefs }) {
+function DeploymentSection({
+  name,
+  setCurrentSection,
+  sectionRefs,
+  sectionData,
+  imageData,
+  bgImage,
+}) {
   const ref = useRef(null);
 
   const [activeTab, setActiveTab] = useState(1);
@@ -70,7 +77,9 @@ function DeploymentSection({ name, setCurrentSection, sectionRefs }) {
 
   return (
     <section
-      className="flex overflow-hidden relative flex-col min-h-[954px] bg-[url('/images/platform/deployment_bg.svg')] bg-cover bg-center bg-no-repeat pt-[54px] pb-[71px] md:px-[80px]"
+      className="flex overflow-hidden relative flex-col min-h-[954px]  bg-cover bg-center bg-no-repeat pt-[54px] pb-[71px] md:px-[80px]"
+      // bg-[url('/images/platform/deployment_bg.png')]
+      style={{backgroundImage: `url(${bgImage})`}}
       id="Deployment"
       ref={ref}
     >
@@ -79,16 +88,19 @@ function DeploymentSection({ name, setCurrentSection, sectionRefs }) {
           <div className="flex flex-col items-center w-full mb-10">
             <div className="flex flex-col items-center">
               <p className="gradient_subheading text-xl leading-snug font-urbanist bg-clip-text">
-                Powered by Generative AI
+                {/* Powered by Generative AI */}
+                {sectionData[0]?.content?.title}
               </p>
               <h1 className="gradient_heading mt-4 py-2 text-5xl font-sora font-semibold capitalize  max-md:text-4xl">
-                Deployment
+                {/* Deployment */}
+                {sectionData[0]?.content?.description}
               </h1>
             </div>
-            <p className="mt-5 text-[18px] font-urbanist leading-7 text-[#EAEAEA] max-md:max-w-full">
-              LightBeam can be deployed in customers&apos; own cloud
+            <p className="mt-5 text-[18px] lg:text-[24px] font-urbanist leading-7 text-[#EAEAEA] max-md:max-w-full">
+              {/* LightBeam can be deployed in customers&apos; own cloud
               environments thereby ensuring that no data leaves their
-              environments.
+              environments. */}
+              {sectionData[0]?.content?.content}
             </p>
             {/* <div className="my-8">
               <HoverBorderGradientDemo
@@ -103,10 +115,23 @@ function DeploymentSection({ name, setCurrentSection, sectionRefs }) {
           <div className="flex gap-5 max-lg:flex-col-reverse">
             <div className="flex flex-col w-6/12 max-md:ml-0 max-lg:w-full">
               <div className="flex relative flex-col gap-8 max-md:gap-4  grow capitalize font-sora text-primary_white max-md:mt-6 max-md:max-w-full">
-                {deploymentCards.map((card, index) => (
+                {/* {deploymentCards.map((card, index) => (
                   <DeploymentCard
                     key={index}
                     {...card}
+                    activeTab={activeTab}
+                    index={index + 1}
+                  />
+                ))} */}
+                {sectionData[1]?.cards?.map((item, index) => (
+                  <DeploymentCard
+                    key={index}
+                    title={item?.title}
+                    description={item?.description}
+                    icon={
+                      item?.icon_url ||
+                      "https://cdn.builder.io/api/v1/image/assets/TEMP/b03b7a0d606f4296c611afb5890c98a17fc6f0d60be4bc7523540aa81c428137?placeholderIfAbsent=true&apiKey=1abc4d0464e34738b1ac60d620a89887"
+                    }
                     activeTab={activeTab}
                     index={index + 1}
                   />
@@ -114,14 +139,22 @@ function DeploymentSection({ name, setCurrentSection, sectionRefs }) {
               </div>
             </div>
             <div className="flex flex-col lg:ml-5 w-6/12 max-md:ml-0 max-lg:w-full overflow-hidden">
-              <Image
-                height={520}
-                width={631}
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/4575e2b1a04b27d9e079833c75806baae0a252e3b740cd54dff8cd9d588c2555?placeholderIfAbsent=true&apiKey=1abc4d0464e34738b1ac60d620a89887"
-                className=" rounded-[20px] h-full w-full"
-                alt="Deployment visualization"
-              />
+              {imageData?.cards[activeTab - 1]?.image?.data?.attributes
+                ?.url && (
+                <Image
+                  height={520}
+                  width={631}
+                  loading="lazy"
+                  src={
+                    (imageData?.cards &&
+                      imageData?.cards[activeTab - 1]?.image?.data?.attributes
+                        ?.url) ||
+                    "https://cdn.builder.io/api/v1/image/assets/TEMP/4575e2b1a04b27d9e079833c75806baae0a252e3b740cd54dff8cd9d588c2555?placeholderIfAbsent=true&apiKey=1abc4d0464e34738b1ac60d620a89887"
+                  }
+                  className=" rounded-[20px] h-full w-full"
+                  alt="Deployment visualization"
+                />
+              )}
             </div>
           </div>
         </div>

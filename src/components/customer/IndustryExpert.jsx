@@ -6,7 +6,8 @@ import "./industry.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRef, useState } from "react";
-const IndustryExpert = () => {
+import Image from "next/image";
+const IndustryExpert = ({ sectionData, imageData = {} }) => {
   let sliderRef = useRef(null);
   let sliderImgRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -86,40 +87,14 @@ const IndustryExpert = () => {
       },
     ],
   };
+
+  const imagesItems = imageData?.cards || [];
   return (
     <section className="flex lg:flex-row flex-col lg:gap-[110px] items-center mt-[49px] lg:mt-0 ">
       <div className="lg:w-[40%] w-full ">
         <h1 className="title2 mb-[20px] lg:text-left text-center lg:w-full w-[80%] mx-auto">
-          Hear From Our Industry Experts
+          {sectionData[0]?.title}
         </h1>
-        {/* <p className="para1 lg:text-left text-center font-urbanist lg:mb-[60px] mb-[36px] font-[400] text-[#444444]">
-          &quot;3MindsDigital has revolutionised our brand with their
-          unparalleled design expertise. Highly recommended!&quot;
-        </p>
-        <div className="flex items-center gap-[24px]">
-          <div className="w-[50px] h-[50px] rounded-[50px]">
-            <img src="/images/customers/collin.svg" alt="" />
-          </div>
-          <div>
-            <h4 className="font-urbanist font-semibold text-[22px] leading-[26.4px] text-[#444444] mb-[16px]">
-              Collen Hoover
-            </h4>
-            <p className="font-urbanist font-[300] text-[18px] leading-[21.6px] text-[#444444]">
-              XYZ company, CEO
-            </p>
-          </div>
-        </div>
-        <div className="flex gap-3 items-center mt-[64px]">
-          <p className="border-2 border-black rounded-[50px] p-2">
-            <FaArrowLeft />
-          </p>
-          <p>
-            {"01"}/{"04"}
-          </p>
-          <p className="border-2 border-black rounded-[50px] p-2">
-            <FaArrowRight />
-          </p>
-        </div> */}
         <div className="slider-container w-full" id="slick-list-custom">
           <Slider
             ref={(slider) => {
@@ -130,23 +105,23 @@ const IndustryExpert = () => {
             {/* box 1st  */}
             <div className="">
               <p className="para1 lg:text-left text-center font-urbanist lg:mb-[60px] mb-[36px] font-[400] text-[#444444] lg:leading-[28.8px]">
-                &quot;3MindsDigital has revolutionised our brand with their
-                unparalleled design expertise. Highly recommended!&quot;
+                {sectionData[1]?.cards[0]?.title}
               </p>
               <div className="flex items-center lg:justify-normal justify-center gap-[24px]">
                 <div className="w-[50px] h-[50px] rounded-[50px]">
-                  <img
-                    loading="lazy"
-                    src="/images/customers/collin.svg"
+                  <Image
+                    src="/images/home/human_image.png"
                     alt=""
+                    height={400}
+                    width={400}
                   />
                 </div>
                 <div>
                   <h4 className="font-urbanist font-semibold text-[22px] leading-[26.4px] text-[#444444] mb-[16px]">
-                    Collen Hoover
+                    {sectionData[1]?.cards[0]?.description}
                   </h4>
                   <p className="font-urbanist font-[300] text-[18px] leading-[21.6px] text-[#444444]">
-                    XYZ company, CEO
+                    {sectionData[1]?.cards[0]?.content}
                   </p>
                 </div>
               </div>
@@ -171,23 +146,23 @@ const IndustryExpert = () => {
             {/* box 2nd  */}
             <div>
               <p className="para1 lg:text-left text-center font-urbanist lg:mb-[60px] mb-[36px] font-[400] text-[#444444] lg:leading-[28.8px]">
-                &quot;3MindsDigital has revolutionised our brand with their
-                unparalleled design expertise. Highly recommended!&quot;
+                {sectionData[1]?.cards[1]?.title}
               </p>
               <div className="flex items-center lg:justify-normal justify-center gap-[24px]">
                 <div className="w-[50px] h-[50px] rounded-[50px]">
-                  <img
-                    loading="lazy"
-                    src="/images/customers/collin.svg"
+                  <Image
+                    height={48}
+                    width={48}
+                    src="/images/home/human_image.jpg"
                     alt=""
                   />
                 </div>
                 <div>
                   <h4 className="font-urbanist font-semibold text-[22px] leading-[26.4px] text-[#444444] mb-[16px]">
-                    James Hemilton
+                    {sectionData[1]?.cards[1]?.description}
                   </h4>
                   <p className="font-urbanist font-[300] text-[18px] leading-[21.6px] text-[#444444]">
-                    XYZ company, CTO
+                    {sectionData[1]?.cards[1]?.content}
                   </p>
                 </div>
               </div>
@@ -212,23 +187,23 @@ const IndustryExpert = () => {
             {/* box 3rd */}
             <div>
               <p className="para1 lg:text-left text-center font-urbanist lg:mb-[60px] mb-[36px] font-[400] text-[#444444] lg:leading-[28.8px]">
-                &quot;3MindsDigital has revolutionised our brand with their
-                unparalleled design expertise. Highly recommended!&quot;
+                {sectionData[1]?.cards[2]?.title}
               </p>
               <div className="flex items-center lg:justify-normal justify-center gap-[24px]">
                 <div className="w-[50px] h-[50px] rounded-[50px]">
-                  <img
-                    loading="lazy"
-                    src="/images/customers/collin.svg"
+                  <Image
+                    src="/images/home/human_image.jpg"
                     alt=""
+                    height={48}
+                    width={48}
                   />
                 </div>
                 <div>
                   <h4 className="font-urbanist font-semibold text-[22px] leading-[26.4px] text-[#444444] mb-[16px]">
-                    Roger Sanchez
+                    {sectionData[1]?.cards[2]?.description}
                   </h4>
                   <p className="font-urbanist font-[300] text-[18px] leading-[21.6px] text-[#444444]">
-                    XYZ company, CEO
+                    {sectionData[1]?.cards[2]?.content}
                   </p>
                 </div>
               </div>
@@ -253,23 +228,24 @@ const IndustryExpert = () => {
             {/* box 4th */}
             <div>
               <p className="para1 lg:text-left text-center font-urbanist lg:mb-[60px] mb-[36px] font-[400] text-[#444444] lg:leading-[28.8px]">
-                &quot;3MindsDigital has revolutionised our brand with their
-                unparalleled design expertise. Highly recommended!&quot;
+                {sectionData[1]?.cards[3]?.title}
               </p>
               <div className="flex items-center lg:justify-normal justify-center gap-[24px]">
                 <div className="w-[50px] h-[50px] rounded-[50px]">
-                  <img
+                  <Image
                     loading="lazy"
-                    src="/images/customers/collin.svg"
+                    src="/images/home/human_image.jpg"
                     alt=""
+                    height={48}
+                    width={48}
                   />
                 </div>
                 <div>
                   <h4 className="font-urbanist font-semibold text-[22px] leading-[26.4px] text-[#444444] mb-[16px]">
-                    Louis Fearen
+                    {sectionData[1]?.cards[3]?.description}
                   </h4>
                   <p className="font-urbanist font-[300] text-[18px] leading-[21.6px] text-[#444444]">
-                    XYZ company, CEO
+                    {sectionData[1]?.cards[3]?.content}
                   </p>
                 </div>
               </div>
@@ -303,19 +279,63 @@ const IndustryExpert = () => {
             {...settings}
           >
             <div>
-              <img
-                loading="lazy"
-                src="images/customers/exp1.png"
-                alt=""
-                className="lg:w-[320px] w-[420px]  h-[416px] md:h-[523px]  overflow-visible"
-              />
+              {imagesItems[0]?.image?.data?.attributes?.url && (
+                <Image
+                  src={
+                    imagesItems && imagesItems[0]?.image?.data?.attributes?.url
+                  }
+                  height={400}
+                  width={400}
+                  alt=""
+                  className="lg:w-[320px] w-[420px]  h-[416px] md:h-[380px]  overflow-visible"
+                />
+              )}
             </div>
             <div>
+              {imagesItems[1]?.image?.data?.attributes?.url && (
+                <Image
+                  height={400}
+                  width={400}
+                  src={
+                    imagesItems && imagesItems[1]?.image?.data?.attributes?.url
+                  }
+                  alt=""
+                  className="lg:w-[320px] w-[420px]  h-[416px] md:h-[380px]  overflow-visible"
+                />
+              )}
+            </div>
+            <div>
+              {imagesItems[2]?.image?.data?.attributes?.url && (
+                <Image
+                  height={400}
+                  width={400}
+                  src={
+                    imagesItems && imagesItems[2]?.image?.data?.attributes?.url
+                  }
+                  alt=""
+                  className="lg:w-[320px] w-[420px]  h-[416px] md:h-[380px] "
+                />
+              )}
+            </div>
+            <div>
+              {imagesItems[3]?.image?.data?.attributes?.url && (
+                <Image
+                  height={400}
+                  width={400}
+                  src={
+                    imagesItems && imagesItems[3]?.image?.data?.attributes?.url
+                  }
+                  alt=""
+                  className="lg:w-[320px] w-[420px]  h-[416px] md:h-[380px] "
+                />
+              )}
+            </div>
+            {/* <div>
               <img
                 loading="lazy"
                 src="images/customers/exp2.png"
                 alt=""
-                className="lg:w-[320px] w-[420px]  h-[416px] md:h-[523px]  overflow-visible"
+                className="lg:w-[320px] w-[420px]  h-[416px] md:h-[380px] "
               />
             </div>
             <div>
@@ -323,33 +343,9 @@ const IndustryExpert = () => {
                 loading="lazy"
                 src="images/customers/exp3.png"
                 alt=""
-                className="lg:w-[320px] w-[420px]  h-[416px] md:h-[523px] "
+                className="w-[300px]  h-[416px] md:h-[380px] "
               />
-            </div>
-            <div>
-              <img
-                loading="lazy"
-                src="images/customers/exp1.png"
-                alt=""
-                className="lg:w-[320px] w-[420px]  h-[416px] md:h-[523px] "
-              />
-            </div>
-            <div>
-              <img
-                loading="lazy"
-                src="images/customers/exp2.png"
-                alt=""
-                className="lg:w-[320px] w-[420px]  h-[416px] md:h-[523px] "
-              />
-            </div>
-            <div>
-              <img
-                loading="lazy"
-                src="images/customers/exp3.png"
-                alt=""
-                className="w-[300px]  h-[416px] md:h-[523px] "
-              />
-            </div>
+            </div> */}
           </Slider>
         </div>
         {/* <div>

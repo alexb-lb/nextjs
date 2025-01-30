@@ -1,38 +1,18 @@
 import React, { useEffect, useRef } from "react";
 import LicenseCard from "./LicenseCard";
-import Slider from "react-slick";
+
 import "../Home/home.css";
 
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  autoplay: true,
-  arrows: false,
-};
 
-const licenseData = [
-  {
-    title: "Spectra Pro",
-    description: "Only has Privacy Center (DSR, ROPA, PIA, AIA/AI Governance)",
-  },
-  {
-    title: "Spectra Ent",
-    description:
-      "Has Privacy Center (Cookie, Consent Mgmt., Breach Notification), Spectra (Automation), Governance (labeling, 3rd party integrations, TPRM/P@P)",
-  },
-  {
-    title: "Spectra Ult",
-    description:
-      "Spectra Actions (redaction, archival, delete), and Governance - Access Snap Program",
-  },
-];
 
-function LicensingPage({ name, setCurrentSection, sectionRefs }) {
+function LicensingPage({
+  name,
+  setCurrentSection,
+  sectionRefs,
+  sectionData,
+  imageData,
+}) {
   const ref = useRef(null);
-
   useEffect(() => {
     // Add each section ref to the sectionRefs array
     sectionRefs.current.push(ref);
@@ -73,21 +53,28 @@ function LicensingPage({ name, setCurrentSection, sectionRefs }) {
         <div className="flex relative flex-col items-start lg:-mb-16  w-full  max-md:mb-2.5 max-md:max-w-full">
           {/* max-w-[1282px] ml-14 */}
           <h3 className="text-5xl font-semibold font-sora text-center text-black capitalize max-md:text-4xl max-md:text-center max-md:mx-auto">
-            Licensing
+            {/* Licensing */}
+            {sectionData[0]?.content?.title}
           </h3>
-          <p className="mt-8 text-xl leading-7 font-urbanist text-black w-[738px] max-md:max-w-full">
-            LightBeam ai pioneers zero-trust data protection, merging data
+          <p className="mt-8 text-2xl leading-7 font-urbanist text-black w-[738px] max-md:max-w-full">
+            {/* LightBeam ai pioneers zero-trust data protection, merging data
             security, privacy, and AI governance. It ensures compliance with
             regulations like PCI, GLBA, GDPR, and HIPAA for businesses&apos;
-            growth.
+            growth. */}
+            {sectionData[0]?.content?.description ||
+              " LightBeam ai pioneers zero-trust data protection, merging data security, privacy, and AI governance. It ensures compliance with regulations like PCI, GLBA, GDPR, and HIPAA for businesses' growth."}
           </p>
           <div className="self-stretch mt-16 max-md:mt-10  max-md:max-w-full">
-            <div className="flex gap-5 max-md:flex-col max-lg:flex-wrap md:justify-center lg:justify-normal">
-              {licenseData.map((license, index) => (
+            <div className="flex gap-5 max-md:flex-col max-lg:flex-wrap md:justify-center lg:justify-normal ">
+              {sectionData[1]?.cards.map((license, index) => (
                 <LicenseCard
                   key={index}
                   title={license.title}
                   description={license.description}
+                  image={
+                    imageData?.cards &&
+                    imageData?.cards[index]?.image?.data?.attributes?.url
+                  }
                 />
               ))}
             </div>

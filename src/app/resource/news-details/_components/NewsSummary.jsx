@@ -1,11 +1,19 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import AudioPlayer from "./AudioPlayer";
-import TableOfContents from "./TableOfContents";
-import Tags from "./Tags";
+import React, { useEffect, useRef, useState } from "react";
 
-function NewsSummary() {
+import Tags from "./Tags";
+import HoverBorderGradientDemo from "@/components/common/HoverBorderGradientDemo";
+
+function NewsSummary({ content, type }) {
   const [divWidth, setDivWidth] = useState(-40);
+
+  const contentRef = useRef();
+
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.innerHTML = content[0]?.content;
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -20,6 +28,13 @@ function NewsSummary() {
       };
     }
   }, []);
+
+  function handleClick() {
+    if (content[0]?.url) {
+      window.location.href = content[0]?.url;
+    }
+  }
+
   return (
     <div className="w-full flex gap-10 px-4 md:px-[60px] py-[78px]">
       <div className="relative w-[10%] hidden md:block">
@@ -83,9 +98,9 @@ function NewsSummary() {
       </div>
 
       <div className="w-full">
-        <div className="flex gap-8 md:gap-14">
+        <div className="flex gap-8 md:gap-14 max-md:flex-col">
           <div className="w-full md:w-[65%] flex flex-col">
-            <div className="w-full flex gap-2">
+            {/* <div className="w-full flex gap-2">
               <div className="w-[24px] h-[24px] rounded-[4px] bg-[#434152] flex justify-center items-center">
                 <img
                   loading="lazy"
@@ -99,233 +114,26 @@ function NewsSummary() {
                 Listen to the article
               </div>
             </div>
-            <AudioPlayer />
+            <div className="sticky top-10">
+              <AudioPlayer />
+            </div> */}
 
-            <div className="w-full py-[59px] flex flex-col gap-5">
-              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                The recent security breach at Xfinity, a reputed internet
-                provider in the US, has exposed the personal data of almost all
-                their customers – nearly 36 million people – including account
-                usernames, passwords, and answers to their security questions.
-                This has sparked conversations about the paramount need for
-                proper security measures and data and security breaches
-                awareness. 
-              </p>
-
-              <div className="w-full flex flex-col md:flex-row gap-2">
-                <div className="w-full flex flex-col justify-between pr-2">
-                  <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                    This has sparked conversations about the paramount need for
-                    proper security measures and data and security breaches
-                    awareness. 
-                  </p>
-                  <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                    Customer Relationship Management (CRM) software is a prime
-                    tool for businesses in terms of relationship management with
-                    their customers and clients. However, with the ever-present
-                    increase in terms of sensitive data being stocked in digital
-                    management systems, it has become critical for organizations
-                    to exercise the use of vigorous actionable CRM security
-                    measures to safeguard themselves against cyber threats and
-                    warrant data privacy. 
-                  </p>
-                </div>
-
-                <img
-                  loading="lazy"
-                  src="/images/resource/introduction.png"
-                  alt="intoduction"
-                  className="max-md:h-[342px]"
-                />
-              </div>
-
-              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                This consequently makes the use of CRM tools to cement safety as
-                a priority and not an option, to necessitate proper security
-                measures being undertaken for everyone&apos;s benefit to fortify
-                their businesses and their customer&apso;s sensitive data and
-                information. 
-              </p>
-
-              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                The attraction of boosting CRM functionality with third-party
-                applications is irrefutable.  From marketing automation to
-                AI-powered analytics, these integrations promise a streamlined
-                path to customer success. However, such integrations could lead
-                to data breaches if proper protection measures are not taken.
-                Each integration acts as a new node of a branch of your CRM
-                tree, a likely weak point for malicious enforcers. The
-                responsibility for data security does not end there, at the
-                CRM&apos;s edge. Businesses must scrutinize their partners,
-                ensuring adherence to stringent security protocols and data
-                protection regulations. The consequences here could be crippling
-                but reputationally and monetary.The good news is, that building
-                a secure CRM ecosystem is possible. Before including any
-                third-party app in the dynamic, companies must conduct thorough
-                due diligence, assessing the vendor&apos;s security posture,
-                data handling practices, and compliance with relevant
-                regulations. Implementing clear access controls and data
-                encryption within the CRM further bolsters the defense
-              </p>
-
-              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                Here are several ways common threats and vulnerabilities exist,
-                and some best practices and tools to combat proper compliance
-                with data protection laws and regulations.
-              </p>
-
-              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                Here are several ways common threats and vulnerabilities exist,
-                and some best practices and tools to combat proper compliance
-                with data protection laws and regulations.
-              </p>
-
-              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                It is imperative to realize the underlying risks and types of
-                cyberattacks that can compromise the security and privacy of
-                sensitive data, a few of them are:
-              </p>
-
-              <div className="w-full flex flex-col gap-1">
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
-                  Phishing
-                </p>
-
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                  It is imperative to realize the underlying risks and types of
-                  cyberattacks that can compromise the security and privacy of
-                  sensitive data, a few of them are:
-                </p>
-              </div>
-              <div className="w-full flex flex-col gap-1">
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
-                  Phishing
-                </p>
-
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                  It is imperative to realize the underlying risks and types of
-                  cyberattacks that can compromise the security and privacy of
-                  sensitive data, a few of them are:
-                </p>
-              </div>
-              <div className="w-full flex flex-col gap-1">
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
-                  Phishing
-                </p>
-
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                  It is imperative to realize the underlying risks and types of
-                  cyberattacks that can compromise the security and privacy of
-                  sensitive data, a few of them are:
-                </p>
-              </div>
-              <div className="w-full flex flex-col gap-1">
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
-                  Phishing
-                </p>
-
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                  It is imperative to realize the underlying risks and types of
-                  cyberattacks that can compromise the security and privacy of
-                  sensitive data, a few of them are:
-                </p>
-              </div>
-              <div className="w-full flex flex-col gap-1">
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
-                  Phishing
-                </p>
-
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                  It is imperative to realize the underlying risks and types of
-                  cyberattacks that can compromise the security and privacy of
-                  sensitive data, a few of them are:
-                </p>
-              </div>
-
-              <div className="w-full">
-                <img
-                  loading="lazy"
-                  src="/images/resource/introduction2.png"
-                  alt="intoduction2"
-                  className="object-cover w-full max-md:h-[342px]"
-                />
-              </div>
-
-              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                It is imperative to realize the underlying risks and types of
-                cyberattacks that can compromise the security and privacy of
-                sensitive data, a few of them are:
-              </p>
-              <div className="w-full flex flex-col gap-1">
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
-                  Phishing
-                </p>
-
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                  It is imperative to realize the underlying risks and types of
-                  cyberattacks that can compromise the security and privacy of
-                  sensitive data, a few of them are:
-                </p>
-              </div>
-              <div className="w-full flex flex-col gap-1">
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
-                  Phishing
-                </p>
-
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                  It is imperative to realize the underlying risks and types of
-                  cyberattacks that can compromise the security and privacy of
-                  sensitive data, a few of them are:
-                </p>
-              </div>
-              <div className="w-full flex flex-col gap-1">
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
-                  Phishing
-                </p>
-
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                  It is imperative to realize the underlying risks and types of
-                  cyberattacks that can compromise the security and privacy of
-                  sensitive data, a few of them are:
-                </p>
-              </div>
-              <div className="w-full flex flex-col gap-1">
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
-                  Phishing
-                </p>
-
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                  It is imperative to realize the underlying risks and types of
-                  cyberattacks that can compromise the security and privacy of
-                  sensitive data, a few of them are:
-                </p>
-              </div>
-              <div className="w-full flex flex-col gap-1">
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[700] leading-[28px] text-[#444444]">
-                  Phishing
-                </p>
-
-                <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                  It is imperative to realize the underlying risks and types of
-                  cyberattacks that can compromise the security and privacy of
-                  sensitive data, a few of them are:
-                </p>
-              </div>
-              <p className="text-[16px] md:text-[20px] font-urbanist font-[400] leading-[28px] text-[#444444]">
-                It is imperative to realize the underlying risks and types of
-                cyberattacks that can compromise the security and privacy of
-                sensitive data, a few of them are:
-              </p>
-            </div>
+            {/* content */}
+            <div
+              ref={contentRef}
+              className="w-full py-5 md:py-[59px] flex flex-col gap-5"
+            ></div>
           </div>
 
-          <div className="relative w-[30%] hidden md:block">
-            <div className="sticky top-10 flex  gap-2">
-              <TableOfContents divWidth={divWidth} />
-            </div>
-          </div>
+          {/* read more */}
+          {type === "news" && (
+            <HoverBorderGradientDemo
+              content="Read More"
+              onClick={handleClick}
+            />
+          )}
         </div>
-        <Tags />
+        <Tags tags={content[0]?.tags} />
       </div>
     </div>
   );

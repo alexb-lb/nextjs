@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
@@ -60,7 +61,7 @@ const solutionsData = [
   },
 ];
 
-function SolutionsPage() {
+function SolutionsPage({ sectionData, bgImage }) {
   const router = useRouter();
   let sliderRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -152,12 +153,15 @@ function SolutionsPage() {
 
   return (
     <main
-      className="flex overflow-hidden relative flex-col flex-wrap lg:min-h-[910px] md:h-[770px] lg:h-[710px] h-[710px] bg-[url('/images/home/solution_bg.svg')] bg-center bg-cover bg-no-repeat"
-      id="solution"
+      className="flex overflow-hidden relative flex-col flex-wrap lg:min-h-[910px] md:h-[770px] lg:h-[710px] h-[710px]  bg-center bg-cover bg-no-repeat"
+      // bg-[url('/images/home/solution_bg.png')]
+      style={{ backgroundImage: `url(${bgImage})` }}
+      id="solutions"
     >
       <section className="flex relative flex-col grow shrink-0 px-20 pt-20 basis-0 lg:min-h-[810px] h-[610px]  max-md:px-5 w-full ">
         <h1 className="relative self-center gradient_heading text-5xl font-sora font-semibold text-center capitalize max-md:text-[30px] ">
-          Our Solutions
+          {/* Our Solutions */}
+          {sectionData[0]?.title}
         </h1>
         <div className="flex relative flex-col mt-12 w-full  mx-auto  max-md:mt-10 max-md:max-w-full">
           <div className=" max-w-full w-full relative z-50">
@@ -180,36 +184,40 @@ function SolutionsPage() {
                 }}
                 {...settings}
               >
-                {solutionsData.map((solution, index) => (
+                {sectionData[1]?.cards.map((solution, index) => (
                   <div key={solution.id} className="card-box2">
                     {" "}
                     <article className="flex flex-col grow shrink-0 basis-0 w-fit max-md:max-w-full">
                       <div className="flex flex-col max-w-full w-[541px]">
-                        <h2 className="self-start text-[26px] md:text-4xl font-bold text-center text-white font-urbanist">
-                          {solution.id}. {solution.title}
+                        <h2 className="self-start text-[26px] md:text-5xl font-bold text-center text-white font-urbanist">
+                          {solution.title}
                         </h2>
                         <h3 className="mt-6 text-[20px] md:text-2xl font-semibold text-zinc-100 font-urbanist">
-                          {solution.subtitle}
+                          {solution.description}
                         </h3>
                         <p className="mt-6 text-[16px] md:text-xl leading-7 text-zinc-300 max-md:max-w-full font-urbanist h-[85px]">
-                          {solution.description}
+                          {solution.content}
                         </p>
                       </div>
                       <div className="flex gap-5 justify-between px-px mt-10 max-w-full text-[16px] md:text-xl text-white w-[364px]">
                         <div className=" max-md:text-center ">
                           <BorderButton
-                            content={"Know More"}
+                            content={solution.cta_text}
                             className={
-                              "px-10 py-5 max-md:py-3 max-md:px-7 rounded-[52px] text-white bg-black font-semibold leading-none text-center"
+                              "px-10 py-5 max-md:py-3 max-md:px-7 rounded-[52px] text-white bg-black font-semibold leading-none text-center cursor-pointer"
                             }
-                            onClick={() => router.push("/template/template2")}
+                            onClick={() =>
+                              router.push(
+                                solution.cta_url || "/template/template2"
+                              )
+                            }
                           />
                         </div>
                         <div className="flex gap-4 justify-center items-center my-auto whitespace-nowrap font-urbanist">
                           <img
                             loading="lazy"
                             src="https://cdn.builder.io/api/v1/image/assets/TEMP/7344fb6cb157a14b1410a04c98344a5ff6c5d6ee1daa005cf5367af62f5a4d56?placeholderIfAbsent=true&apiKey=1abc4d0464e34738b1ac60d620a89887"
-                            alt=""
+                            alt="left"
                             className="object-contain shrink-0 self-stretch my-auto w-8 aspect-square cursor-pointer"
                             onClick={handlePreClick}
                           />
@@ -219,7 +227,7 @@ function SolutionsPage() {
                           <img
                             loading="lazy"
                             src="https://cdn.builder.io/api/v1/image/assets/TEMP/55560e2bb5213fd04a2a99d06db6019f5373452d2f09926b6c1cbb7b0c742f03?placeholderIfAbsent=true&apiKey=1abc4d0464e34738b1ac60d620a89887"
-                            alt=""
+                            alt="right"
                             className="object-contain shrink-0 self-stretch my-auto w-8 aspect-square cursor-pointer"
                             onClick={handleNextClick}
                           />
@@ -259,7 +267,7 @@ function SolutionsPage() {
               src={"/images/home/globe_anim.png"}
               height={400}
               width={1100}
-              className="absolute top-32 max-md:top-10 max-lg:top-20 min-w-[80%] max-md:max-w-[100%] max-lg:min-w-[120%]"
+              className="absolute top-32 max-md:top-10 max-lg:top-20 min-w-[80%] max-md:max-w-[100%] max-lg:min-w-[120%] globeImage"
             />
             <div className="absolute top-[150px] max-md:top-[50px] h-[350px] max-md:h-[160px] w-full max-lg:w-[130%] bg-gradient-to-b from-black/0 to-black/90"></div>
           </div>

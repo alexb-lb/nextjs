@@ -1,4 +1,5 @@
 import BorderButton from "@/components/Animation/Button";
+import Image from "next/image";
 
 const contentDetails = [
   { title: "Discover", value: "discover" },
@@ -29,12 +30,16 @@ const ContentSection = ({ content }) => (
           </div>
         </div>
         <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-          <img
-            loading="lazy"
-            src={sharedContentImage}
-            alt=""
-            className="object-contain grow w-full rounded-3xl aspect-[1.08] shadow-[0px_4px_42px_rgba(50,50,50,0.08)] max-md:mt-10 max-md:max-w-full"
-          />
+          {sharedContentImage && (
+            <Image
+              src={sharedContentImage}
+              alt=""
+              width={500}
+              height={462}
+              className="object-contain grow w-full rounded-3xl aspect-[1.08] shadow-[0px_4px_42px_rgba(50,50,50,0.08)] max-md:mt-10 max-md:max-w-full"
+              layout="responsive"
+            />
+          )}
         </div>
       </div>
     </div>

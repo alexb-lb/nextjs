@@ -1,10 +1,11 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 
-const CustomerOverview = () => {
+const CustomerOverview = ({ caseStudy }) => {
   return (
-    <main className="overflow-hidden px-7 pt-[30px] pb-10 rounded-none bg-primary_white min-w-[1219px] rounded-b-lg">
+    <main className=" px-7 pt-[30px] pb-10 rounded-none bg-primary_white max-xl:w-[1000px] xl:min-w-[1219px] rounded-b-lg">
       <section>
         <div className="flex flex-col items-start  ">
           <header className="flex gap-3 text-lg font-semibold tracking-normal leading-[22px] font-sora text-[#221F20] cursor-pointer">
@@ -18,18 +19,20 @@ const CustomerOverview = () => {
               />
             </Link>
           </header>
-          <p className="mt-3 text-sm font-medium font-urbanist leading-[22px] text-[#808080] ">
-            Lightbeam is building a data security platform that delivers the{" "}
+          <p className="mt-3 text-sm font-medium font-urbanist leading-[22px] text-[#808080]">
+            LightBeam.ai converges data security, privacy, and governance,
+            enabling businesses to secure their data,
             <br />
-            ease, agility, and robust protections that security teams demand
+            remediate access risks, and comply with regulations with a single
+            sensitive data platform
           </p>
           <hr className="shrink-1 self-stretch  mt-7 h-px border border-solid border-zinc-300 border-opacity-80 " />
         </div>
         <h3 className="font-semibold mt-[18px] mb-[15px] text-[16px] font-sora text-[#221F20]">
           Case Study
         </h3>
-        <div className="bg-[#EEF2FF] rounded-[20px] flex items-center flex-wrap gap-[10px] p-3">
-          <div className="bg-white rounded-[16px] w-[181px] h-[207px] py-[24px] px-[19px]">
+        <div className="bg-[#EEF2FF] rounded-[20px] flex items-center md:items-stretch flex-wrap gap-[10px] p-3">
+          {/* <div className="bg-white rounded-[16px] w-[181px] h-[207px] py-[24px] px-[19px]">
             <img
               loading="lazy"
               src="/images/logo/josef.svg"
@@ -162,7 +165,40 @@ const CustomerOverview = () => {
               </p>
               <FaArrowRight className="text-[#545CF6] text-[13.26px]" />
             </Link>
-          </div>
+          </div> */}
+          {caseStudy?.map((item, ind) => (
+            <div
+              className="bg-white rounded-[16px] w-[181px] min-h-[207px] py-[24px] px-[19px]"
+              key={item?.id}
+            >
+              {item?.attributes?.logo?.data?.attributes?.url && (
+                <Image
+                  loading="lazy"
+                  // src="/images/logo/chili_piper.svg"
+                  src={item?.attributes?.logo?.data?.attributes?.url}
+                  alt=""
+                  height={38}
+                  width={38}
+                  className="min-h-[38px] md:max-h-[38px] w-auto"
+                />
+              )}
+
+              <p className="py-[15px] font-urbanist text-[#151617] text-[12px] leading-4 text-wrap">
+                {/* Lorem ipsum dolor sit amet, consectetur adipiscj elit, sed do
+                eiusmod temporu uyuht ythy */}
+                {item?.attributes?.title}
+              </p>
+              <Link
+                href={"/customer#success-stories"}
+                className="flex items-center gap-3"
+              >
+                <p className="text-[#545CF6] text-[13.26px] font-urbanist">
+                  Learn more
+                </p>
+                <FaArrowRight className="text-[#545CF6] text-[13.26px]" />
+              </Link>
+            </div>
+          ))}
         </div>
       </section>
     </main>

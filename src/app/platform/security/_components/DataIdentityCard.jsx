@@ -1,5 +1,4 @@
 import React from "react";
-
 function DeploymentCard({ title, icon, description, activeTab, index }) {
   return (
     <div
@@ -9,10 +8,11 @@ function DeploymentCard({ title, icon, description, activeTab, index }) {
     >
       <div className="flex flex-wrap gap-2.5 justify-center items-center w-full text-[16px] text-2xl font-semibold leading-none max-md:max-w-full">
         <img
-          loading="lazy"
           src={icon}
-          className="object-contain shrink-0 self-stretch my-auto aspect-square w-[30px] max-md:w-[18px]"
           alt=""
+          className="object-contain shrink-0 self-stretch my-auto aspect-square w-[30px] max-md:w-[18px]"
+          layout="responsive"
+          loading="lazy"
         />
         <h2 className="flex-1 shrink self-stretch my-auto basis-0 max-md:text-[16px] text-[26px] max-md:max-w-full font-sora">
           {title}

@@ -37,7 +37,7 @@ function AnimateIcon({ cardsActive }) {
         transition: "transform 0.5s ease-in-out",
         transformOrigin: "40% 50%",
       }}
-      className="w-auto h-[350px] md:w-[485px] md:h-[521px] "
+      className="w-auto h-[350px] md:w-[485px] md:h-[521px] lg:w-[400px] triangleHeight"
     >
       <g filter="url(#filter0_i_1576_90193)">
         <rect
@@ -75,9 +75,9 @@ function AnimateIcon({ cardsActive }) {
       {/* First */}
       <path
         d="M454.504 242.389C467.971 250.164 467.971 269.602 454.504 277.377L284.94 375.275C271.473 383.05 254.639 373.332 254.639 357.781L254.639 161.985C254.639 146.435 271.473 136.716 284.939 144.491L454.504 242.389Z"
-        fill={cardsActive === 3 ? colorObj.fill : fadeObj.fill}
+        fill={cardsActive === 0 ? colorObj.fill : fadeObj.fill}
         fill-opacity={
-          cardsActive === 3 ? colorObj["fill-opacity"] : fadeObj["fill-opacity"]
+          cardsActive === 0 ? colorObj["fill-opacity"] : fadeObj["fill-opacity"]
         }
       />
       <g filter="url(#filter3_iii_1576_90193)">

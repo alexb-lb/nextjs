@@ -36,7 +36,7 @@ const CaseStudy = () => {
             </p>
           </div>
         </div>
-        <div className="rounded-[24px] w-[630px] pt-[66px] pl-[32px] pr-[40px] pb-[38px] bg-[url('/images/customers/case_study1.svg')] bg-center bg-cover bg-no-repeat flex justify-end items-end">
+        <div className="rounded-[24px] w-[630px] pt-[66px] pl-[32px] pr-[40px] pb-[38px] bg-[url('/images/customers/case_study1.png')] bg-center bg-cover bg-no-repeat flex justify-end items-end">
           <div className="flex gap-8">
             <p className="border-2 border-primary_white text-primary_white cursor-pointer p-3 rounded-[50px]">
               <FaArrowLeft />

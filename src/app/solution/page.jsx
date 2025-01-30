@@ -1,86 +1,69 @@
-"use client";
-import React, { useRef, useState, useEffect } from "react";
-import Hero from "@/components/Solution/Hero";
-import CategoryTabs from "@/components/Solution/CategoryTabs";
+import React from "react";
+import LandingPage from "./main";
+import {
+  fetchCaseStudies,
+  fetchDataFromStrapi,
+  fetchImageData,
+  fetchPageData,
+} from "../../utils/helpers/initStrapi.helper";
+import { fetchNavigation } from "og_strapi_client";
+import { getSeoMetaData } from "@/utils/helpers/server.helpers";
 
-import SolutionSection from "@/components/Solution/SolutionSection";
+async function SolutionPage() {
+  const data = await fetchPageData("pages", "solution");
+  const imagesData = await fetchImageData("pages", {
+    filters: {
+      slug: "solution",
+    },
+    populate: {
+      sections: {
+        populate: {
+          cards: {
+            populate: "image",
+          },
+          tabs: {
+            populate: "image",
+          },
+          images:{
+            populate: "*",
+          }
+        },
+      },
+    },
+  });
+  const caseStudy = await fetchCaseStudies();
+  const navigation = await fetchNavigation(["header", "footer"]);
+  const GetInTouchData = await fetchDataFromStrapi("get-in-touches",{
+    populate: "*",
+  });
 
-import DeploymentSection from "@/components/Solution/DeploymentSection";
-import LawRegulationSection from "@/components/Solution/LawRegulationSection";
-import IntegrationSection from "@/components/Solution/IntegrationSection";
-
-import Header from "@/components/common/Header";
-
-import Footer from "@/components/common/Footer";
-import ContactForm from "@/components/common/ContactForm";
-import PrivacyTab from "@/components/Solution/PrivacyTab";
-import lottie from "lottie-web";
-import animationData from "@/utils/animation/Torch-interaction.json";
-
-const Page = () => {
-  const [currentSection, setCurrentSection] = useState(1);
-
-  const sectionRefs = useRef([]);
-  const lottieRef = useRef(null);
-  const lottieInstance = useRef(null);
-
-  useEffect(() => {
-    if (lottieRef.current && !lottieInstance.current) {
-      lottieInstance.current = lottie.loadAnimation({
-        container: lottieRef.current,
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        animationData: animationData,
-      });
-    }
-
-    // Cleanup function to destroy the animation on component unmount
-    return () => {
-      if (lottieInstance.current) {
-        lottieInstance.current.destroy();
-        lottieInstance.current = null;
-      }
-    };
-  }, []);
   return (
-    <>
-      <div className="relative bg-primary_white ">
-        <div className="md:p-[80px] md:pb-0 md:pt-[20px] hero_banner">
-          <div className="absolute top-20 right-0" ref={lottieRef}></div>
-          <Header />
-          <Hero />
-        </div>
-        <div className="flex flex-col items-center relative">
-          <CategoryTabs currentSection={currentSection} />
-          <SolutionSection
-            name="1"
-            setCurrentSection={setCurrentSection}
-            sectionRefs={sectionRefs}
-          />
-          <LawRegulationSection
-            name="2"
-            setCurrentSection={setCurrentSection}
-            sectionRefs={sectionRefs}
-          />
-
-          <PrivacyTab />
-
-          <DeploymentSection />
-          <IntegrationSection
-            name="3"
-            setCurrentSection={setCurrentSection}
-            sectionRefs={sectionRefs}
-          />
-        </div>
-
-        <div className="md:px-20 md:w-full md:sticky md:top-0">
-          <ContactForm />
-        </div>
-        <Footer />
-      </div>
-    </>
+    <LandingPage
+      strapiData={data?.data?.data[0]?.attributes.sections}
+      navigation={navigation}
+      caseStudy={caseStudy}
+      imagesData={imagesData?.data?.data[0]?.attributes.sections}
+      GetInTouchData={GetInTouchData?.data?.data?.[0]?.attributes}
+    />
   );
-};
+}
+export const dynamic = "force-dynamic";
+export default SolutionPage;
 
-export default Page;
+export async function generateMetadata() {
+  const response = await fetchDataFromStrapi("pages", {
+    filters: {
+      slug: {
+        $eq: "solution",
+      },
+    },
+    populate: {
+      seo: {
+        populate: "*",
+      },
+    },
+  });
+  const seo = response?.data?.data && response?.data?.data[0]?.attributes?.seo;
+  const seoData = seo && seo[0];
+  return getSeoMetaData(seoData);
+}

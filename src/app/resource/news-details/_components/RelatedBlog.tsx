@@ -2,7 +2,6 @@
 import React from "react";
 
 import { useRouter } from "next/navigation";
-import Slider from "react-slick";
 import "../../../../components/Home/home.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -131,11 +130,6 @@ const TrendingBlogsSection: React.FC = () => {
         {/* mobile */}
 
         <div className="block sm:hidden flex-wrap gap-5 items-center mt-12 w-full max-md:mt-10 max-md:max-w-full">
-          <Slider {...settings} className="trendBlogMob">
-            {blogs.map((blog, index) => (
-              <BlogCard key={index} {...blog} />
-            ))}
-          </Slider>
         </div>
       </div>
     </section>

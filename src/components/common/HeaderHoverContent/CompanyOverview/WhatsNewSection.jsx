@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const WhatsNewSection = () => {
@@ -25,35 +26,56 @@ const WhatsNewSection = () => {
           Awards & Recongnitions
         </h2>
         <div className="p-3 bg-white rounded-[13.31px] flex items-center gap-3 mb-[28px]">
-          <img loading="lazy" src="/images/Header/Award.png" alt="" />
+          <Image
+            loading="lazy"
+            src="/images/company/CRN.png"
+            alt=""
+            height={80}
+            width={60}
+            className="h-[80px] w-[60px] "
+          />
           <div>
             <h3 className="text-[#000000] font-semibold font-sora text-[13.21px] leading-[14.53px] mb-[7px]">
-              Info World 2023
+              CRN
             </h3>
-            <p className="text-[#808080] font-semibold font-sora text-[8.81px] leading-[11.89px] text-wrap">
-              Cloud Compliance & Governance
+            <p className="text-[#808080] font-semibold font-sora text-[11.81px] leading-[11.89px] text-wrap">
+              2023 Steller Startup
             </p>
           </div>
         </div>
         <div className="p-3 bg-white rounded-[13.31px] flex items-center gap-3 mb-[28px]">
-          <img loading="lazy" src="/images/Header/Award.png" alt="" />
+          <Image
+            loading="lazy"
+            src="/images/company/award2.svg"
+            alt=""
+            height={80}
+            width={60}
+            className="h-[80px] "
+          />
           <div>
             <h3 className="text-[#000000] font-semibold  font-sora text-[13.21px] leading-[14.53px] mb-[7px]">
-              Info World 2023
+              RegTech Insight Awards
             </h3>
-            <p className="text-[#808080] font-semibold font-sora text-[8.81px] leading-[11.89px] text-wrap">
-              Cloud Compliance & Governance
+            <p className="text-[#808080] font-semibold font-sora text-[11.81px] leading-[11.89px] text-wrap">
+              Best North America Startup
             </p>
           </div>
         </div>
         <div className="p-3 bg-white rounded-[13.31px] flex items-center gap-3 ">
-          <img loading="lazy" src="/images/Header/Award.png" alt="" />
+          <Image
+            loading="lazy"
+            src="/images/company/award3.svg"
+            alt=""
+            height={80}
+            width={60}
+            className="h-[80px] "
+          />
           <div>
             <h3 className="text-[#000000] font-semibold font-sora text-[13.21px] leading-[14.53px] mb-[7px]">
-              Info World 2023
+              InfoWorld
             </h3>
-            <p className="text-[#808080] font-semibold font-sora text-[8.81px] leading-[11.89px] text-wrap">
-              Cloud Compliance & Governance
+            <p className="text-[#808080] font-semibold font-sora text-[11.81px] leading-[11.89px] text-wrap">
+              Cloud Compliance and Governance
             </p>
           </div>
         </div>

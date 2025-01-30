@@ -1,8 +1,10 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import React from "react";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +31,7 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
+        <GoogleTagManager gtmId="GTM-TZ92VCF" />
         <Providers>{children}</Providers>
       </body>
     </html>

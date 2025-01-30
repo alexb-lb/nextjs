@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 // import Image from "next/image";
 import { Tabs } from "../ui/tabs";
 
@@ -12,12 +13,11 @@ type Tab = {
 };
 
 export function TabsDemo({
-  tabs,
+  tabs, 
   activeTab,
   tabClass,
   animateClass,
   handleAnimationChange,
-  refreshAnimation,
 }: any) {
   const containerClassName =
     "border-b border-[#A877FF] pb-0 flex flex-row justify-between pt-2 " +
@@ -34,7 +34,6 @@ export function TabsDemo({
         activeTab={activeTab}
         animateClass={animateClass}
         handleAnimationChange={handleAnimationChange}
-        refreshAnimation={refreshAnimation}
       />
     </div>
   );

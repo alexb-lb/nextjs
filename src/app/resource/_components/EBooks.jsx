@@ -1,6 +1,7 @@
 import React from "react";
 import ContentPage from "./ContentPage";
 import HoverBorderGradientDemo from "@/components/common/HoverBorderGradientDemo";
+import Link from "next/link";
 
 const contentData = [
   {
@@ -30,20 +31,26 @@ const contentData = [
   },
 ];
 
-const EBooks = () => {
+const EBooks = ({ sectionData }) => {
   return (
     <div>
       <div className="pt-10">
         <h1 className="text-[28px] md:text-[48px] font-semibold text-center md:mb-6">
-          E-Books
+          {/* E-Books */}
+          {sectionData[0]?.content?.title}
         </h1>
       </div>
       <div className="flex flex-nowrap md:flex-wrap md:gap-6 items-center justify-center">
         {/* {contentData.map((content, index) => ( */}
-        <ContentPage contentList={contentData} />
+        <ContentPage contentList={sectionData[1]?.cards} />
       </div>
       <div className="p-10">
-        <HoverBorderGradientDemo content="View All" className="flex" />
+        <Link href={sectionData[0]?.cta[0]?.url || "#"}>
+          <HoverBorderGradientDemo
+            content={sectionData[0]?.cta[0]?.text}
+            className="flex"
+          />
+        </Link>
       </div>
     </div>
   );

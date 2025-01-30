@@ -1,7 +1,7 @@
 import React from "react";
-import HoverBorderGradientDemo from "../common/HoverBorderGradientDemo";
+import AnimationComponent from "../Home/AnimationComponent";
 
-const Hero: React.FC = () => {
+const Hero = () => {
   return (
     <>
       <section className="flex  flex-col items-center justify-center px-[23px] lg:px-16 py-10 w-full bg-blend-normal lg:min-h-[832px] max-md:px-5 max-md:max-w-full ">
@@ -16,7 +16,8 @@ const Hero: React.FC = () => {
         <div className="mt-[355px]">
           <HoverBorderGradientDemo content="Know More" />
         </div> */}
-        <div className=" max-md:h-[35vh] md:h-[50vh] lg:h-[80vh] max-md:min-w-[90%] md:min-w-[100%] lg:min-w-[70%] bg-[url('/images/home/home_hero.gif')] bg-cover bg-no-repeat bg-center"></div>
+        {/* <div className=" max-md:h-[35vh] md:h-[50vh] lg:h-[80vh] max-md:min-w-[90%] md:min-w-[100%] lg:min-w-[70%] bg-[url('/images/home/home_hero.gif')] bg-cover bg-no-repeat bg-center"></div> */}
+        <AnimationComponent />
       </section>
     </>
   );

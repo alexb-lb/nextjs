@@ -4,8 +4,12 @@ import Slider from "react-slick";
 import BorderButton from "@/components/Animation/Button";
 import { useMediaQuery } from "react-responsive";
 import "../../../components/Home/home.css";
+import Image from "next/image";
 
 const ContentPage = ({ contentList }) => {
+
+
+  
   const [isMobile, setIsMobile] = useState(false);
 
   // Define a media query for mobile screens
@@ -31,14 +35,12 @@ const ContentPage = ({ contentList }) => {
       {isMobile ? (
         <Slider {...settings} className="trendBlogMob">
           {contentList.map(
-            ({ title, description, ctaLink, imageUrl }, index) => (
+            ({ title, description, cta_url, imageUrl }, index) => (
               <div key={index} className="p-4">
                 {/* Card */}
                 <div
-
                   className={`w-full bg-white rounded-2xl p-6 flex flex-col justify-center ${
                     imageUrl ? "min-h-[441px]" : "h-[266px]"
-
                   }`}
                 >
                   <div>
@@ -55,7 +57,8 @@ const ContentPage = ({ contentList }) => {
                   <div className="mt-auto">
                     <BorderButton
                       content={"Download"}
-                      href={ctaLink}
+                      href={cta_url || "#"}
+                      download={true}
                       className={
                         "text-xl font-semibold leading-none text-center text-[#020103] md:px-[34px] md:py-[16px] rounded-full max-md:px-5 bg-primary_white"
                       }
@@ -63,8 +66,10 @@ const ContentPage = ({ contentList }) => {
                   </div>
                   {imageUrl && (
                     <div className="">
-                      <img
-                        src={imageUrl}
+                      <Image
+                        height={100}
+                        width={200}
+                        src={imageUrl || null}
                         alt="Optional Visual"
                         className="mx-auto max-w-full h-auto"
                       />
@@ -78,7 +83,7 @@ const ContentPage = ({ contentList }) => {
       ) : (
         <div className="flex items-center justify-center gap-4 md:gap-[40px]">
           {contentList.map(
-            ({ title, description, ctaLink, imageUrl }, index) => (
+            ({ title, description, cta_url, imageUrl }, index) => (
               <div
                 key={index}
                 className={`w-auto md:w-[403px] bg-white rounded-2xl p-6 flex flex-col justify-between ${
@@ -94,16 +99,19 @@ const ContentPage = ({ contentList }) => {
                 <div className="mt-auto">
                   <BorderButton
                     content={"Download"}
-                    href={ctaLink}
+                    href={cta_url}
                     className={
                       "text-xl font-semibold leading-none text-center text-[#020103] md:px-[34px] md:py-[16px] rounded-full max-md:px-5 bg-primary_white"
                     }
+                    download={true}
                   />
                 </div>
                 {imageUrl && (
                   <div className="relative">
-                    <img
-                      src={imageUrl}
+                    <Image
+                      height={300}
+                      width={300}
+                      src={imageUrl || null}
                       alt="Optional Visual"
                       className="mx-auto max-w-full h-auto"
                     />

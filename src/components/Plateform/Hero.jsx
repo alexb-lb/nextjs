@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import HoverBorderGradientDemo from "../common/HoverBorderGradientDemo";
-import lottie from "lottie-web";
-import animationData from "../../utils/animation/Platform-Page-Ani.json";
 
-const Hero = () => {
+import lottie from "lottie-web";
+// import animationData from "../../utils/animation/Platform-Page-updated-1.json";
+import animationData from "../../utils/animation/Platform Page NO TXT_new.json";
+
+const Hero = ({ sectiondata }) => {
   const lottieRef = useRef(null);
-  const lottieInstance = useRef(null);
+  const lottieInstance = useRef(null); 
 
   useEffect(() => {
     if (lottieRef.current && !lottieInstance.current) {
@@ -33,15 +34,18 @@ const Hero = () => {
         <div className="flex flex-col lg:flex-row items-center justify-center">
           <section className="flex flex-col w-full text-center lg:text-left">
             <p className="text-[14px] md:text-[20px] leading-[28px] mb-4 font-urbanist bg-gradient-to-r from-[#DABEF6] to-[#8D83F5] text-transparent bg-clip-text">
-              Powered by Generative AI
+              {/* Powered by Generative AI */}
+              {sectiondata?.content?.title}
             </p>
             <h3 className="bg-clip-text gradient_heading w-full max-md:text-4xl font-sora font-bold text-[38px] md:text-[70px] leading-[88px] mb-[20px]">
-              Zero Trust <br /> Data Protection
+              {/* Zero Trust <br /> Data Protection */}
+              {sectiondata?.content?.description}
             </h3>
-            <p className=" font-urbanist md:mt-0 text-[14px] md:text-[18px] leading-[26px] text-[#EAEAEA] max-md:max-w-full  max-md:mb-6 max-lg:text-center">
-              LightBeam.ai ensures secure data across locations, maintaining
+            <p className=" font-urbanist md:mt-0 text-[14px] md:text-[24px] leading-[26px] text-[#EAEAEA] max-md:max-w-full  max-md:mb-6 max-lg:text-center">
+              {/* LightBeam.ai ensures secure data across locations, maintaining
               control, compliance, <br /> and privacy for all data types,
-              enabling a zero-trust data protection approach.
+              enabling a zero-trust data protection approach. */}
+              {sectiondata?.content?.content}
             </p>
           </section>
           <section>

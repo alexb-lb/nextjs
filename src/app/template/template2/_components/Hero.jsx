@@ -1,4 +1,4 @@
-const Hero = () => {
+const Hero = ({strapiData}) => {
   return (
     <>
       {/* <div> */}
@@ -12,7 +12,7 @@ const Hero = () => {
       >
         <div className="w-full text-center ">
           <h1 className="title1 text-center mb-[12px] font-sora gradient_heading">
-            Lightbeam.ai for Credit Unions
+            {strapiData[0]?.content[0]?.title}
           </h1>
         </div>
       </div>

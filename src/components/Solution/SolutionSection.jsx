@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import SolutionCard from "./SolutionCard";
-import Button from "../common/Button";
+
 import BorderButton from "../Animation/Button";
+import Link from "next/link";
 
 const solutions = [
   {
@@ -79,7 +80,13 @@ const solutions = [
   },
 ];
 
-function SolutionSection({ name, setCurrentSection, sectionRefs }) {
+function SolutionSection({
+  name,
+  setCurrentSection,
+  sectionRefs,
+  sectionData,
+  imagesData = [],
+}) {
   const [viewAll, setViewAll] = useState(false);
   const ref = useRef(null);
 
@@ -114,20 +121,30 @@ function SolutionSection({ name, setCurrentSection, sectionRefs }) {
   return (
     <section className="md:mt-[128px] mt-[47px] px-2" id="Solution" ref={ref}>
       <h2 className="text-[30px] leading-[37px] md:text-[48px] font-sora md:leading-[60px] font-semibold text-center text-[#020103] capitalize max-md:max-w-full ">
-        Solution by Industry Verticals
+        {/* Solution by Industry Verticals */}
+        {sectionData[0]?.title}
       </h2>
       <div className="mt-12 w-full  max-md:mt-[45px]  md:px-[80px]">
         <div className="flex flex-wrap gap-2 md:gap-5 justify-center">
-          {solutions
-            .filter((item, ind) => (viewAll ? ind < solutions.length : ind < 9))
-            .map((solution, index) => (
-              <SolutionCard
-                key={index}
-                icon={solution.icon}
-                image={solution.image}
-                title={solution.title}
-              />
-            ))}
+          {sectionData &&
+            sectionData[1]?.cards
+              .filter((item, ind) =>
+                viewAll ? ind < solutions.length : ind < 9
+              )
+              .map((solution, index) => (
+                <SolutionCard
+                  key={index}
+                  icon={solution?.icon_url || solutions[index].icon}
+                  title={solution?.description}
+                  head={solution?.title}
+                  image={
+                    (imagesData &&
+                      imagesData[index]?.image?.data?.attributes?.url) ||
+                    solution.image
+                  }
+                  link={imagesData && imagesData[index]?.cta_url}
+                />
+              ))}
         </div>
         {/* {viewAll ? (
           <div className="mt-8 w-full  justify-center hidden lg:flex">
@@ -159,13 +176,16 @@ function SolutionSection({ name, setCurrentSection, sectionRefs }) {
           </div>
         ) : (
           <div className="mt-8 w-full  justify-center flex">
-            <BorderButton
-              content={"View All"}
-              className={
-                "text-xl leading-[20px] font-semibold text-center text-[#020103] px-[54.88px] py-[10px] md:py-[20px] rounded-[52px] max-md:px-5 bg-primary_white max-md:min-w-[140px]"
-              }
-              onClick={() => setViewAll(true)}
-            />
+            <Link href={sectionData[0]?.cta[0]?.url || "#"}>
+              {" "}
+              <BorderButton
+                content={sectionData[0]?.cta[0]?.text}
+                className={
+                  "text-xl leading-[20px] font-semibold text-center text-[#020103] px-[54.88px] py-[10px] md:py-[20px] rounded-[52px] max-md:px-5 bg-primary_white max-md:min-w-[140px]"
+                }
+                // onClick={() => setViewAll(true)}
+              />
+            </Link>
           </div>
         )}
       </div>

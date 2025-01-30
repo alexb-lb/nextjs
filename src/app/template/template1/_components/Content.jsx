@@ -1,55 +1,60 @@
 import React from "react";
 
-const Content = () => {
+const Content = ({ strapiData }) => {
   return (
     <div className="pt-[40px] md:pt-[93px] md:pb-[80px] md:px-[80px] px-4">
       <div className="max-md:mb-[40px]">
         <h3 className="font-sora font-semibold text-[28px] md:text-[40px] leading-[35px] md:leading-[50px] text-[#444444] mb-[32px] md:mb-[54px]">
-          Key Requirements of Law 25
+          {strapiData[1]?.title}
         </h3>
         <ul className="px-7">
-          <li className="list-disc font-urbanist  text-[14px] leading-[16px]  md:text-[18px] md:leading-[21px] text-[#444444] mb-8">
+          {/* <li className="list-disc font-urbanist  text-[14px] leading-[16px]  md:text-[18px] md:leading-[21px] text-[#444444] mb-8">
             {" "}
             <span className="font-semibold">
-              Transparency & Accountability:
+              {strapiData[1]?.faqs[0]?.title}
             </span>{" "}
-            Law 25 mandates clear privacy notices outlining data collection,
-            usage, and sharing practices (effective September 22nd, 2023).
-          </li>
-          <li className="list-disc font-urbanist  text-[14px] leading-[16px]  md:text-[18px] md:leading-[21px] text-[#444444] mb-8">
-            {" "}
-            <span className="font-semibold">Data Subject Rights:</span>{" "}
-            Individuals hold rights to access, rectify, erase, and object to
-            personal data processing. Businesses must establish procedures for
-            handling these requests within 30 days (effective September 22nd,
-            2023).
+            {strapiData[1]?.faqs[0]?.description}
           </li>
           <li className="list-disc font-urbanist  text-[14px] leading-[16px]  md:text-[18px] md:leading-[21px] text-[#444444] mb-8">
             {" "}
             <span className="font-semibold">
-              Privacy Impact Assessments (PIAs):
+              {strapiData[1]?.faqs[1]?.title}
             </span>{" "}
-            Required for high-risk data processing activities, PIAs evaluate
-            privacy risks and propose mitigation measures (effective September
-            22nd, 2023, for high-risk projects).
+            {strapiData[1]?.faqs[1]?.description}.
           </li>
           <li className="list-disc font-urbanist  text-[14px] leading-[16px]  md:text-[18px] md:leading-[21px] text-[#444444] mb-8">
             {" "}
-            <span className="font-semibold">Data Security:</span> Businesses
-            must implement robust security measures to safeguard personal
-            information (effective September 22nd, 2023).
+            <span className="font-semibold">
+              {strapiData[1]?.faqs[2]?.title}
+            </span>{" "}
+            {strapiData[1]?.faqs[2]?.description}
           </li>
           <li className="list-disc font-urbanist  text-[14px] leading-[16px]  md:text-[18px] md:leading-[21px] text-[#444444] mb-8">
             {" "}
-            <span className="font-semibold">Data Breach Notification:</span> In
-            case of a data breach posing a high risk, businesses must notify the
-            Commission d&apos;accès à l&apos;information du Québec (CAIQ) and
-            affected individuals within 72 hours (effective September 22nd,
-            2023)..
+            <span className="font-semibold">
+              {strapiData[1]?.faqs[3]?.title}
+            </span>{" "}
+            {strapiData[1]?.faqs[3]?.description}
           </li>
+          <li className="list-disc font-urbanist  text-[14px] leading-[16px]  md:text-[18px] md:leading-[21px] text-[#444444] mb-8">
+            {" "}
+            <span className="font-semibold">
+              {strapiData[1]?.faqs[4]?.title}
+            </span>{" "}
+            {strapiData[1]?.faqs[4]?.description}
+          </li> */}
+          {strapiData[1]?.faqs?.map((item, ind) => (
+            <li
+              className="list-disc font-urbanist  text-[14px] leading-[16px]  md:text-[18px] md:leading-[21px] text-[#444444] mb-8"
+              key={ind}
+            >
+              <span className="font-semibold">{item?.title}</span>
+              {item?.description}
+            </li>
+          ))}
         </ul>
       </div>
-      <div className="max-md:mb-[40px]">
+      {/* <div className="max-md:mb-[40px]">
         <h3 className="font-sora font-semibold text-[28px] md:text-[40px] leading-[35px] md:leading-[50px] text-[#444444] mb-[32px] md:mb-[54px]">
           Automate Law 25 Compliance with LightBeam
         </h3>
@@ -96,8 +101,8 @@ const Content = () => {
             2023)..
           </li>
         </ul>
-      </div>
-      <div className="max-md:mb-[58px]">
+      </div> */}
+      {/* <div className="max-md:mb-[58px]">
         <h3 className="font-sora font-semibold text-[28px] md:text-[40px] leading-[35px] md:leading-[50px] text-[#444444] mb-[32px] md:mb-[54px]">
           Ensure Continuous Compliance & Reduce Risk
         </h3>
@@ -105,7 +110,7 @@ const Content = () => {
           LightBeam&apos;s platform simplifies Law 25 compliance, saving time
           and resources.
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };

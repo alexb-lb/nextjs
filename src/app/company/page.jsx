@@ -1,65 +1,72 @@
-"use client";
-import Hero from "@/components/company/Hero";
-import FeatureSection from "@/components/company/FeatureSection";
-import AwardsSection from "@/components/common/AwardsSection";
-import PartnershipSection from "@/components/company/PartnershipSection";
-import TestimonialSection from "@/components/common/TestimonialSection";
-import CareerSection from "@/components/company/CareerSection";
-import NewsSection from "@/components/company/NewsSection";
-import Footer from "@/components/common/Footer";
-import Header from "@/components/common/Header";
-import ContactForm from "@/components/common/ContactForm";
-import lottie from "lottie-web";
-import animationData from "@/utils/animation/Torch-interaction.json";
-import { useEffect, useRef } from "react";
-import News from "../resource/_components/News";
+import React from "react";
+import LandingPage from "./main";
+import {
+  fetchCaseStudies,
+  fetchDataFromStrapi,
+  fetchImageData,
+  fetchPageData,
+} from "../../utils/helpers/initStrapi.helper";
+import { fetchNavigation } from "og_strapi_client";
+import { getNewsPopulate, getSeoMetaData } from "@/utils/helpers/server.helpers";
 
-const Page = () => {
-  const lottieRef = useRef(null);
-  const lottieInstance = useRef(null);
-
-  useEffect(() => {
-    if (lottieRef.current && !lottieInstance.current) {
-      lottieInstance.current = lottie.loadAnimation({
-        container: lottieRef.current,
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        animationData: animationData,
-      });
-    }
-
-    // Cleanup function to destroy the animation on component unmount
-    return () => {
-      if (lottieInstance.current) {
-        lottieInstance.current.destroy();
-        lottieInstance.current = null;
-      }
-    };
-  }, []);
+async function CompanyPage() {
+  const data = await fetchPageData("pages", "company");
+  const navigation = await fetchNavigation(["header", "footer"]);
+  const caseStudy = await fetchCaseStudies();
+  const imageData = await fetchImageData("pages", {
+    filters: {
+      slug: "company",
+    },
+    populate: {
+      sections: {
+        populate: ["cards.image", 'images'],
+      },
+    },
+  });
+  const GetInTouchData = await fetchDataFromStrapi("get-in-touches",{
+    populate: "*",
+  });
+  const latestNews = await fetchDataFromStrapi("news-rooms", {
+    filters: {
+      news_room_tags: {
+        slug: {
+          $eq: "new",
+        },
+      },
+    },
+    pagination: {
+      limit: 4,
+    },
+    populate: getNewsPopulate(),
+  });
   return (
-    <>
-      <div className="relative bg-primary_white">
-        <div className="lg:p-[80px] lg:pt-[20px] max-lg:pb-[58px] hero_banner">
-          <div className="absolute top-20 right-0" ref={lottieRef}></div>
-          <Header />
-          <Hero />
-          <FeatureSection />
-        </div>
-
-        <AwardsSection />
-        <PartnershipSection />
-
-        <TestimonialSection value="-40px" pt="171px" />
-        <CareerSection />
-        {/* <NewsSection /> */}
-        <News />
-        <div className="md:px-20 md:sticky md:top-0">
-          <ContactForm />
-        </div>
-        <Footer />
-      </div>
-    </>
+    <LandingPage
+      strapiData={data?.data?.data[0]?.attributes}
+      navigation={navigation}
+      caseStudy={caseStudy}
+      imageData={imageData?.data?.data[0]?.attributes}
+      GetInTouchData={GetInTouchData?.data?.data?.[0]?.attributes}
+      latestNews={latestNews?.data?.data}
+    />
   );
-};
-export default Page;
+}
+export const dynamic = "force-dynamic";
+export default CompanyPage;
+
+export async function generateMetadata() {
+  const response = await fetchDataFromStrapi("pages", {
+    filters: {
+      slug: {
+        $eq: "company",
+      },
+    },
+    populate: {
+      seo: {
+        populate: "*",
+      },
+    },
+  });
+  const seo = response?.data?.data && response?.data?.data[0]?.attributes?.seo;
+  const seoData = seo && seo[0];
+  return getSeoMetaData(seoData);
+}

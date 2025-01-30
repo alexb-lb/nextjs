@@ -23,15 +23,15 @@ html {
 }
 /* 
 body {
-  font-family: "Sora", sans-serif;
+  font-family: "Inter", sans-serif;
 } */
 
 .font-sora {
-  font-family: "Sora", sans-serif;
+  font-family: "Aeonik, sans-serif";
 }
 
 .font-urbanist {
-  font-family: "Urbanist", sans-serif;
+  font-family: "Aeonik, sans-serif";
 }
 
 @layer utilities {
@@ -77,7 +77,7 @@ body {
     @apply text-[14px] lg:text-[18px] leading-[16.8px] lg:leading-[26px];
   }
   .link_text {
-    @apply text-[16px] leading-[24px];
+    @apply text-[18px] leading-[24px];
   }
   .small_text {
     @apply text-[12px] lg:text-[14px] leading-[14.4px] lg:leading-[22px];
@@ -213,4 +213,8 @@ body {
   .animation_zerotrust {
     height: 130vh;
   }
+}
+
+#lottie_div > svg {
+  z-index: 20;
 }

@@ -1,7 +1,7 @@
 "use client";
 import HoverBorderGradientDemo from "@/components/common/HoverBorderGradientDemo";
 import React, { useState } from "react";
-import { Accordion, AccordionItem as Item } from "@szhsin/react-accordion";
+
 import Image from "next/image";
 import plusIcon from "./plus-icon.svg";
 import minusIcon from "./minus-icon.svg";
@@ -33,7 +33,7 @@ const AccordionItem = ({ header, isOpen, onClick, children }) => (
   </div>
 );
 
-const Records = () => {
+const Records = ({ sectionData }) => {
   const [openIndex, setOpenIndex] = useState(0);
 
   const handleAccordionClick = (index) => {
@@ -53,14 +53,12 @@ const Records = () => {
 
   const accordionItems = [
     {
-      header: "Lorem ipsum",
-      content:
-        "RoPA reports can be generated at any point in time at any level - company, process groups, individual processes. RoPA report generation has been automated with near-real time visibility into all data present in your data repositories, their purpose, and active data maps.",
+      header: sectionData[1]?.title,
+      content: sectionData[1]?.description,
     },
     {
-      header: "Lorem ipsum",
-      content:
-        "RoPA reports can be generated at any point in time at any level - company, process groups, individual processes. RoPA report generation has been automated with near-real time visibility into all data present in your data repositories, their purpose, and active data maps.",
+      header: sectionData[2]?.title,
+      content: sectionData[1]?.description,
     },
   ];
 
@@ -79,12 +77,16 @@ const Records = () => {
             className="gradient_heading font-sora text-[24px] lg:text-[48px] lg:leading-[60px] 
         font-semibold text-center md:mb-[46px]"
           >
-            Records of Processing Activity (RoPA)
+            {/* Records of Processing Activity (RoPA) */}
+            {sectionData[0]?.title}
           </h3>
         </div>
         <div className="md:hidden my-[30px]">
-          <Link href={"/template/template1"}>
-            <HoverBorderGradientDemo content="Know More" className="" />
+          <Link href={sectionData[0]?.cta[0]?.url || "#"}>
+            <HoverBorderGradientDemo
+              content={sectionData[0]?.cta[0]?.text}
+              className=""
+            />
           </Link>
         </div>
 
@@ -106,26 +108,47 @@ const Records = () => {
           </div>
           <div className="w-full lg:w-[40%] lg:min-h-[440px] h-[257px]">
             {openIndex === 0 && (
-              <img
-                loading="lazy"
-                src="/images/platform/records.png"
-                alt="Records of Processing Activity"
-                className="w-full h-full object-fill"
-              />
+              <>
+                {sectionData[1]?.icon?.data?.attributes?.url && (
+                  <Image
+                    src={
+                      sectionData && sectionData[1]?.icon?.data?.attributes?.url
+                    }
+                    alt="Records of Processing Activity"
+                    width={500}
+                    height={500}
+                    className="w-full h-full object-fill"
+                    layout="responsive"
+                  />
+                )}
+              </>
             )}
             {openIndex === 1 && (
-              <img
-                loading="lazy"
-                src="/images/platform/records.png"
-                alt="Records of Processing Activity"
-                className="invert w-full h-full object-fill"
-              />
+              <>
+                {sectionData[2]?.icon?.data?.attributes?.url && (
+                  <Image
+                    src={
+                      sectionData && sectionData[2]?.icon?.data?.attributes?.url
+                    }
+                    alt="Records of Processing Activity"
+                    width={500}
+                    height={500}
+                    className="w-full h-full object-fill"
+                    layout="responsive"
+                  />
+                )}
+              </>
             )}
           </div>
         </div>
 
         <div className="max-md:hidden">
-          <HoverBorderGradientDemo />
+          <Link href={sectionData[0]?.cta[0]?.url || "#"}>
+            <HoverBorderGradientDemo
+              content={sectionData[0]?.cta[0]?.text}
+              className=""
+            />
+          </Link>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import { FaAngleDown } from "react-icons/fa6";
 import PlatformOverview from "./HeaderHoverContent/PlateformOverview/PlatformOverview";
@@ -9,116 +9,109 @@ import CompanyOverview from "./HeaderHoverContent/CompanyOverview/CompanyOvervie
 import CustomerOverview from "./HeaderHoverContent/CustomerOverview/CustomerOverview";
 import ResourceOverview from "./HeaderHoverContent/ResourceOverview/ResourceOverview";
 
-const NavItem = ({ label, hasDropdown, link = "#" }) => {
+const NavItem = ({
+  navigation,
+  caseStudy,
+  whatsNew,
+  blogs,
+  ebook,
+  whitePaper,
+}) => {
   const pathname = usePathname();
+  const [hoveredItem, setHoveredItem] = useState(null);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const isActive = (path) => pathname === path;
+  if (!navigation || navigation.length === 0) {
+    return null;
+  }
   return (
     <>
       <ul className="flex items-center gap-[30px]">
-        <li className="group">
-          <Link href="/platform" className="relative z-[100]">
-            <div
-              className={`flex items-center gap-2 cursor-pointer font-urbanist`}
+        {navigation?.map((item, index) => (
+          <>
+            <li
+              key={index}
+              className="group "
+              onMouseEnter={() => {
+                setHoveredItem(item?.name);
+                setHoveredIndex(index);
+              }}
+              onMouseLeave={() => {
+                setHoveredItem(null);
+                setHoveredIndex(null);
+              }}
             >
-              Platform
-              <span>
-                <FaAngleDown />
-              </span>
-            </div>
-            <div
-              className={`absolute top-[45px] ${
-                isActive("/platform")
-                  ? "w-full h-[8px] bg-[#475070] border-t border-r border-l border-[#D4DEFF]"
-                  : ""
-              }`}
-            ></div>
-          </Link>
-          <div className=" hidden absolute z-50 left-[50%] transform translate-x-[-50%] group-hover:block pt-7">
-            <PlatformOverview />
-          </div>
-        </li>
-        <li className=" group ">
-          <Link href="/solution" className="relative">
-            <div className="flex items-center gap-2 cursor-pointer font-urbanist">
-              Solutions
-              <span>
-                <FaAngleDown />
-              </span>
-            </div>
-            <div
-              className={`absolute top-[45px] ${
-                isActive("/solution")
-                  ? "w-full h-[7px] bg-[#475070] border-t border-r border-l border-[#D4DEFF]"
-                  : ""
-              }`}
-            ></div>
-          </Link>
-          <div className=" hidden absolute left-[50%] transform translate-x-[-50%] group-hover:block pt-7">
-            <SolutionOverview />
-          </div>
-        </li>
-        <li className=" group ">
-          <Link href="/company" className="relative">
-            <div className="flex items-center gap-2 cursor-pointer font-urbanist">
-              Company
-              <span>
-                <FaAngleDown />
-              </span>
-            </div>
-            <div
-              className={`absolute top-[45px] ${
-                isActive("/company")
-                  ? "w-full h-[7px] bg-[#475070] border-t border-r border-l border-[#D4DEFF]"
-                  : ""
-              }`}
-            ></div>
-          </Link>
-          <div className=" hidden absolute left-[50%] transform translate-x-[-50%] group-hover:block pt-7">
-            <CompanyOverview />
-          </div>
-        </li>
-        <li className=" group ">
-          <Link href={"/customer"} className="relative">
-            <div className="flex items-center gap-2 cursor-pointer font-urbanist">
-              Customer
-              <span>
-                <FaAngleDown />
-              </span>
-            </div>
-            <div
-              className={`absolute top-[45px] ${
-                isActive("/customer")
-                  ? "w-full h-[7px] bg-[#475070] border-t border-r border-l border-[#D4DEFF]"
-                  : ""
-              }`}
-            ></div>
-          </Link>
-          <div className=" hidden absolute left-[50%] transform translate-x-[-50%] group-hover:block pt-7">
-            <CustomerOverview />
-          </div>
-        </li>
+              {item?.custom_path && (
+                <Link
+                  href={item?.custom_path}
+                  className="relative z-[100]"
+                  style={{ cursor: "pointer" }}
+                >
+                  <div
+                    className={`flex items-center gap-2 cursor-pointer font-urbanist`}
+                  >
+                    {item?.name}
+                    <span>
+                      <FaAngleDown />
+                    </span>
+                  </div>
+                  <div
+                    className={`absolute top-[45px] ${
+                      isActive(item?.custom_path)
+                        ? "w-full h-[8px] bg-[#475070] border-t border-r border-l border-[#D4DEFF]"
+                        : ""
+                    }`}
+                  ></div>
+                </Link>
+              )}
 
-        <li className=" group ">
-          <Link href={"/resource"} className="relative">
-            <div className="flex items-center gap-2 cursor-pointer font-urbanist">
-              Resources
-              <span>
-                <FaAngleDown />
-              </span>
-            </div>
-            <div
-              className={`absolute top-[45px] ${
-                isActive("/resource")
-                  ? "w-full h-[7px] bg-[#475070] border-t border-r border-l border-[#D4DEFF]"
-                  : ""
-              }`}
-            ></div>
-          </Link>
-          <div className=" hidden absolute left-[50%] transform translate-x-[-50%] group-hover:block pt-7">
-            <ResourceOverview />
-          </div>
-        </li>
+              {hoveredItem === "Platform" && (
+                <div className="hidden absolute z-200 left-[50%] transform translate-x-[-50%] group-hover:block pt-7">
+                  <PlatformOverview
+                    navChild={navigation[hoveredIndex]?.children}
+                    whatsNew={whatsNew}
+                    blogs={blogs}
+                  />
+                </div>
+              )}
+              {hoveredItem === "Solution" && (
+                <div className=" hidden absolute z-50 left-[50%] transform translate-x-[-50%] group-hover:block pt-7 min-h-[300px]">
+                  <SolutionOverview
+                    navChild={navigation[hoveredIndex]?.children}
+                  />
+                </div>
+              )}
+              {hoveredItem === "Company" && (
+                <div className=" hidden absolute z-50 left-[50%] transform translate-x-[-50%] group-hover:block pt-7">
+                  <CompanyOverview
+                    navChild={navigation[hoveredIndex]?.children}
+                    whatsNew={whatsNew}
+                  />
+                </div>
+              )}
+              {hoveredItem === "Customer" && (
+                <div className=" hidden absolute z-50 left-[50%] transform translate-x-[-50%] group-hover:block pt-7">
+                  <CustomerOverview
+                    navChild={navigation[hoveredIndex]?.children}
+                    caseStudy={caseStudy}
+                  />
+                </div>
+              )}
+              {hoveredItem === "Resources" && (
+                <div className=" hidden absolute z-50 left-[50%] transform translate-x-[-50%] group-hover:block pt-7">
+                  <ResourceOverview
+                    navChild={navigation[hoveredIndex]?.children}
+                    whatsNew={whatsNew}
+                    blogs={blogs}
+                    ebook={ebook}
+                    whitePaper={whitePaper}
+                  />
+                </div>
+              )}
+            </li>
+          </>
+        ))}
       </ul>
     </>
   );

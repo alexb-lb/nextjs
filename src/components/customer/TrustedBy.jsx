@@ -1,11 +1,10 @@
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
-const TrustedBySection = () => {
+const TrustedBySection = ({ sectionData }) => {
   return (
     <div className="bg-[#F5F8FF] md:px-[105px] py-[52px] md:py-[60px] ">
       <h3 className="text-[#232323] font-semibold text-[28px] md:text-[32px] leading-[35px] md:leading-[48px] text-center  md:mb-[84px] font-sora">
-        Trusted by leading organisations <br className="max-md:hidden" /> around
-        the world
+        {sectionData?.content?.title}
       </h3>
       <div className="w-full max-h-[262px] hidden xl:block relative 2xl:max-w-[1300px] 2xl:mx-auto">
         <div
@@ -20,27 +19,31 @@ const TrustedBySection = () => {
               {/* First Image Start */}
               <div className="relative">
                 <div className=" pb-5 relative">
-                  <Image
-                    loading="lazy"
-                    src="/images/home/Trusted1.png"
-                    alt=""
-                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
-                    height={60}
-                    width={169}
-                  />
+                  {sectionData?.images?.data?.[0]?.attributes?.url && (
+                    <Image
+                      loading="lazy"
+                      src={sectionData?.images?.data?.[0]?.attributes?.url}
+                      alt=""
+                      className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
+                      height={60}
+                      width={169}
+                    />
+                  )}
                 </div>
               </div>
               {/* End First Image  */}
 
               <div className="relative">
-                <Image
-                  loading="lazy"
-                  src="/images/home/Trusted2.png"
-                  alt=""
-                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                  height={60}
-                  width={169}
-                />
+                {sectionData?.images?.data?.[1]?.attributes?.url && (
+                  <Image
+                    loading="lazy"
+                    src={sectionData?.images?.data?.[1]?.attributes?.url}
+                    alt=""
+                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                    height={60}
+                    width={169}
+                  />
+                )}
               </div>
             </section>
           </Marquee>
@@ -50,27 +53,31 @@ const TrustedBySection = () => {
               {/* First Image Start */}
               <div className="relative">
                 <div className=" pb-5 relative">
-                  <Image
-                    loading="lazy"
-                    src="/images/home/Trusted3.png"
-                    alt=""
-                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
-                    height={60}
-                    width={169}
-                  />
+                  {sectionData?.images?.data?.[2]?.attributes?.url && (
+                    <Image
+                      loading="lazy"
+                      src={sectionData?.images?.data?.[2]?.attributes?.url}
+                      alt=""
+                      className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
+                      height={60}
+                      width={169}
+                    />
+                  )}
                 </div>
               </div>
               {/* End First Image  */}
 
               <div className="relative">
-                <Image
-                  loading="lazy"
-                  src="/images/home/Trusted4.png"
-                  alt=""
-                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                  height={60}
-                  width={169}
-                />
+                {sectionData?.images?.data?.[3]?.attributes?.url && (
+                  <Image
+                    loading="lazy"
+                    src={sectionData?.images?.data?.[3]?.attributes?.url}
+                    alt=""
+                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                    height={60}
+                    width={169}
+                  />
+                )}
               </div>
             </section>
           </Marquee>
@@ -80,27 +87,31 @@ const TrustedBySection = () => {
               {/* First Image Start */}
               <div className="relative">
                 <div className=" pb-5 relative">
-                  <Image
-                    loading="lazy"
-                    src="/images/home/Trusted5.png"
-                    alt=""
-                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
-                    height={60}
-                    width={169}
-                  />
+                  {sectionData?.images?.data?.[4]?.attributes?.url && (
+                    <Image
+                      loading="lazy"
+                      src={sectionData?.images?.data?.[4]?.attributes?.url}
+                      alt=""
+                      className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
+                      height={60}
+                      width={169}
+                    />
+                  )}
                 </div>
               </div>
               {/* End First Image  */}
 
               <div className="relative">
-                <Image
-                  loading="lazy"
-                  src="/images/home/Trusted6.png"
-                  alt=""
-                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                  height={60}
-                  width={169}
-                />
+                {sectionData?.images?.data?.[5]?.attributes?.url && (
+                  <Image
+                    loading="lazy"
+                    src={sectionData?.images?.data?.[5]?.attributes?.url}
+                    alt=""
+                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                    height={60}
+                    width={169}
+                  />
+                )}
               </div>
             </section>
           </Marquee>
@@ -110,27 +121,31 @@ const TrustedBySection = () => {
               {/* First Image Start */}
               <div className="relative">
                 <div className=" pb-5 relative">
-                  <Image
-                    loading="lazy"
-                    src="/images/home/Trusted7.png"
-                    alt=""
-                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
-                    height={60}
-                    width={169}
-                  />
+                  {sectionData?.images?.data?.[6]?.attributes?.url && (
+                    <Image
+                      loading="lazy"
+                      src={sectionData?.images?.data?.[6]?.attributes?.url}
+                      alt=""
+                      className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px]  my-10  "
+                      height={60}
+                      width={169}
+                    />
+                  )}
                 </div>
               </div>
               {/* End First Image  */}
 
               <div className="relative">
-                <Image
-                  loading="lazy"
-                  src="/images/home/Trusted8.png"
-                  alt=""
-                  className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
-                  height={60}
-                  width={169}
-                />
+                {sectionData?.images?.data?.[7]?.attributes?.url && (
+                  <Image
+                    loading="lazy"
+                    src={sectionData?.images?.data?.[7]?.attributes?.url}
+                    alt=""
+                    className=" w-[138px] h-[43px] xl:w-[169px] xl:h-[60px] my-10"
+                    height={60}
+                    width={169}
+                  />
+                )}
               </div>
             </section>
           </Marquee>

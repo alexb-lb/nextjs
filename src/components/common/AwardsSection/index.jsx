@@ -4,8 +4,9 @@ import Slider from "react-slick";
 import "./slider.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Image from "next/image";
 
-const CenterMode = () => {
+const CenterMode = ({ sectionData, imageData }) => {
   const [slidesToShow, setSlidesToShow] = useState(5);
 
   useEffect(() => {
@@ -33,33 +34,33 @@ const CenterMode = () => {
     };
   }, []);
 
-  const handleSlideChange = () => {
-    if (typeof window !== "undefined") {
-      const slides = document.querySelectorAll(".slick-slide");
+  // const handleSlideChange = () => {
+  //   if (typeof window !== "undefined") {
+  //     const slides = document.querySelectorAll(".slick-slide");
 
-      slides.forEach((slide) => {
-        const index = parseInt(slide.getAttribute("data-index"), 10);
-        const centerIndex = parseInt(
-          document.querySelector(".slick-center")?.getAttribute("data-index"),
-          10
-        );
+  //     slides.forEach((slide) => {
+  //       const index = parseInt(slide.getAttribute("data-index"), 10);
+  //       const centerIndex = parseInt(
+  //         document.querySelector(".slick-center")?.getAttribute("data-index"),
+  //         10
+  //       );
 
-        let scale = 0.7; // default smallest scale
+  //       let scale = 0.7; // default smallest scale
 
-        if (index === centerIndex) {
-          scale = 1.2; // center slide
-        } else if (index === centerIndex - 1 || index === centerIndex + 1) {
-          scale = 0.9; // adjacent slides
-        }
+  //       if (index === centerIndex) {
+  //         scale = 1.2; // center slide
+  //       } else if (index === centerIndex - 1 || index === centerIndex + 1) {
+  //         scale = 0.4; // adjacent slides
+  //       }
 
-        slide.style.transform = `scale(${scale})`;
-      });
-    }
-  };
+  //       slide.style.transform = `scale(${scale})`;
+  //     });
+  //   }
+  // };
 
-  useEffect(() => {
-    handleSlideChange(); // initial adjustment
-  }, []);
+  // useEffect(() => {
+  //   handleSlideChange(); // initial adjustment
+  // }, []);
 
   const settings = {
     className: "center",
@@ -73,7 +74,7 @@ const CenterMode = () => {
     autoplay: true,
     pauseOnHover: false,
     arrows: false,
-    afterChange: handleSlideChange,
+    // afterChange: handleSlideChange,
     responsive: [
       {
         breakpoint: 1024,
@@ -91,10 +92,63 @@ const CenterMode = () => {
   return (
     <div className="awardSection px-15 py-16 max-md:pb-0 sm:mt-20 max-md:max-w-full bg-primary_white">
       <h2 className="title2 text-primary_black text-center font-sora capitalize max-md:max-w-full max-md:text-[30px]">
-        Awards & <br className="block md:hidden" /> Recognition
+        {/* Awards & <br className="block md:hidden" /> Recognition */}
+        {sectionData[0]?.title}
       </h2>
       <Slider {...settings} id="award_section">
-        <div>
+        {sectionData[1]?.cards?.map((item, ind) => (
+          <div key={ind}>
+            <div className="sliderBox" data-index={ind}>
+              {imageData?.cards[ind]?.image?.data?.attributes?.url && ( 
+                <Image
+                  loading="lazy"
+                  // src="/images/company/award3.svg"
+                  src={imageData?.cards[ind]?.image?.data?.attributes?.url}
+                  alt=""
+                  height={200}
+                  width={200}
+                  className="mx-auto"
+                />
+              )}
+
+              <h4 className="text-center text-[#020103] font-urbanist mt-2">
+                {/* 2023 */}
+                {item?.title || "2023"}
+              </h4>
+              <p className="font-medium text-[10px] sm:text-[16px] tracking-tight leading-5 text-gray-500 text-center para font-urbanist">
+                {/* Excellence Awards Winner */}
+                {item?.description || "Excellence Awards Winner"}
+              </p>
+            </div>
+          </div>
+        ))}
+        {sectionData[1]?.cards?.map((item, ind) => (
+          <div key={ind}>
+            <div className="sliderBox" data-index={ind}>
+              {imageData?.cards[ind]?.image?.data?.attributes?.url && ( 
+                <Image
+                  loading="lazy"
+                  // src="/images/company/award3.svg"
+                  src={imageData?.cards[ind]?.image?.data?.attributes?.url}
+                  alt=""
+                  height={200}
+                  width={200}
+                  className="mx-auto"
+                />
+              )}
+
+              <h4 className="text-center text-[#020103] font-urbanist mt-2">
+                {/* 2023 */}
+                {item?.title || "2023"}
+              </h4>
+              <p className="font-medium text-[10px] sm:text-[16px] tracking-tight leading-5 text-gray-500 text-center para font-urbanist">
+                {/* Excellence Awards Winner */}
+                {item?.description || "Excellence Awards Winner"}
+              </p>
+            </div>
+          </div>
+        ))}
+        {/* <div>
           <div className="sliderBox" data-index="0">
             <img
               loading="lazy"
@@ -173,7 +227,7 @@ const CenterMode = () => {
               Excellence Awards Winner
             </p>
           </div>
-        </div>
+        </div> */}
       </Slider>
     </div>
   );

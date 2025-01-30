@@ -1,5 +1,5 @@
 "use client";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 const tableOfContents = [
   { title: "Introduction" },
@@ -9,8 +9,7 @@ const tableOfContents = [
   { title: "CRM Tools" },
 ];
 
-function TableOfContents({divWidth}) {
-  console.log(divWidth)
+function TableOfContents({ divWidth, propdata }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   // const [divWidth, setDivWidth] = useState(10);
 
@@ -40,7 +39,9 @@ function TableOfContents({divWidth}) {
             alt=""
             className="object-contain shrink-0 self-stretch my-auto w-8 aspect-square"
           />
-          <h2 className="self-stretch my-auto">Table of Contents</h2>
+          <h2 className="self-stretch my-auto">
+            {propdata?.title || "Table of Contents"}
+          </h2>
         </div>
         <div className="mt-9 w-full border-2 border-indigo-500 border-solid min-h-[2px]" />
         <nav className="mt-9 text-xl">
@@ -65,7 +66,10 @@ function TableOfContents({divWidth}) {
         8 min read
       </div>
       <div className=" w-[100%]  mt-3 rounded-2xl border border-solid border-zinc-300 overflow-hidden  ">
-        <div className=" h-4 rounded-3xl bg-[#545CF6] " style={{ width: `${(Math.floor(divWidth))*3.333}%` }}  />
+        <div
+          className=" h-4 rounded-3xl bg-[#545CF6] "
+          style={{ width: `${Math.floor(divWidth) * 3.333}%` }}
+        />
       </div>
     </div>
   );

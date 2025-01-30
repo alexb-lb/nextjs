@@ -8,8 +8,11 @@ import {
   AccordionItemPanel,
 } from "react-accessible-accordion";
 import { FaAngleDown } from "react-icons/fa6";
+import WhatsNewCard from "../PlateformOverview/WhatsNewCard";
 
-const PlatformMenu = ({ changeNavMenu }) => {
+const PlatformMenu = ({ changeNavMenu, navData, whatsNew, blogs }) => {
+  const newsItem = (whatsNew && whatsNew[0]) || [];
+  const blogItem = (blogs && blogs[0]) || [];
   const platform_navItems = [
     {
       title: "PRIVACY CENTER",
@@ -100,21 +103,22 @@ const PlatformMenu = ({ changeNavMenu }) => {
       ],
     },
   ];
+
   return (
     <>
       <MobileNavheader
-        title={"Platform"}
+        title={navData?.name}
         changeNavMenu={changeNavMenu}
-        link={"/platform"}
+        link={navData?.custom_path || "#"}
       />
       <Accordion allowZeroExpanded>
-        {platform_navItems.map((item) => (
+        {navData?.children?.map((item, index) => (
           <AccordionItem key={item.uuid} className="mb-[35px]">
             <AccordionItemHeading>
               <AccordionItemButton>
                 <h2 className="flex items-center gap-[12px] cursor-pointer">
-                  <Link href={"/platform/" + item.link}>
-                    <span>{item.title}</span>
+                  <Link href={item?.custom_path}>
+                    <span>{item.name}</span>
                   </Link>
                   <span>
                     <FaAngleDown />
@@ -123,15 +127,22 @@ const PlatformMenu = ({ changeNavMenu }) => {
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
-              {item.body.map((body, ind) => (
+              {item?.children?.map((body, ind) => (
                 <div
                   className="mt-[14px] flex items-center gap-[9px]"
                   key={ind}
                 >
-                  <img src={body.img} alt="" />
-                  <Link href={body?.link}>
+                  <img
+                    src={
+                      body?.img ||
+                      platform_navItems[index]?.body[ind]?.img ||
+                      ""
+                    }
+                    alt=""
+                  />
+                  <Link href={body?.custom_path}>
                     <p className="font-normal font-urbanist text-[14px] leading-[16px] text-[#232323E5]/[.90]">
-                      {body.data}
+                      {body?.name}
                     </p>
                   </Link>
                 </div>
@@ -144,7 +155,7 @@ const PlatformMenu = ({ changeNavMenu }) => {
         <h3 className="font-sora font-semibold text-[18px] leading-[22.68px] mb-[22px]">
           What&apos;s New
         </h3>
-        <div className="bg-white rounded-[16px] py-[8px] px-[12px] flex gap-[16px] items-center">
+        {/* <div className="bg-white rounded-[16px] py-[8px] px-[12px] flex gap-[16px] items-center">
           <div>
             <h2 className="font-sora font-semibold text-[14px] leading-[17.64px] text-[#232323] mb-[16px]">
               AI and Employee Privacy
@@ -166,7 +177,24 @@ const PlatformMenu = ({ changeNavMenu }) => {
             alt=""
             className="w-[126px] h-[126px] rounded-[12px] "
           />
-        </div>
+        </div> */}
+        <WhatsNewCard
+          authorName={newsItem?.author?.name}
+          authorImage={newsItem?.author?.image}
+          date={newsItem?.createdAt}
+          title={newsItem?.title}
+          imageSrc={newsItem?.image}
+          link={newsItem?.link || "/resource/news-detail/" + newsItem?.slug}
+        />
+
+        <WhatsNewCard
+          authorName={blogItem?.author?.name}
+          authorImage={blogItem?.author?.image}
+          date={blogItem?.createdAt}
+          title={blogItem?.title}
+          imageSrc={blogItem?.image}
+          link={blogItem?.link || "/resource/blogs/" + blogItem?.slug}
+        />
       </div>
     </>
   );

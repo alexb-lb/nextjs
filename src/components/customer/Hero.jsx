@@ -1,4 +1,4 @@
-const Hero = () => {
+const Hero = ({ sectionData }) => {
   return (
     <>
       {/* <div> */}
@@ -12,11 +12,10 @@ const Hero = () => {
       >
         <div className="w-[627px] text-center ">
           <h1 className="title1 text-center mb-[12px] font-sora gradient_heading">
-            Customer Stories and Experiences
+            {sectionData?.content?.title}
           </h1>
-          <p className="para3A text-primary_white font-poppins max-md:font-urbanist">
-            Immerse in captivating client stories, sharing transformative
-            experiences that resonate profoundly.
+          <p className="para3A md:text-[24px] text-primary_white font-poppins max-md:font-urbanist">
+            {sectionData?.content?.description}
           </p>
         </div>
       </div>

@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import UseCaseCard from "./UseCaseCard";
 import "./home.css";
 import BorderButton from "../Animation/Button";
-import "./home.css";
+
+import Image from "next/image";
 
 interface UseCaseData {
   title: string;
@@ -77,7 +78,7 @@ const useCases: UseCaseData[] = [
   },
 ];
 
-const UseCasesSection: React.FC = () => {
+const UseCasesSection = ({ sectionData }: any) => {
   const [viewAll, setViewAll] = useState(false);
   return (
     <section className="z-10 self-center  max-md:mt-[0px] sm:mt-0 w-full md:pb-[100px] max-md:max-w-full bg-primary_white">
@@ -85,35 +86,63 @@ const UseCasesSection: React.FC = () => {
         <div className="flex justify-between max-md:flex-col">
           <div className="flex flex-col w-5/12 max-md:ml-0 max-md:w-full">
             <p className="para2 font-urbanist font-normal text-[#232323] lg:block hidden">
-              USE CASES
+              {/* USE CASES */}
+              {sectionData?.content?.title}
             </p>
             <h2 className="text-[28px] lg:text-[48px] leading-[39px] lg:leading-[60px] font-semibold text-[#232323] md:text-[#020103] capitalize text-center lg:text-left max-md:mt-10 max-md:max-w-full max-md:text-[28px] font-sora">
-              Some of Our <br /> Success Use cases
+              {/* Some of Our <br /> Success Use cases */}
+              {sectionData?.content?.description}
             </h2>
           </div>
           <div className="flex flex-col ml-5 w-5/12 max-md:ml-0 max-md:w-full">
             <p className="self-stretch my-auto text-[14px] leading-[22px] lg:text-xl lg:leading-7 text-[#444444] lg:text-left text-center max-md:mt-[26px] max-md:max-w-full font-urbanist">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-              turpis molestie, dictum est a, mattis tellus.
+              {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
+              turpis molestie, dictum est a, mattis tellus. */}
+              {sectionData?.content?.content}
             </p>
           </div>
         </div>
-        <img
+        <Image
+          alt=""
           src="/images/platform/caseStudyLine.png"
-          className="pt-[40px] max-md:hidden"
+          height={100}
+          width={100}
+          className="pt-[40px] max-md:hidden size-full"
         />
-        <div className="flex justify-center sm:justify-center flex-wrap w-full  lg:gap-5 gap-[14px] items-start self-center mt-[32px] lg:mt-12 text-neutral-900 max-md:mt-[54px] max-md:max-w-full m-auto">
-          {useCases
-            .filter((item, ind) => (viewAll ? ind < useCases.length : ind < 12))
-            .map((useCase, index) => (
-              <UseCaseCard
-                key={index}
-                title={useCase.title}
-                description={useCase.description}
-              />
-            ))}
+        <div className="flex justify-center items-stretch sm:justify-center flex-wrap w-full  lg:gap-5 gap-[14px]  self-center mt-[32px] lg:mt-12 text-neutral-900 max-md:mt-[54px] max-md:max-w-full m-auto">
+          {sectionData?.cards?.slice(0, 4)?.map((useCase: any) => (
+            <UseCaseCard
+              key={useCase?.id}
+              title={useCase?.title}
+              description={useCase?.description}
+              cta_text={useCase?.cta_text}
+              cta_url={useCase?.cta_url}
+            />
+          ))}
         </div>
-        {viewAll ? (
+        <div className="flex justify-center items-stretch sm:justify-center flex-wrap w-full  lg:gap-5 gap-[14px]  self-center mt-[32px] lg:mt-5 text-neutral-900 max-md:mt-[54px] max-md:max-w-full m-auto">
+          {sectionData?.cards?.slice(4, 8)?.map((useCase: any) => (
+            <UseCaseCard
+              key={useCase?.id}
+              title={useCase?.title}
+              description={useCase?.description}
+              cta_text={useCase?.cta_text}
+              cta_url={useCase?.cta_url}
+            />
+          ))}
+        </div>
+        <div className="flex justify-center items-stretch sm:justify-center flex-wrap w-full  lg:gap-5 gap-[14px]  self-center mt-[32px] lg:mt-5 text-neutral-900 max-md:mt-[54px] max-md:max-w-full m-auto">
+          {sectionData?.cards?.slice(8, 12)?.map((useCase: any) => (
+            <UseCaseCard
+              key={useCase?.id}
+              title={useCase?.title}
+              description={useCase?.description}
+              cta_text={useCase?.cta_text}
+              cta_url={useCase?.cta_url}
+            />
+          ))}
+        </div>
+        {/* {viewAll ? (
           <div className="mt-8 w-full flex justify-center ">
             <BorderButton
               content={"View Less"}
@@ -130,10 +159,10 @@ const UseCasesSection: React.FC = () => {
               className={
                 "text-xl leading-[20px] font-semibold text-center text-[#020103] px-[54.88px] py-[20px] rounded-[52px] max-md:px-5 bg-primary_white max-md:hidden"
               }
-              onClick={() => setViewAll(true)}
+              onClick={() => setViewAll(false)}
             />
           </div>
-        )}
+        )} */}
       </div>
     </section>
   );

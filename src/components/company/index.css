@@ -1,0 +1,5 @@
+.scrollbar-visible::-webkit-scrollbar-thumb {
+  background-color: var(--primary-blue);
+  border-radius: 10px;
+  border: 3px solid var(--gray-200);
+}

@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import thunk from "redux-thunk";
 
 import rootReducer from "./rootReducer";
 import strapiAxios from "../utils/axios/strapi.axios";

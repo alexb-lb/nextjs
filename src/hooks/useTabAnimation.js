@@ -1,17 +1,13 @@
-import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function useTabAnimation(className) {
-  const [cardActive, setCardActive] = useState(0);
-  const sectionRef = useRef();
-  const tlRef = useRef(null);
-  const [refresh, setRefresh] = useState(false);
-
-  function initGSAP() {
+function useTabAnimation(className, sectionRef, tlRef, setCardsActive) {
+  useEffect(() => {
     const boxes = gsap.utils.toArray(className);
+    gsap.set(boxes[0], { y: 0, scale: 1, zIndex: 10 });
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
@@ -23,7 +19,8 @@ function useTabAnimation(className) {
         onUpdate: (self) => {
           const progress = self.progress;
           const currentBox = Math.floor(progress * boxes.length);
-          setCardActive(currentBox);
+          setCardsActive(currentBox);
+
           // Apply scale down to previous boxes
           boxes.forEach((box, index) => {
             if (index < currentBox) {
@@ -42,50 +39,28 @@ function useTabAnimation(className) {
 
     let topPosition = 0;
 
-    boxes.forEach((box, index) => {
+    boxes.slice(1).forEach((box, index) => {
       tl.fromTo(
         box,
-        { y: window.innerWidth > 768 ? 1000 : 500, scale: 1 },
+        { y: window.innerWidth > 768 ? 1000 : 800, scale: 1 },
         {
           y: topPosition,
-          scale: 1,
+          scale: 1, // Make sure the new card starts at full size
           duration: 0.6,
-          delay: index * 0.2,
+          delay: index * 0.2, // Stagger effect based on index
           ease: "power1.out",
         }
       );
-      topPosition += 50;
+      topPosition += 30;
     });
 
     tlRef.current = tl;
-  }
 
-  useEffect(() => {
-    initGSAP();
     return () => {
       // Clean up ScrollTrigger instance
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
-
-  function refreshAnimation() {
-    ScrollTrigger.refresh();
-  }
-
-  function changeAnimationAsPerTabClick(newTabIndex) {
-    if (tlRef.current) {
-      const totalBoxes = gsap.utils.toArray(className).length;
-      const progressValue = newTabIndex / totalBoxes;
-      tlRef.current.progress(progressValue);
-    }
-  }
-
-  return {
-    cardActive,
-    sectionRef,
-    changeAnimationAsPerTabClick,
-    refreshAnimation,
-  };
 }
 
 export default useTabAnimation;

@@ -1,78 +1,58 @@
-"use client";
-import Header from "@/components/common/Header";
-import Footer from "@/components/common/Footer";
-import Hero from "@/components/customer/Hero";
-import CaseStudy from "@/components/common/CaseStudy";
-import TrustedBy from "@/components/customer/TrustedBy";
-import SuccessStories from "@/components/customer/SuccessStories";
-import IndustryExpert from "@/components/customer/IndustryExpert";
-import CustomerExperiencesSection from "@/components/Home/CustomerExperiencesSection";
-import AwardsSection from "../../components/common/AwardsSection";
-import ContactForm from "@/components/common/ContactForm";
-import CompanyHero from "@/components/company/Hero";
-import FeatureSection from "@/components/company/FeatureSection";
-import lottie from "lottie-web";
-import animationData from "@/utils/animation/Torch-interaction.json";
-import { useEffect, useRef } from "react";
+import React from "react";
+import LandingPage from "./main";
+import {
+  fetchCaseStudies,
+  fetchDataFromStrapi,
+  fetchImageData,
+  fetchPageData,
+} from "../../utils/helpers/initStrapi.helper";
+import { fetchNavigation } from "og_strapi_client";
+import { getSeoMetaData } from "@/utils/helpers/server.helpers";
 
-const Page = () => {
-  const lottieRef = useRef(null);
-  const lottieInstance = useRef(null);
-
-  useEffect(() => {
-    if (lottieRef.current && !lottieInstance.current) {
-      lottieInstance.current = lottie.loadAnimation({
-        container: lottieRef.current,
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        animationData: animationData,
-      });
-    }
-
-    // Cleanup function to destroy the animation on component unmount
-    return () => {
-      if (lottieInstance.current) {
-        lottieInstance.current.destroy();
-        lottieInstance.current = null;
-      }
-    };
-  }, []);
+async function CustomerPage() {
+  const data = await fetchPageData("pages", "customer");
+  const imageData = await fetchImageData("pages", {
+    filters: {
+      slug: "customer",
+    },
+    populate: {
+      sections: {
+        populate: ["cards.image", "cards.icon", 'images'],
+      },
+    },
+  });
+  const navigation = await fetchNavigation(["header", "footer"]);
+  const caseStudy = await fetchCaseStudies();
+  const GetInTouchData = await fetchDataFromStrapi("get-in-touches",{
+    populate: "*",
+  });
   return (
-    <>
-      <main className="bg-primary_white relative">
-        <div className="lg:px-[80px] lg:pt-[20px] hero_banner  w-full">
-          <div className="absolute top-20 right-0" ref={lottieRef}></div>
-          <Header />
-          <Hero />
-        </div>
-        <div className="lg:p-[80px] lg:pb-[53px] md:bg-[url('/images/customers/case_study_bg.svg')] bg-bottom bg-cover bg-no-repeat max-lg:px-4 w-full">
-          <CaseStudy />
-        </div>
-        <TrustedBy />
-        <div
-          className="lg:px-[80px]  px-4 lg:pb-2 md:bg-[url('/images/customers/stories_bg.svg')] bg-center bg-cover bg-no-repeat w-full"
-          style={{ backgroundPositionY: "-95px" }}
-        >
-          <SuccessStories />
-        </div>
-        <CustomerExperiencesSection />
-        <div className="lg:pl-[80px] px-4 lg:py-[110px] md:bg-[url('/images/customers/expert_bg.svg')] bg-center bg-cover bg-no-repeat  w-full overflow-hidden">
-          <IndustryExpert />
-        </div>
-        <div className="lg:p-[80px] lg:pt-[20px] pt-[40px] max-lg:pb-[58px] bg-[url('/images/company/hero_bg.svg')] bg-cover bg-center bg-no-repeat">
-          <CompanyHero />
-          <FeatureSection />
-        </div>
-
-        <AwardsSection />
-
-        <div className="lg:px-20  md:sticky top-0 bg-primary_white md:mt-[-200px]">
-          <ContactForm />
-        </div>
-        <Footer />
-      </main>
-    </>
+    <LandingPage
+      strapiData={data?.data?.data[0]?.attributes}
+      navigation={navigation}
+      caseStudy={caseStudy}
+      imagesData={imageData?.data?.data?.[0]?.attributes}
+      GetInTouchData={GetInTouchData?.data?.data?.[0]?.attributes}
+    />
   );
-};
-export default Page;
+}
+export const dynamic = "force-dynamic";
+export default CustomerPage;
+
+export async function generateMetadata() {
+  const response = await fetchDataFromStrapi("pages", {
+    filters: {
+      slug: {
+        $eq: "customer",
+      },
+    },
+    populate: {
+      seo: {
+        populate: "*",
+      },
+    },
+  });
+  const seo = response?.data?.data && response?.data?.data[0]?.attributes?.seo;
+  const seoData = seo && seo[0];
+  return getSeoMetaData(seoData);
+}

@@ -1,6 +1,9 @@
+import Image from "next/image";
 import React from "react";
 
-const Whyus = () => {
+const Whyus = ({ strapiData }) => {
+
+
   return (
     <div
       className="flex flex-col items-center justify-center pt-12  w-full relative"
@@ -16,12 +19,10 @@ const Whyus = () => {
     >
       <section className=" w-full text-center md:pt-12 max-md:px-[21px]">
         <h2 className="text-[30px] leading-[37px] md:text-[48px] font-semibold font-sora md:leading-[45px] mb-6">
-          Why Us
+          {strapiData.sections[8].title || "Why Us"}
         </h2>
-        <p className="text-[14px] leading-[20px] md:text-[18px] font-normal font-urbanist md:leading-[26px] mb-[34px] md:mb-20">
-          LightBeam.ai ensures secure data across locations, maintaining
-          control, compliance, <br></br> and privacy for all data types,
-          enabling a zero-trust data protection approach.
+        <p className="text-[14px] leading-[20px] md:text-[24px] font-normal font-urbanist md:leading-[26px] mb-[34px] md:mb-20 xl:max-w-[800px] mx-auto">
+          {strapiData.sections[8]?.content?.description}
         </p>
 
         <div className="flex flex-col justify-center items-center gap-6 max-w-4xl mx-auto ">
@@ -32,11 +33,12 @@ const Whyus = () => {
             </div>
             <div>
               <h3 className="text-[22px] text-left font-medium font-sora text-[#232323] leading-8 mb-[25px] md:mb-1">
-                Comprehensive Security Solutions
+                {strapiData.sections[9].cards[0].title ||
+                  "Comprehensive Security Solutions "}
               </h3>
               <p className="text-[14px] font-normal text-left font-urbanist text-[#232323] leading-[20px] ">
-                LightBeam offers robust data protection, encryption, and secure
-                access management for peace of mind.
+                {strapiData.sections[9].cards[0].description ||
+                  "LightBeam offers robust data protection, encryption, and secure access management for peace of mind."}
               </p>
             </div>
           </div>
@@ -48,11 +50,12 @@ const Whyus = () => {
             </div>
             <div>
               <h3 className="text-[22px] text-left font-medium font-sora text-[#232323] leading-8 mb-[25px] md:mb-1">
-                Efficient Compliance Management
+                {strapiData.sections[9].cards[1].title ||
+                  "Efficient Compliance Management"}
               </h3>
               <p className="text-[14px] font-normal text-left font-urbanist text-[#232323] leading-[20px] ">
-                Automate regulatory compliance workflows with LightBeam&apos;s
-                intuitive tools and real-time monitoring capabilities.
+                {strapiData.sections[9].cards[1].description ||
+                  "Automate regulatory compliance workflows with LightBeam's  intuitive tools and real-time monitoring capabilities."}
               </p>
             </div>
           </div>
@@ -64,22 +67,26 @@ const Whyus = () => {
             </div>
             <div>
               <h3 className="text-[22px] text-left font-medium font-sora text-[#232323] leading-8 mb-[25px] md:mb-1">
-                Scalable Performance Enhancement
+                {strapiData.sections[9].cards[1].title ||
+                  "Scalable Performance Enhancement"}
               </h3>
               <p className="text-[14px] font-normal text-left font-urbanist text-[#232323] leading-[20px] ">
-                LightBeam&apos;s advanced analytics and insights optimize system
-                performance, ensuring operational efficiency and growth
-                readiness.
+                {strapiData.sections[9].cards[1].description ||
+                  " LightBeam's advanced analytics and insights optimize system performance, ensuring operational efficiency and growth  readiness."}
               </p>
             </div>
           </div>
         </div>
       </section>
-      <img
-        src="/images/career/prop4.png"
-        alt="Question Mark"
-        className="absolute bottom-14 left-14 max-md:hidden"
-      />
+      {/* {strapiData?.sections?.[8]?.images?.data?.[0]?.attributes?.url && (
+        <Image
+          src={strapiData?.sections?.[8]?.images?.data?.[0]?.attributes?.url}
+          alt="Question Mark"
+          width={300}
+          height={400}
+          className="absolute bottom-14 left-14 max-md:hidden"
+        />
+      )} */}
     </div>
   );
 };

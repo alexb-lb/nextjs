@@ -28,12 +28,12 @@ const features = [
   },
 ];
 
-function FeatureSection() {
+function FeatureSection({ strapiData, imageData }) {
   return (
     <section className="overflow-hidden relative lg:px-px px-[16px] lg:mt-9 mt-[44px] lg:ml-0 max-md:max-w-full ">
       <div className="flex md:gap-5 flex-wrap max-lg:justify-between lg:w-[1280px] mx-auto max-md:justify-center max-md:gap-[7px]">
-        {features.map((feature, index) => (
-          <FeatureCard key={index} {...feature} />
+        {strapiData?.cards?.map((feature, index) => (
+          <FeatureCard key={index} feature={feature} iconImage={imageData?.cards?.[index]?.image?.data?.attributes?.url} />
         ))}
       </div>
     </section>

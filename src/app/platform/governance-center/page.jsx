@@ -1,61 +1,58 @@
-"use client";
 import React from "react";
-import Hero from "./_components/Hero";
-import Access from "./_components/Access";
-import Retention from "./_components/Retention";
-import Content from "./_components/Content";
-import AIGovernance from "./_components/AIGovernance";
-import Footer from "@/components/common/Footer";
-import Header from "@/components/common/Header";
-import ContactForm from "@/components/common/ContactForm";
-import lottie from "lottie-web";
-import animationData from "@/utils/animation/Torch-interaction.json";
-import { useEffect, useRef } from "react";
+import LandingPage from "./main";
+import {
+  fetchCaseStudies,
+  fetchDataFromStrapi,
+  fetchImageData,
+  fetchPageData,
+} from "../../../utils/helpers/initStrapi.helper";
+import { fetchNavigation } from "og_strapi_client";
+import { getSeoMetaData } from "@/utils/helpers/server.helpers";
 
-const Page = () => {
-  const lottieRef = useRef(null);
-  const lottieInstance = useRef(null);
-
-  useEffect(() => {
-    if (lottieRef.current && !lottieInstance.current) {
-      lottieInstance.current = lottie.loadAnimation({
-        container: lottieRef.current,
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        animationData: animationData,
-      });
-    }
-
-    // Cleanup function to destroy the animation on component unmount
-    return () => {
-      if (lottieInstance.current) {
-        lottieInstance.current.destroy();
-        lottieInstance.current = null;
-      }
-    };
-  }, []);
+async function PlatformGovernance() {
+  const data = await fetchPageData("pages", "platform-governance");
+  const navigation = await fetchNavigation(["header", "footer"]);
+  const caseStudy = await fetchCaseStudies();
+  const imageData = await fetchImageData("pages", {
+    filters: {
+      slug: "platform-governance",
+    },
+    populate: {
+      sections: {
+        populate: "cards.image",
+      },
+    },
+  });
+  const GetInTouchData = await fetchDataFromStrapi("get-in-touches",{
+    populate: "*",
+  });
   return (
-    <>
-      <div className=" bg-primary_white relative">
-        <div className="relative">
-          <div className="lg:p-[80px] lg:pt-[20px] hero_banner">
-            <div className="absolute top-28 right-0" ref={lottieRef}></div>
-            <Header />
-            <Hero />
-          </div>
-          <Access />
-          <Retention />
-          <Content />
-          <AIGovernance />
-        </div>
-        <div className="md:px-20 md:sticky md:top-0">
-          <ContactForm />
-        </div>
-        <Footer />
-      </div>
-    </>
+    <LandingPage
+      strapiData={data?.data?.data[0]?.attributes}
+      imageData={imageData?.data?.data[0]?.attributes}
+      navigation={navigation}
+      caseStudy={caseStudy}
+      GetInTouchData={GetInTouchData?.data?.data?.[0]?.attributes}
+    />
   );
-};
+}
+export const dynamic = "force-dynamic";
+export default PlatformGovernance;
 
-export default Page;
+export async function generateMetadata() {
+  const response = await fetchDataFromStrapi("pages", {
+    filters: {
+      slug: {
+        $eq: "platform-governance",
+      },
+    },
+    populate: {
+      seo: {
+        populate: "*",
+      },
+    },
+  });
+  const seo = response?.data?.data && response?.data?.data[0]?.attributes?.seo;
+  const seoData = seo && seo[0];
+  return getSeoMetaData(seoData);
+}

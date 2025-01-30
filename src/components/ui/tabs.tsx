@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { motion, useScroll } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import React from "react";
 
 type Tab = {
   title: string;
@@ -13,7 +13,7 @@ type Tab = {
 };
 
 export const Tabs = ({
-  tabs: propTabs,
+  tabs: propTabs = [],
   containerClassName,
   activeTabClassName,
   tabClassName,
@@ -21,7 +21,6 @@ export const Tabs = ({
   activeTab,
   animateClass,
   handleAnimationChange,
-  refreshAnimation,
 }: {
   tabs: Tab[];
   containerClassName?: string;
@@ -31,23 +30,35 @@ export const Tabs = ({
   activeTab: number;
   animateClass: string;
   handleAnimationChange: any;
-  refreshAnimation: any;
 }) => {
   const [active, setActive] = useState<Tab>(propTabs[0]);
   const [tabs, setTabs] = useState<Tab[]>(propTabs);
 
-  // useEffect(() => {
-  //   if (Array.isArray(propTabs) && propTabs.length > 0 && activeTab)
-  //     if (propTabs[activeTab]) {
-  //       setActive(propTabs[activeTab]);
+  // const moveSelectedTabToTop = (idx: number) => {
+  //   if (idx === activeIndex + 1 || idx === activeIndex - 1) {
+  //     if (handleAnimationChange) {
+  //       handleAnimationChange(idx);
   //     }
-  // }, [activeTab]);
+  //     if (idx === activeIndex - 1)
+  //       setActiveIndex((activeIndex) => activeIndex - 1);
+  //     if (idx === activeIndex + 1)
+  //       setActiveIndex((activeIndex) => activeIndex + 1);
+  //   }
+  //   setActive(tabs[idx]);
+  // };
 
   const moveSelectedTabToTop = (idx: number) => {
-    // if (handleAnimationChange) {
-    //   handleAnimationChange(idx);
-    // }
+    if (handleAnimationChange) {
+      handleAnimationChange(idx);
+    }
+    setActive(tabs[idx]);
   };
+
+  const [hovering, setHovering] = useState(false);
+
+  useEffect(() => {
+    setActive(tabs[activeTab || 0]);
+  }, [activeTab]);
 
   return (
     <>
@@ -62,7 +73,7 @@ export const Tabs = ({
             }}
             className={`para1 relative lg:px-4 lg:py-2 p-3 font-urbanist font-semibold lg:pb-8 pb-6 max-lg:min-w-[150px] ${tabClassName}`}
           >
-            {active.value === tab.value && (
+            {active?.value === tab.value && (
               <motion.div
                 layoutId="clickedbutton"
                 transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
@@ -72,7 +83,7 @@ export const Tabs = ({
 
             <span
               className={`para1 font-urbanist relative block max-md:text-[16px]  ${
-                active.value === tab.value && "text-[#232323]"
+                active?.value === tab.value && "text-[#232323]"
               }`}
             >
               {tab.title}
@@ -82,38 +93,42 @@ export const Tabs = ({
       </div>
       <FadeInDiv
         tabs={tabs}
-        key={active.value}
+        active={activeTab}
+        hovering={hovering}
+        className={`lg:mt-[58px] ${contentClassName}`}
         animateClass={animateClass}
-        refreshAnimation={refreshAnimation}
       />
     </>
   );
 };
 
-export const FadeInDiv = React.memo(
-  ({
-    tabs,
-    animateClass,
-    refreshAnimation,
-  }: {
-    tabs: Tab[];
-    animateClass: string;
-    refreshAnimation: any;
-  }) => {
-    return (
-      <div className="relative lg:w-[80%] w-full mx-auto h-full">
-        {tabs.map((tab) => (
-          <div
-            className={`w-full h-full absolute top-0 ${animateClass}`}
-            key={tab.value}
-          >
-            {tab.content}
-          </div>
-        ))}
-      </div>
-    );
-  },
-  () => {
-    return false;
+export const FadeInDiv = ({
+  tabs,
+  animateClass,
+  active,
+}: {
+  className?: string;
+  tabs: Tab[];
+  active: number;
+  hovering?: boolean;
+  animateClass: string;
+}) => {
+  function getClassName(idx: number) {
+    return true;
   }
-);
+
+  return (
+    <div className="relative lg:w-[80%] w-full mx-auto h-full">
+      {tabs.map((tab, idx) => (
+        <div
+          className={`w-full h-full absolute top-0 ${
+            getClassName(idx) ? animateClass : null
+          }`}
+          key={idx}
+        >
+          {tab.content}
+        </div>
+      ))}
+    </div>
+  );
+};

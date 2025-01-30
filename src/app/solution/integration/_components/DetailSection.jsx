@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import React, { useRef } from "react";
-import Select from "react-select";
 
 const options = [
   { value: "dateCreated", label: "Sort by: Date Created" },
@@ -167,7 +166,7 @@ const integrations = [
   },
 ];
 
-const DetailSection = () => {
+const DetailSection = ({ sectionData }) => {
   const cardRefs = useRef([]);
 
   const scrollToCard = (cardId) => {
@@ -190,9 +189,20 @@ const DetailSection = () => {
     }
   };
 
+  const exp = {
+    0: "m365-suite",
+    2: "#cloud-storage",
+    9: "#web-apps",
+    3: "#sql-database",
+    10: "#onprem-storage",
+    13: "#crm-system",
+    11: "#ticketing-system",
+    14: "#hr-system",
+  };
+
   return (
     <section className="mt-[52px] md:mt-[108px] pb-[67px] flex flex-col items-center">
-      <div className="w-[100%] h-[60px] flex justify-center items-center">
+      {/* <div className="w-[100%] h-[60px] flex justify-center items-center">
         <div className="flex gap-5 max-lg:items-center lg:w-[70%] w-full">
           <div className="relative lg:w-[68%] w-full h-[60px]">
             <input
@@ -225,6 +235,7 @@ const DetailSection = () => {
               width={52}
               height={52}
               alt="Sortby"
+              className="max-sm:w-[62px] max-sm:h-[62px]"
             />
           </div>
 
@@ -237,33 +248,40 @@ const DetailSection = () => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
 
-      {integrations.map((integration, index) => (
+      {sectionData?.map((integration, index) => (
         // <IntegrationBox  key={index} {...integration} />
         <div
-          key={integration.id}
+          key={integration?.id}
           ref={(el) => (cardRefs.current[index] = el)}
           className={`flex max-lg:flex-col lg:gap-[88px] gap-4 items-center lg:mt-[100px] mt-10 max-lg:text-center ${
-            integration.reverse ? "flex-row-reverse" : ""
+            index % 2 !== 0 ? "flex-row-reverse" : ""
           }`}
-          id={integration.id}
+          id={exp[index]}
         >
           <div className="lg:w-[542px] w-full">
             <h2 className="text-[28px] leading-[35px] md:title2 font-sora font-semibold">
-              {integration.title}
+              {integration?.content?.title}
             </h2>
-            <p className="font-urbanist text-[14px] leading-[20px] md:text-[20px] md:leading-[28px] text-[#444444] lg:my-[32px] mt-4">
-              {integration.description}
+            <p className="font-urbanist text-[14px] leading-[20px] md:text-[24px] md:leading-[28px] text-[#444444] lg:my-[32px] mt-4">
+              {integration?.content?.description}
             </p>
           </div>
           <div className=" lg:w-[649px] w-full lg:h-[315px] rounded-[16px] overflow-hidden">
-            <img
-              loading="lazy"
-              src={integration.image}
-              alt={integration.title}
-              className=" min-h-[315px] min-w-full object-cover"
-            />
+            {integration?.images?.data[0]?.attributes?.url && (
+              <Image
+                loading="lazy"
+                height={300}
+                width={300}
+                src={
+                  integration?.images?.data &&
+                  integration?.images?.data[0]?.attributes?.url
+                }
+                alt={integration?.title}
+                className=" min-h-[315px] min-w-full object-cover"
+              />
+            )}
           </div>
         </div>
       ))}

@@ -1,3 +1,7 @@
+.canvasHeight canvas {
+  height: 600px !important;
+  width: 1000px !important;
+}
 .trendBlogMob .slick-dots li button:before {
   content: "" !important;
 }
@@ -20,7 +24,7 @@
   margin-top: 25px;
 }
 .trendBlogMob .slick-dots {
-  bottom: -45px !important;
+  bottom: -20px !important;
 }
 @media only screen and (min-width: 1700px) {
   .firstMarque {
@@ -31,6 +35,12 @@
   .cardSpacing {
     padding-left: 35px;
   }
+  .globeImage {
+    width: 80%;
+  }
+  .customerPara {
+    padding-right: 15px;
+  }
 }
 @media only screen and (max-width: 1000px) {
   .cardSpacing {
@@ -38,5 +48,25 @@
   }
 }
 
-@media screen and (min-height: "668px") and (max-height: "") {
+@media only screen and (min-width: 1300px) {
+  .zeroTrustCard {
+    margin-top: 80px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .canvasHeight canvas {
+    height: 400px !important;
+    width: auto !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  .canvasHeight canvas {
+    height: 150px !important;
+    width: auto !important;
+  }
+}
+@media screen and (min-width: 400px) and (max-width: 440px) {
+  .triangleHeight {
+    height: 390px;
+  }
 }

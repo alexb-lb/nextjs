@@ -1,25 +1,9 @@
 import React from "react";
 import WhatsNewCard from "./WhatsNewCard";
 
-const WhatsNewSection = () => {
-  const newsItems = [
-    {
-      author: "Sharon Farber",
-      date: "Jan 4, 2024",
-      title: "AI and Employee Privacy",
-      imageSrc:
-        "https://cdn.builder.io/api/v1/image/assets/TEMP/97cf3168f1c895497270f1f5b148e9ac400c02785d9da7a016047221dc3f5d4a?placeholderIfAbsent=true&apiKey=1abc4d0464e34738b1ac60d620a89887",
-      link: "/resource/news-details",
-    },
-    {
-      author: "Sharon Farber",
-      date: "Jan 4, 2024",
-      title: "AI and Employee Privacy",
-      imageSrc:
-        "https://cdn.builder.io/api/v1/image/assets/TEMP/97cf3168f1c895497270f1f5b148e9ac400c02785d9da7a016047221dc3f5d4a?placeholderIfAbsent=true&apiKey=1abc4d0464e34738b1ac60d620a89887",
-      link: "/resource/news-details",
-    },
-  ];
+const WhatsNewSection = ({ whatsNew, blogs }) => {
+  const newsItem = (whatsNew && whatsNew[0]) || [];
+  const blogItem = (blogs && blogs[0]) || [];
 
   return (
     <aside className="flex flex-col ml-5 w-[398px]">
@@ -27,9 +11,40 @@ const WhatsNewSection = () => {
         <h2 className="self-start text-[22px] leading-[27px] font-sora font-semibold text-center text-black">
           What&apos;s New
         </h2>
-        {newsItems.map((item, index) => (
-          <WhatsNewCard key={index} {...item} />
-        ))}
+        {/* {whatsNew &&
+          whatsNew
+            ?.filter((item, ind) => ind < 2)
+            .map((item, index) => {
+              const date = new Date(item?.createdAt);
+              return (
+                <WhatsNewCard
+                  key={index}
+                  author={item?.author?.name}
+                  date={date?.toLocaleString()}
+                  title={item?.title}
+                  imageSrc={item?.image}
+                  link={item?.link || "/resource/news-room"}
+                />
+              );
+            })} */}
+
+        <WhatsNewCard
+          authorName={newsItem?.author?.name}
+          authorImage={newsItem?.author?.image}
+          date={newsItem?.createdAt}
+          title={newsItem?.title}
+          thumbnail={newsItem.thumbnail}
+          link={newsItem?.link || "/resources/news-detail/" + newsItem?.slug}
+        />
+
+        <WhatsNewCard
+          authorName={blogItem?.author?.name}
+          authorImage={blogItem?.author?.image}
+          date={blogItem?.createdAt}
+          title={blogItem?.title}
+          thumbnail={blogItem.thumbnail}
+          link={blogItem?.link || "/resource/blogs/" + blogItem?.slug}
+        />
       </div>
     </aside>
   );
