@@ -49,6 +49,8 @@ const getLbEssentialsWhiteList = () => {
     window.location.host,
     getLbMainDomain(),
     "." + getLbMainDomain(),
+    "googletagmanager\.com",
+    "google-analytics\.com",
     ...(dataWebApp ? [dataWebApp.replace(/https?:\/\//i, "")] : []),
     ...(dataScriptHost ? [dataScriptHost.replace(/https?:\/\//i, "")] : []),
     ...customWhiteListUrls

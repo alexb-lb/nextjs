@@ -810,7 +810,6 @@ var renderCookieConsent = async () => {
     console.log('domain', globalDomain);
     console.log('categories', globalDomain.categories.map(({id, name}) => ({id, name})));
     console.log('GCM', globalDomain.googleConsentMapper.map(item => ({type: item.googleConsentType, linkedCategories: item?.lbCookieCategories.map(c => c.name) || []})));
-
     // // get global banner
     const globalBanner = !!globalDomain?.regionBannerInfo.length
       ? globalDomain?.regionBannerInfo[0].banner
