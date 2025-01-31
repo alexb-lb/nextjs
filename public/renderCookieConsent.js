@@ -803,7 +803,8 @@ var renderCookieConsent = async () => {
 
     const hostingUrlBase = lbCookieConsent.getHostingBaseUrl();
 
-    const globalResponse = await fetch(`${hostingUrlBase}/domain_config_${domainHash}.json`);
+    // const globalResponse = await fetch(`${hostingUrlBase}/domain_config.json`);
+    const globalResponse = await fetch(`${dataScriptHost}/cookie_consent_${ccVersion}/${domainId}/domain_config_${domainHash}.json`);
     const globalDomain = await globalResponse.json();
 
     console.log('domain', globalDomain);
@@ -899,6 +900,7 @@ var renderCookieConsent = async () => {
         functionality_storage: "denied",
         security_storage: "denied",
       };
+      console.log('Accepted categories', accepted);
       categoriesAccepted.forEach((accepted) => {
         const acceptedTags =
           domain.categories.find((c) => c.id === accepted)?.tags || [];
@@ -908,6 +910,8 @@ var renderCookieConsent = async () => {
       });
       lbCookieConsent.setConsentMode({ ...gtagConsents });
     }
+
+    console.log('Given GCM consents: ', gtagConsents);
 
     fetch(`${dataWebApp}/api/cookie-consent/response`, {
       method: "POST",
