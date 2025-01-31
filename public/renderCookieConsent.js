@@ -901,11 +901,16 @@ var renderCookieConsent = async () => {
         security_storage: "denied",
       };
       console.log('Accepted categories', categoriesAccepted);
-      categoriesAccepted.forEach((accepted) => {
-        const acceptedTags =
-          domain.categories.find((c) => c.id === accepted)?.tags || [];
-        acceptedTags.forEach((tag) => {
-          gtagConsents[tag] = "granted";
+      categoriesAccepted.forEach((categoryId) => {
+        domain.googleConsentMapper.find((gcmCategory) => {
+          const type = gcmCategory.googleConsentType;
+          const isCategoryLinked = !!gcmCategory.lbCookieCategories?.find(
+            (c) => c.id === categoryId
+          );
+
+          if (isCategoryLinked) {
+            gtagConsents[type] = "granted";
+          }
         });
       });
       console.log('Given GCM consents: ', gtagConsents);
