@@ -1,4 +1,4 @@
-const injectCookies = () => {
+var injectCookies = () => {
   const oneDayExpire = new Date(Date.now() + 86400 * 1000).toUTCString();
 
   document.cookie =
