@@ -30,12 +30,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script
+        {/* <Script
           src="/main.js"
           // src="https://newcookiebucket.s3.us-east-2.amazonaws.com/cookie_consent_10/363cc9bc-7ee8-43de-bd64-4238ee416ba2/main_4f8046e.js"
           id="lb-cookie-consent"
           strategy="beforeInteractive"
-        />
+        /> */}
         <Script
           id="gtag-default"
           strategy="beforeInteractive"
@@ -59,18 +59,6 @@ export default function RootLayout({
               } else {
                 gtag('consent', 'default', JSON.parse(localStorage.getItem('consentMode')));
               }
-            `,
-          }}
-        />
-        <Script
-          id="gtag-default"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              const setConsentMode = (consents) => {
-                window.gtag('consent', 'update', consents);
-                localStorage.setItem('consentMode', JSON.stringify(consents));
-              };
             `,
           }}
         />

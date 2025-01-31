@@ -798,18 +798,22 @@ var renderCookieConsent = async () => {
 
   // API requests
   const fetchDomainInfo = async () => {
-    const globalDomain = mockDomain;
-    const globalBanner = globalDomain?.banner;
+    // const globalDomain = mockDomain;
+    // const globalBanner = globalDomain?.banner;
 
-    // const globalResponse = await fetch(
-    //   `${dataScriptHost}/cookie_consent_${ccVersion}/${domainId}/domain_config_${domainHash}.json`
-    // );
-    // const globalDomain = await globalResponse.json();
+    const hostingUrlBase = lbCookieConsent.getHostingBaseUrl();
+
+    const globalResponse = await fetch(`${hostingUrlBase}/domain_config_${domainHash}.json`);
+    const globalDomain = await globalResponse.json();
+
+    console.log('domain', globalDomain);
+    console.log('categories', globalDomain.categories.map(({id, name}) => ({id, name})));
+    console.log('GCM', globalDomain.categories.map(({id, name}) => ({id, name})));
 
     // // get global banner
-    // const globalBanner = !!globalDomain?.regionBannerInfo.length
-    //   ? globalDomain?.regionBannerInfo[0].banner
-    //   : globalDomain?.banner;
+    const globalBanner = !!globalDomain?.regionBannerInfo.length
+      ? globalDomain?.regionBannerInfo[0].banner
+      : globalDomain?.banner;
 
     // get location-based banner
     let localBanner;
@@ -902,7 +906,7 @@ var renderCookieConsent = async () => {
           gtagConsents[tag] = "granted";
         });
       });
-      setConsentMode({ ...gtagConsents });
+      lbCookieConsent.setConsentMode({ ...gtagConsents });
     }
 
     fetch(`${dataWebApp}/api/cookie-consent/response`, {
@@ -1198,7 +1202,7 @@ var renderCookieConsent = async () => {
             cookie-consent-banner-container \
             ${banner?.layout.type} \
             ${banner?.layout.position?.join(" ")} \
-            ${!banner.toShowBanner || showPreferencesOnly ? " hidden" : ""} \
+            ${showPreferencesOnly ? " hidden" : ""} \
             ${isMobile() ? " mobile-view" : ""} \
         "
         id="lb-cookie-consent-banner">\
