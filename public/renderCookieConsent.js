@@ -888,7 +888,10 @@ var renderCookieConsent = async () => {
   }) => {
     if (!domain) return;
 
-    // mapping gtag consents
+    /**
+     * Mapping gtag consents
+     * GTM should be enabled on page, and either script was loaded wia GTM or googleConsentModeEnabled flag is on
+     */
     if (window.gtag && (!!domain.googleConsentModeEnabled || !!lbCookieConsentGcm?.isLoadedViaGtm)) {
       const gtagConsents = {
         ad_storage: "denied",
