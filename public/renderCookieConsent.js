@@ -900,7 +900,7 @@ var renderCookieConsent = async () => {
         functionality_storage: "denied",
         security_storage: "denied",
       };
-      console.log('Accepted categories', accepted);
+      console.log('Accepted categories', categoriesAccepted);
       categoriesAccepted.forEach((accepted) => {
         const acceptedTags =
           domain.categories.find((c) => c.id === accepted)?.tags || [];
