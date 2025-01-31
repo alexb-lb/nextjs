@@ -26,7 +26,7 @@ const lbCookieConsent = {
     let hostingUrlBase = '';
 
     if(window.lbCookieConsentGcm?.scriptHostURL){
-      const pathParts = url.split("/");
+      const pathParts = window.lbCookieConsentGcm?.scriptHostURL.split("/");
       pathParts.pop();
       hostingUrlBase = pathParts.join("/")
     } else {
