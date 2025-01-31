@@ -889,7 +889,7 @@ var renderCookieConsent = async () => {
     if (!domain) return;
 
     // mapping gtag consents
-    if (window.gtag && (!!domain.googleConsentModeEnabled || !!window.lbCookieConsentGcm?.scriptHostURL)) {
+    if (window.gtag && (!!domain.googleConsentModeEnabled || !!lbCookieConsentGcm?.isLoadedViaGtm)) {
       const gtagConsents = {
         ad_storage: "denied",
         ad_user_data: "denied",
