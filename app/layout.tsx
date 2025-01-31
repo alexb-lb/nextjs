@@ -30,12 +30,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script
+        {/* <Script
           src="/main.js"
           // src="https://newcookiebucket.s3.us-east-2.amazonaws.com/cookie_consent_10/363cc9bc-7ee8-43de-bd64-4238ee416ba2/main_4f8046e.js"
           id="lb-cookie-consent"
           strategy="beforeInteractive"
-        />
+        /> */}
         <Script
           id="gtag-default"
           strategy="beforeInteractive"
@@ -45,7 +45,7 @@ export default function RootLayout({
               function gtag() {
                 dataLayer.push(arguments);
               }
-                  
+
               gtag('consent', 'default', {
                 ad_storage: 'denied',
                 ad_user_data: 'denied',
@@ -59,7 +59,6 @@ export default function RootLayout({
           }}
         />
         <GoogleTagManager gtmId={GTM_ID} />
-        {/* Inject your custom script */}
         <Script
           src="./injectCookies.js"
           type="text/javascript"

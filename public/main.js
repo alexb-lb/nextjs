@@ -21,7 +21,7 @@ const lbCookieConsent = {
 
   setConsentMode: (consents) => {
     window.gtag('consent', 'update', consents);
-    localStorage.setItem('consentMode', JSON.stringify(consents));
+    // localStorage.setItem('consentMode', JSON.stringify(consents));
   },
 
   getHostingBaseUrl: () => {
