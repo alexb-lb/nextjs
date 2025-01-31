@@ -908,10 +908,10 @@ var renderCookieConsent = async () => {
           gtagConsents[tag] = "granted";
         });
       });
+      console.log('Given GCM consents: ', gtagConsents);
       lbCookieConsent.setConsentMode({ ...gtagConsents });
     }
 
-    console.log('Given GCM consents: ', gtagConsents);
 
     fetch(`${dataWebApp}/api/cookie-consent/response`, {
       method: "POST",
