@@ -26,8 +26,9 @@ const LB_LOCAL_STORAGE_PREFERENCES_KEY = "lb-preferences";
  *  Example: https://web-app.lightbeam.com
  * }
  */
-const lbCookieConsent = {
+var lbCookieConsent = {
   isLoadedViaGtm: !!window.lbCookieConsentGcm?.scriptHostURL,
+  isGcmOn: document.getElementById("lb-cookie-consent")?.getAttribute("data-gcm") === "true",
 
   setConsentMode: (consents) => {
     window.gtag('consent', 'update', consents);
@@ -61,8 +62,7 @@ const getLbEssentialsWhiteList = () => {
     window.location.host,
     getLbMainDomain(),
     "." + getLbMainDomain(),
-    "googletagmanager\.com",
-    "google-analytics\.com",
+    ...(lbCookieConsent.isGcmOn ? ["googletagmanager\.com", "google-analytics\.com"] : []),
     ...(dataWebApp ? [dataWebApp.replace(/https?:\/\//i, "")] : []),
     ...(dataScriptHost ? [dataScriptHost.replace(/https?:\/\//i, "")] : []),
     ...customWhiteListUrls
