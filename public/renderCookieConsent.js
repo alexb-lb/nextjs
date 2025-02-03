@@ -543,6 +543,7 @@ var renderCookieConsent = async () => {
   const showPreferences = root?.getAttribute("data-preferences-only") || "";
   const VISITOR_ID = "_lb_fp";
   let domain;
+  let enableLightbeamBranding = true; // show logo by default
 
   const cookieConsentTypes = {
     accept: "accept",
@@ -798,48 +799,58 @@ var renderCookieConsent = async () => {
 
   // API requests
   const fetchDomainInfo = async () => {
-    // const globalDomain = mockDomain;
-    // const globalBanner = globalDomain?.banner;
-
     const hostingUrlBase = lbCookieConsent.getHostingBaseUrl();
 
     // const globalResponse = await fetch(`${hostingUrlBase}/domain_config.json`);
-    const globalResponse = await fetch(`${dataScriptHost}/cookie_consent_${ccVersion}/${domainId}/domain_config_${domainHash}.json`);
+    const globalResponse = await fetch(
+      `${dataScriptHost}/cookie_consent_${ccVersion}/${domainId}/domain_config_${domainHash}.json`
+    );
     const globalDomain = await globalResponse.json();
 
-    console.log('domain', globalDomain);
-    console.log('categories', globalDomain.categories.map(({id, name}) => ({id, name})));
-    console.log('GCM', globalDomain.googleConsentMapper.map(item => ({type: item.googleConsentType, linkedCategories: item?.lbCookieCategories.map(c => c.name) || []})));
-    // // get global banner
+    console.log("domain", globalDomain);
+    console.log(
+      "categories",
+      globalDomain.categories.map(({ id, name }) => ({ id, name }))
+    );
+    console.log(
+      "GCM",
+      globalDomain.googleConsentMapper.map((item) => ({
+        type: item.googleConsentType,
+        linkedCategories: item?.lbCookieCategories.map((c) => c.name) || [],
+      }))
+    );
+
+    // get global banner
     const globalBanner = !!globalDomain?.regionBannerInfo.length
       ? globalDomain?.regionBannerInfo[0].banner
       : globalDomain?.banner;
 
     // get location-based banner
     let localBanner;
-    // try {
-    //   const MAX_PENDING_TIME_MS = 2000;
-    //   const controller = new AbortController();
+    try {
+      const MAX_PENDING_TIME_MS = 2000;
+      const controller = new AbortController();
 
-    //   const webAppResponse = await Promise.race([
-    //     fetch(
-    //       `${dataWebApp}/api/cookie-consent/domain?domainName=${dataDomain}`,
-    //       {
-    //         signal: controller.signal,
-    //       }
-    //     ),
-    //     new Promise((resolve) => {
-    //       setTimeout(() => {
-    //         resolve(JSON.stringify({ banner: null }));
-    //         controller.abort();
-    //       }, MAX_PENDING_TIME_MS);
-    //     }),
-    //   ]);
-    //   const localDomain = await webAppResponse.json();
-    //   localBanner = localDomain?.banner;
-    // } catch (e) {
-    //   console.log("web app is not available");
-    // }
+      const webAppResponse = await Promise.race([
+        fetch(
+          `${dataWebApp}/api/cookie-consent/domain?domainName=${dataDomain}`,
+          {
+            signal: controller.signal,
+          }
+        ),
+        new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(JSON.stringify({ banner: null }));
+            controller.abort();
+          }, MAX_PENDING_TIME_MS);
+        }),
+      ]);
+      const localDomain = await webAppResponse.json();
+      localBanner = localDomain?.banner;
+      enableLightbeamBranding = localDomain?.enableLightbeamBranding ?? true;
+    } catch (e) {
+      console.log("web app is not available");
+    }
 
     const banner = localBanner || globalBanner;
     const domain = {
@@ -892,7 +903,11 @@ var renderCookieConsent = async () => {
      * Mapping gtag consents
      * GTM should be enabled on page, and either script was loaded wia GTM or googleConsentModeEnabled flag is on
      */
-    if (window.gtag && (!!domain.googleConsentModeEnabled || !!lbCookieConsentGcm?.isLoadedViaGtm)) {
+    if (
+      window.gtag &&
+      (!!domain.googleConsentModeEnabled ||
+        !!lbCookieConsentGcm?.isLoadedViaGtm)
+    ) {
       const gtagConsents = {
         ad_storage: "denied",
         ad_user_data: "denied",
@@ -902,7 +917,7 @@ var renderCookieConsent = async () => {
         functionality_storage: "denied",
         security_storage: "denied",
       };
-      console.log('Accepted categories', categoriesAccepted);
+      console.log("Accepted categories", categoriesAccepted);
       categoriesAccepted.forEach((categoryId) => {
         domain.googleConsentMapper.find((gcmCategory) => {
           const type = gcmCategory.googleConsentType;
@@ -915,10 +930,9 @@ var renderCookieConsent = async () => {
           }
         });
       });
-      console.log('Given GCM consents: ', gtagConsents);
+      console.log("Given GCM consents: ", gtagConsents);
       lbCookieConsent.setConsentMode({ ...gtagConsents });
     }
-
 
     fetch(`${dataWebApp}/api/cookie-consent/response`, {
       method: "POST",
@@ -1067,13 +1081,6 @@ var renderCookieConsent = async () => {
           ?.classList.add("hidden");
       }
 
-      if (e.target?.closest(".category.accepted")) {
-        const category = e.target?.closest(".category.accepted");
-        Array.from(category?.classList).includes("expanded")
-          ? category.classList.remove("expanded")
-          : category.classList.add("expanded");
-      }
-
       if (e.target.closest(".lb-switch")) {
         const container = e.target.closest(".lb-switch");
 
@@ -1086,6 +1093,14 @@ var renderCookieConsent = async () => {
         } else {
           category?.classList.remove("accepted", "expanded");
         }
+        return;
+      }
+
+      if (e.target?.closest(".category")) {
+        const category = e.target?.closest(".category");
+        Array.from(category?.classList).includes("expanded")
+          ? category.classList.remove("expanded")
+          : category.classList.add("expanded");
       }
     });
 
@@ -1213,7 +1228,7 @@ var renderCookieConsent = async () => {
             cookie-consent-banner-container \
             ${banner?.layout.type} \
             ${banner?.layout.position?.join(" ")} \
-            ${showPreferencesOnly ? " hidden" : ""} \
+            ${!banner.toShowBanner || showPreferencesOnly ? " hidden" : ""} \
             ${isMobile() ? " mobile-view" : ""} \
         "
         id="lb-cookie-consent-banner">\
@@ -1334,21 +1349,21 @@ var renderCookieConsent = async () => {
     const getCookieHtml = (cookie) => {
       const cookieDescription = `\
       <div class="lb-row">\
-        <div class="label">Description:</div>
+        <div class="label">Cookie Description:</div>
         <div class="value">${cookie.description}</div>
       </div>`;
 
       return `\
           <div class="category-cookie">\
             <div class="lb-row">\
-              <div class="label">Cookie name:</div>
+              <div class="label">Cookie Name:</div>
               <div class="value">${cookie.name}</div>
-            </div>
+            </div>\
+            ${cookie.description ? cookieDescription : ""}\
             <div class="lb-row">\
               <div class="label">Expires:</div>
               <div class="value">${getPrettyExpires(cookie.expires)}</div>
-            </div>
-            ${cookie.description ? cookieDescription : ""}
+            </div>\
           </div>`;
     };
 
@@ -1369,14 +1384,13 @@ var renderCookieConsent = async () => {
       );
 
       const htmlCaret = `<div class="icon-box">${SVG_CARET_RIGHT}</div>`;
-      const htmlDescription = `<div class="lb-row category-description">${category?.description}</div>`;
+      const htmlDescription = `<div class="lb-row category-description" style="color: #${banner?.layout?.preferences?.category?.colorDescription}">${category?.description}</div>`;
 
       const html = `\
       <div class="category ${payload.checked ? "accepted" : ""}" id="${
         category.id
       }">\
         <div class="lb-row category-name">\
-            ${categoryCookies.length ? htmlCaret : ""}\
           <div\
             class="title"\
             style="color: #${
@@ -1384,6 +1398,7 @@ var renderCookieConsent = async () => {
             };"\
           >\
             ${category?.name}\
+            ${categoryCookies.length ? htmlCaret : ""}\
           </div>\
           ${showToggle ? renderToggle(payload) : renderCheckbox(payload)}
         </div>\
@@ -1451,7 +1466,7 @@ var renderCookieConsent = async () => {
               ${btnSavePreferences}\
             </div>
             ${
-              banner.layout.enableLightbeamBranding
+              enableLightbeamBranding
                 ? `<a href="https://www.lightbeam.ai/" target="_blank" class="lb-powered-by-container">
                       <p class="lb-powered-by-text">Powered by</p>
                       <img src="https://lb-common.s3.ap-south-1.amazonaws.com/lb-logo.png" alt="lb-logo" class="lb-powered-by-logo" />
@@ -1479,9 +1494,30 @@ var renderCookieConsent = async () => {
       ?.classList.add("hidden");
   };
 
+  const setCSSVariables = (banner) => {
+    document.documentElement.setAttribute(
+      "style",
+      `--lb-checkbox-color-always-on: #${
+        banner?.layout?.preferences?.category?.checkboxColorAlwaysOn || "D1D5DA"
+      };
+      --lb-checkbox-color-on: #${
+        banner?.layout?.preferences?.category?.checkboxColorOn || "333333"
+      };
+      --lb-checkbox-color-off: #${
+        banner?.layout?.preferences?.category?.checkboxColorOff || "FFFFFF"
+      };
+      --lb-checkbox-check-mark-color: #${
+        banner?.layout?.preferences?.category?.checkboxCheckMarkColor ||
+        "FFFFFF"
+      };
+      `
+    );
+  };
+
   // blockers / unblockers
   const injectHtml = (domain) => {
     const item = getLbCookies(LB_LOCAL_STORAGE_KEY);
+    setCSSVariables(domain.banner);
     renderPreferences(domain.banner);
     if (!item) {
       renderBanner(domain.banner, showPreferences);

@@ -16,6 +16,16 @@ const customWhiteListUrls = [];
 const LB_LOCAL_STORAGE_KEY = "lb-cookie-consent";
 const LB_LOCAL_STORAGE_PREFERENCES_KEY = "lb-preferences";
 
+/**
+ * window.lbCookieConsentGcm = {
+ * 
+ *  scriptHostURL: string
+ *  Example: https://lb-cctest.s3.ap-south-1.amazonaws.com/cookie_consent_41/8f3da2ac-7052-4995-bc73-1487cab95165/main.js
+ * 
+ *  webAppServerHost: string
+ *  Example: https://web-app.lightbeam.com
+ * }
+ */
 const lbCookieConsent = {
   isLoadedViaGtm: !!window.lbCookieConsentGcm?.scriptHostURL,
 
@@ -125,16 +135,6 @@ var setLbCookies = ({ name, value = "", shareCookies = false }) => {
   }
 })();
 
-/**
- * window.lbCookieConsentGcm = {
- * 
- *  scriptHostURL: string
- *  Example: https://lb-cctest.s3.ap-south-1.amazonaws.com/cookie_consent_41/8f3da2ac-7052-4995-bc73-1487cab95165/main.js
- * 
- *  webAppServerHost: string
- *  Example: https://web-app.lightbeam.com
- * }
- */
 // check if script was added via Google Tag Manager. If so, disable scripts blocking
 if(!lbCookieConsent.isLoadedViaGtm) {
   /**Yett blocking script  */
