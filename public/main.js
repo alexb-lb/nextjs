@@ -26,13 +26,15 @@ const LB_LOCAL_STORAGE_PREFERENCES_KEY = "lb-preferences";
  *  Example: https://web-app.lightbeam.com
  * }
  */
+var lbCookieConsentRoot = document.getElementById("lb-cookie-consent");
 var lbCookieConsent = {
+  root: lbCookieConsentRoot,
   isLoadedViaGtm: !!window.lbCookieConsentGcm?.scriptHostURL,
-  isGcmOn: document.getElementById("lb-cookie-consent")?.getAttribute("data-gcm") === "true",
+  isGcmOn: lbCookieConsentRoot?.src?.includes('gcm=true'),
+  isPrefCenterOnly: lbCookieConsentRoot?.src?.includes('prefCenterOnly=true'),
 
   setConsentMode: (consents) => {
     window.gtag('consent', 'update', consents);
-    // localStorage.setItem('consentMode', JSON.stringify(consents));
   },
 
   getHostingBaseUrl: () => {
@@ -96,12 +98,7 @@ var setLbCookies = ({ name, value = "", shareCookies = false }) => {
 
 (function () {
   // detect essentials that must NOT be blocked
-  const root = document.getElementById("lb-cookie-consent");
   const essentialsWhiteList = getLbEssentialsWhiteList();
-
-  // check whether show both banner and pref center or pref center only
-  const isLbPrefCenter =
-    (root?.getAttribute("data-preferences-only") || "") === "true";
 
   const userConsents = getLbCookies(LB_LOCAL_STORAGE_KEY);
 
@@ -125,7 +122,7 @@ var setLbCookies = ({ name, value = "", shareCookies = false }) => {
    * - if banner: block everything excepts essential domains
    */
   if (!userConsents) {
-    if (isLbPrefCenter) {
+    if (lbCookieConsent.isPrefCenterOnly) {
       window.YETT_BLACKLIST = [];
     } else {
       window.YETT_WHITELIST = essentialsWhiteList.map(
