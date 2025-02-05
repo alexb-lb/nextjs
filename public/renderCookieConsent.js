@@ -906,7 +906,7 @@ var renderCookieConsent = async () => {
     if (
       window.gtag &&
       (!!domain.googleConsentModeEnabled ||
-        !!lbCookieConsentGcm?.isLoadedViaGtm)
+        !!window.lbCookieConsentGcm?.isLoadedViaGtm)
     ) {
       const gtagConsents = {
         ad_storage: "denied",
