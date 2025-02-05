@@ -1229,7 +1229,7 @@ var renderCookieConsent = async () => {
             ${banner?.layout.type} \
             ${banner?.layout.position?.join(" ")} \
             ${
-              banner.toShowBanner === false || showPreferencesOnly
+              banner.showBanner === false || showPreferencesOnly
                 ? " hidden"
                 : ""
             } \
