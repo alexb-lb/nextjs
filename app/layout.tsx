@@ -31,12 +31,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <Script
-          src="/main.js?gcm=false&prefCenterOnly=false"
-          // src="https://lb-cctest.s3.ap-south-1.amazonaws.com/cookie_consent_44/8f3da2ac-7052-4995-bc73-1487cab95165/main_dd201b6.js?gcm=true&prefCenterOnly=false"
-          id="lb-cookie-consent"
-          strategy="beforeInteractive"
-        />
-        {/* <Script
           id="gtag-default"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
@@ -57,7 +51,13 @@ export default function RootLayout({
               });
             `,
           }}
-        /> */}
+        />
+        <Script
+          // src="/main.js?gcm=false&prefCenterOnly=false"
+          src="https://sahil-cctest.s3.ap-south-1.amazonaws.com/cookie_consent_10/e779101f-63cd-44f7-a275-6f92ead51336/main_4dae72e.js?gcm=false&prefCenterOnly=false"
+          id="lb-cookie-consent"
+          strategy="beforeInteractive"
+        />
         <GoogleTagManager gtmId={GTM_ID} />
         <Script
           src="./injectCookies.js"
