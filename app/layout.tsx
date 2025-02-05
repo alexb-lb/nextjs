@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script
+        {/* <Script
           id="gtag-default"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
@@ -51,14 +51,14 @@ export default function RootLayout({
               });
             `,
           }}
-        />
+        /> */}
         <GoogleTagManager gtmId={GTM_ID} />
-        <Script
+        {/* <Script
           src="/main.js?gcm=true&prefCenterOnly=false"
           // src="https://sahil-cctest.s3.ap-south-1.amazonaws.com/cookie_consent_17/408ecbd2-0ae8-4be8-9dc7-1da9c11abb89/main_5d20284.js?gcm=true&prefCenterOnly=false" 
           id="lb-cookie-consent"
           strategy="beforeInteractive"
-        />
+        /> */}
         <Script
           src="./injectCookies.js"
           type="text/javascript"
