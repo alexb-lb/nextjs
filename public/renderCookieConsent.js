@@ -932,30 +932,30 @@ var renderCookieConsent = async () => {
       lbCookieConsent.setConsentMode({ ...gtagConsents });
     }
 
-    fetch(`${dataWebApp}/api/cookie-consent/response`, {
-      method: "POST",
-      credentials: "include",
-      body: JSON.stringify({
-        status: "active",
-        domain: dataDomain,
-        networkIP: "",
-        networkFamily: "",
-        browserFingerprint: {
-          device: isMobile() ? "mobile" : "desktop",
-          browser: getBrowserName(),
-          location: getBrowserLang(),
-        },
-        browserVisitorId: getCookie(VISITOR_ID) || "",
-        consentInfo: {
-          consentAccepted,
-          consentRejected,
-          categoriesAccepted,
-          categoriesRejected,
-        },
-        eventType,
-      }),
-      headers,
-    });
+    // fetch(`${dataWebApp}/api/cookie-consent/response`, {
+    //   method: "POST",
+    //   credentials: "include",
+    //   body: JSON.stringify({
+    //     status: "active",
+    //     domain: dataDomain,
+    //     networkIP: "",
+    //     networkFamily: "",
+    //     browserFingerprint: {
+    //       device: isMobile() ? "mobile" : "desktop",
+    //       browser: getBrowserName(),
+    //       location: getBrowserLang(),
+    //     },
+    //     browserVisitorId: getCookie(VISITOR_ID) || "",
+    //     consentInfo: {
+    //       consentAccepted,
+    //       consentRejected,
+    //       categoriesAccepted,
+    //       categoriesRejected,
+    //     },
+    //     eventType,
+    //   }),
+    //   headers,
+    // });
   };
 
   // DOM handlers
