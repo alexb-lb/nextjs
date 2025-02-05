@@ -53,7 +53,7 @@ export default function RootLayout({
           }}
         />
         <Script
-          src="/main.js?gcm=on&prefCenterOnly=false"
+          src="/main.js?gcm=true&prefCenterOnly=false"
           // src="https://sahil-cctest.s3.ap-south-1.amazonaws.com/cookie_consent_10/e779101f-63cd-44f7-a275-6f92ead51336/main_4dae72e.js?gcm=false&prefCenterOnly=false"
           id="lb-cookie-consent"
           strategy="beforeInteractive"
