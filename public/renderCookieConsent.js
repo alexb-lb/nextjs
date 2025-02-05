@@ -714,13 +714,9 @@ var renderCookieConsent = async () => {
   const getConsentData = (props = {}) => {
     const { isDoNotSell = false, isSavePreferences = false } = props;
     // get mandatory that must be accepted (optOut disabled)
-    const categoriesAccepted = window.lbCookieConsentGcm?.isLoadedViaGtm
-      ? []
-      : domain.categories?.filter((c) => !c.optOut);
+    const categoriesAccepted = domain.categories?.filter((c) => !c.optOut);
 
-    let domainsAccepted = window.lbCookieConsentGcm?.isLoadedViaGtm
-      ? []
-      : essentialsWhiteList || [];
+    let domainsAccepted = essentialsWhiteList || [];
     const domainsAcceptedRegExp = domainsAccepted.map((domain) => {
       const regex = new RegExp(domain);
       unblockSources(regex);
