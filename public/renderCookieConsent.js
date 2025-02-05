@@ -1019,7 +1019,6 @@ var renderCookieConsent = async () => {
           value: { whiteList: domainsAccepted, blackList: domainsRejected },
           shareCookies: domain.shareConsent,
         });
-        console.log('domainsAccepted', domainsAccepted);
         domainsAccepted.forEach((domain) => unblockSources(new RegExp(domain)));
 
         savePreferencesInStorage(categoriesAccepted.map((c) => c.id));
@@ -1047,6 +1046,7 @@ var renderCookieConsent = async () => {
           value: { whiteList: domainsAccepted, blackList: domainsRejected },
           shareCookies: domain.shareConsent,
         });
+        console.log('domainsAccepted', domainsAccepted);
         domainsAccepted.forEach((domain) => unblockSources(new RegExp(domain)));
 
         savePreferencesInStorage(categoriesAccepted.map((c) => c.id));
