@@ -714,9 +714,13 @@ var renderCookieConsent = async () => {
   const getConsentData = (props = {}) => {
     const { isDoNotSell = false, isSavePreferences = false } = props;
     // get mandatory that must be accepted (optOut disabled)
-    const categoriesAccepted = domain.categories?.filter((c) => !c.optOut);
+    const categoriesAccepted = window.lbCookieConsentGcm?.isLoadedViaGtm
+      ? []
+      : domain.categories?.filter((c) => !c.optOut);
 
-    let domainsAccepted = essentialsWhiteList || [];
+    let domainsAccepted = window.lbCookieConsentGcm?.isLoadedViaGtm
+      ? []
+      : essentialsWhiteList || [];
     const domainsAcceptedRegExp = domainsAccepted.map((domain) => {
       const regex = new RegExp(domain);
       unblockSources(regex);
@@ -1046,7 +1050,7 @@ var renderCookieConsent = async () => {
           value: { whiteList: domainsAccepted, blackList: domainsRejected },
           shareCookies: domain.shareConsent,
         });
-        console.log('domainsAccepted', domainsAccepted);
+        console.log("domainsAccepted", domainsAccepted);
         domainsAccepted.forEach((domain) => unblockSources(new RegExp(domain)));
 
         savePreferencesInStorage(categoriesAccepted.map((c) => c.id));
@@ -1510,7 +1514,7 @@ var renderCookieConsent = async () => {
       .getElementById("cookie-consent-banner-preferences")
       ?.classList.add("hidden");
 
-    if(lbCookieConsent.isLoadedViaGtm) {
+    if (lbCookieConsent.isLoadedViaGtm) {
       showFloatingButton();
     }
   };
@@ -1547,7 +1551,9 @@ var renderCookieConsent = async () => {
 
     // render floating pref center button if script loaded via GTM
     if (lbCookieConsent.isLoadedViaGtm) {
-      renderFloatingButton((isVisible = !!(item || lbCookieConsent.isPrefCenterOnly)));
+      renderFloatingButton(
+        (isVisible = !!(item || lbCookieConsent.isPrefCenterOnly))
+      );
     }
 
     // show banner if there is no saved user preferences
