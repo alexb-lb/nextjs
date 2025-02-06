@@ -56,8 +56,8 @@ export default function RootLayout({
         <Script
           // src="/main.js?gcm=true&prefCenterOnly=false"
           src="https://sahil-cctest.s3.ap-south-1.amazonaws.com/cookie_consent_25/408ecbd2-0ae8-4be8-9dc7-1da9c11abb89/main_12ddfab.js?gcm=false&prefCenterOnly=false"
-          id="lb-cookie-consent"
           strategy="beforeInteractive"
+          id="lb-cookie-consent"
         />
         <Script
           src="./injectCookies.js"
