@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script
+        {/* <Script
           id="gtag-default"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
@@ -51,7 +51,7 @@ export default function RootLayout({
               });
             `,
           }}
-        />
+        /> */}
         <GoogleTagManager gtmId={GTM_ID} />
         <Script
           // src="/main.js?gcm=true&prefCenterOnly=false"
