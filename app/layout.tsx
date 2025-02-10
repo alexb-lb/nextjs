@@ -55,7 +55,7 @@ export default function RootLayout({
         <GoogleTagManager gtmId={GTM_ID} />
         <Script
           // src="/main.js?gcm=true&prefCenterOnly=false"
-          src="https://lb-cctest.s3.ap-south-1.amazonaws.com/cookie_consent_45/8f3da2ac-7052-4995-bc73-1487cab95165/main_fe6de34.js?gcm=true&prefCenterOnly=false"
+          src="https://lb-cctest.s3.ap-south-1.amazonaws.com/cookie_consent_46/8f3da2ac-7052-4995-bc73-1487cab95165/main_3e667bb.js?gcm=true&prefCenterOnly=false"
           id="lb-cookie-consent"
           strategy="beforeInteractive"
         />
