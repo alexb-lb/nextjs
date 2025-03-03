@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script
+        {/* <Script
           id="gtag-default"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
@@ -51,8 +51,8 @@ export default function RootLayout({
               });
             `,
           }}
-        />
-        <GoogleTagManager gtmId={GTM_ID} />
+        /> */}
+        {/* <GoogleTagManager gtmId={GTM_ID} /> */}
         {/* <Script
           // src="/main.js?gcm=true&prefCenterOnly=false"
           src="https://lb-cctest.s3.ap-south-1.amazonaws.com/cookie_consent_91/4a56b734-e393-4bc2-9f17-a401c9bef803/main_23746fc.js?gcm=true&prefCenterOnly=false"
@@ -64,7 +64,7 @@ export default function RootLayout({
           type="text/javascript"
           strategy="beforeInteractive"
         />
-        <Script src="https://test-cookies.tiiny.site/show_alert.js" />
+        <Script src="https://test-cookies.tiiny.site/show_alert.js" strategy="beforeInteractive" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
