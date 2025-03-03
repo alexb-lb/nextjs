@@ -1488,6 +1488,7 @@ var renderCookieConsent = async () => {
       "cookie-consent-banner-preferences"
     );
     if (!isBannerInDom) {
+      console.log('Inject preferences');
       document.body.insertAdjacentHTML("beforeend", htmlPreferences);
     }
   };
