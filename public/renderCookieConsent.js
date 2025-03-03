@@ -911,7 +911,7 @@ var renderCookieConsent = async () => {
     if (
       window.gtag &&
       (!!domain.googleConsentModeEnabled ||
-        !!window.lbCookieConsentGcm?.isLoadedViaGtm)
+        !!window.lbCookieConsent?.isLoadedViaGtm)
     ) {
       const gtagConsents = {
         ad_storage: "denied",
@@ -1488,7 +1488,6 @@ var renderCookieConsent = async () => {
       "cookie-consent-banner-preferences"
     );
     if (!isBannerInDom) {
-      console.log('Inject preferences');
       document.body.insertAdjacentHTML("beforeend", htmlPreferences);
     }
   };
