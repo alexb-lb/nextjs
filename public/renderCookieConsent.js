@@ -906,11 +906,11 @@ var renderCookieConsent = async () => {
 
     /**
      * Mapping gtag consents
-     * GTM should be enabled on page, and either script was loaded wia GTM or googleConsentModeEnabled flag is on
+     * GTM should be enabled on page, and either script was loaded wia GTM or gcm flag is on
      */
     if (
       window.gtag &&
-      (!!domain.googleConsentModeEnabled ||
+      (!!window.lbCookieConsent?.isGcmOn ||
         !!window.lbCookieConsent?.isLoadedViaGtm)
     ) {
       const gtagConsents = {
@@ -922,17 +922,30 @@ var renderCookieConsent = async () => {
         functionality_storage: "denied",
         security_storage: "denied",
       };
-      domain.googleConsentMapper.forEach((item) => {
-        // if any of linked LB categories rejected, rejected the whole Google consent type
-        const isGranted = item.lbCookieCategories.every((c) => {
-          return !!categoriesAccepted.includes(c.id);
-        });
 
-        if (isGranted) {
-          gtagConsents[item.googleConsentType] = "granted";
+      // if GCM flag enabled, check send consent to google based on category mapping
+      if(window.lbCookieConsent?.isGcmOn) {
+        domain.googleConsentMapper.forEach((item) => {
+          // if any of linked LB categories rejected, rejected the whole Google consent type
+          const isGranted = item.lbCookieCategories.every((c) => {
+            return !!categoriesAccepted.includes(c.id);
+          });
+  
+          if (isGranted) {
+            gtagConsents[item.googleConsentType] = "granted";
+          }
+        });
+        lbCookieConsent.setConsentMode(gtagConsents);
+      } else {
+        // send all granted only if eventType is "accept all"
+        if(eventType === apiEventTypes.accept) {
+          Object.keys(gtagConsents).forEach(key => {
+            gtagConsents[key] = "granted";
+          });
         }
-      });
-      lbCookieConsent.setConsentMode({ ...gtagConsents });
+        lbCookieConsent.setConsentMode(gtagConsents);
+      }
+
     }
 
     fetch(`${dataWebApp}/api/cookie-consent/response`, {
