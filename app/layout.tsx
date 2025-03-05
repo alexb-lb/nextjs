@@ -53,18 +53,21 @@ export default function RootLayout({
           }}
         />
         <GoogleTagManager gtmId={GTM_ID} />
-        {/* <Script
+        <Script
           // src="/main.js?gcm=true&prefCenterOnly=false"
-          src="https://lb-cctest.s3.ap-south-1.amazonaws.com/cookie_consent_91/4a56b734-e393-4bc2-9f17-a401c9bef803/main_23746fc.js?gcm=true&prefCenterOnly=false"
+          src="https://lb-cctest.s3.ap-south-1.amazonaws.com/cookie_consent_17/c87bf431-c126-485b-a461-7e48c6e52b66/main_201bf27.js?gcm=true&prefCenterOnly=false"
           id="lb-cookie-consent"
           strategy="beforeInteractive"
-        /> */}
+        />
         <Script
           src="./injectCookies.js"
           type="text/javascript"
           strategy="beforeInteractive"
         />
-        <Script src="https://test-cookies.tiiny.site/show_alert.js" strategy="beforeInteractive" />
+        <Script
+          src="https://test-cookies.tiiny.site/show_alert.js"
+          strategy="beforeInteractive"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
