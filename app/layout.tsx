@@ -53,12 +53,12 @@ export default function RootLayout({
           }}
         /> */}
         {/* <GoogleTagManager gtmId={GTM_ID} /> */}
-        <Script
+        {/* <Script
           // src="/main.js?gcm=true&prefCenterOnly=false"
           src="https://lb-cctest.s3.ap-south-1.amazonaws.com/cookie_consent_30/c9054962-8376-465a-ae53-9c55054839a4/main_9e4c6dd.js?gcm=true&prefCenterOnly=false"
           id="lb-cookie-consent"
           strategy="beforeInteractive"
-        />
+        /> */}
         <Script
           src="./injectCookies.js"
           type="text/javascript"
